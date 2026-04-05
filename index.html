@@ -106,6 +106,39 @@
             .subscribe-form { flex-direction: column; align-items: center; }
             .email-input { width: 100%; max-width: 320px; }
         }
+    .custom-subscribe {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.sub-btn-link {
+    background: var(--paper);
+    color: #000;
+    border: 1px solid var(--paper);
+    padding: 12px 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.sub-btn-link:hover {
+    background: transparent;
+    color: var(--paper);
+}
+
+.sub-note {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    color: #666;
+    font-family: var(--body-serif);
+}
+    
+    
     </style>
 </head>
 <body>
@@ -248,7 +281,12 @@
                 <h2>訂閱音樂劇的ㄅㄆㄇ</h2>
                 <p>從ㄅ到ㄦ，每月不定期出刊的音樂劇產業新聞與創作心得</p>
                 <form class="subscribe-form">
-                 <iframe src="https://wealllovemusical.substack.com/embed" width="480" height="150" style="border: 1px solid #EEE; background: white" frameborder="0" scrolling="no"></iframe>
+                <div class="subscribe-form custom-subscribe">
+        <a href="https://wealllovemusical.substack.com" target="_blank" rel="noopener noreferrer" class="sub-btn-link">
+           點我訂閱電子報
+        </a>
+    </div>
+                
                 </form>
             </div>
             <div class="footer-contact">
