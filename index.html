@@ -1,383 +1,1550 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chandler Chen | 劇場與文字工作者</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Libre+Baskerville:ital@0;1&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>冰島 × 倫敦 2026.11</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2230;
+    --card: #1e2636;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #e6edf3;
+    --muted: #7d8590;
+    --dim: #4a5568;
+    --accent: #4fc3f7;
+    --accent2: #81d4fa;
+    --green: #56d364;
+    --amber: #f0a443;
+    --red: #f85149;
+    --purple: #a371f7;
+    --teal: #39d3c3;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font: 'Noto Sans TC', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+  }
 
-    <style>
-        :root {
-            --ink: #0a0a0a;
-            --paper: #e2e2e2;
-            --accent: #c5a368;
-            --border: #222222;
-            --work-bg: #161616;
-            --serif: 'Playfair Display', serif;
-            --body-serif: 'Libre Baskerville', serif;
-            --sans: 'Inter', sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--ink); color: var(--paper); font-family: var(--sans); line-height: 1.6; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 30px; }
-
-        .top-bar {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 18px 30px 0;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #777;
-        }
-
-        .hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; padding: 80px 0; border-bottom: 1px double var(--border); }
-        .hero-text h1 { font-family: var(--serif); font-size: 3.5rem; line-height: 1; color: #fff; margin-bottom: 25px; font-style: italic; }
-        .hero-text p { font-family: var(--body-serif); font-size: 1rem; color: #aaa; }
-        .hero-img { width: 100%; height: 350px; overflow: hidden; border: 1px solid var(--border); filter: grayscale(100%); }
-        .hero-img img { width: 100%; height: 100%; object-fit: cover; }
-
-        .featured-works-section { background-color: var(--work-bg); padding: 60px 0; border-bottom: 1px solid var(--border); position: relative; }
-    .work-slider {
-    width: 100%;
-    height: 420px;
-    padding: 0 72px 42px;
-}
-
-.work-slide {
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 16px;
+    height: 52px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
-.work-info {
-    flex: 1;
-    padding-right: 40px;
-    max-width: 560px;
-}
-
-.work-info h2 {
-    font-family: var(--serif);
-    font-size: 2.5rem;
-    color: #fff;
-    margin-bottom: 10px;
-    line-height: 1.1;
-}
-
-.work-info p {
-    font-family: var(--body-serif);
-    font-size: 0.95rem;
-    color: #bbb;
-    margin-bottom: 0;
-    line-height: 1.8;
-}
-
-.work-visual {
-    flex: 0 0 36%;
-    text-align: right;
-}
-
-.work-visual img {
-    max-width: 240px;
-    filter: drop-shadow(15px 20px 30px rgba(0,0,0,0.8));
-    transform: rotate(1deg);
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-    color: var(--accent) !important;
-    transition: 0.3s;
-    background: rgba(255,255,255,0.05);
-    width: 48px !important;
-    height: 48px !important;
-    border-radius: 50%;
-    top: 50%;
-    margin-top: -24px;
-}
-
-.swiper-button-prev {
-    left: 0 !important;
-}
-
-.swiper-button-next {
-    right: 0 !important;
-}
-    
-
-        .swiper-pagination-bullet { background: #555 !important; opacity: 1 !important; width: 8px; height: 8px; transition: 0.3s; }
-        .swiper-pagination-bullet-active { background: var(--accent) !important; width: 24px; border-radius: 4px; }
-
-        .timeline-section { padding: 80px 0; }
-        .section-label { font-family: var(--serif); font-size: 2rem; color: #fff; margin-bottom: 50px; text-align: center; font-style: italic; }
-        .timeline-row { display: grid; grid-template-columns: 180px 1fr; margin-bottom: 50px; position: relative; }
-        .timeline-row::after { content: ""; position: absolute; bottom: -25px; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, #333, transparent); }
-        .t-year-side { font-family: var(--serif); font-size: 1.3rem; color: var(--accent); font-weight: bold; }
-        .t-role-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #666; display: block; margin-top: 5px; }
-        .t-content h3 { font-size: 1.2rem; color: #fff; margin-bottom: 12px; font-weight: 600; }
-        .t-content .sub-list { list-style: none; padding-left: 20px; border-left: 1px solid #333; margin-top: 12px; }
-        .t-content .sub-list li { font-size: 0.9rem; color: #999; margin-bottom: 8px; position: relative; }
-        .t-content .sub-list li::before { content: "—"; position: absolute; left: -20px; color: #444; }
-        .t-content a { color: #aaa; text-decoration: none; border-bottom: 1px solid #444; }
-        .t-content a:hover { color: var(--accent); border-color: var(--accent); }
-        .award-badge { display: inline-block; background: rgba(197, 163, 104, 0.1); color: var(--accent); padding: 2px 10px; font-size: 0.75rem; border: 1px solid var(--accent); margin-left: 10px; border-radius: 20px; }
-
-        .footer-cta { background-color: #050505; padding: 100px 0; text-align: center; border-top: 1px solid var(--border); }
-        .substack-box { max-width: 600px; margin: 0 auto 60px; }
-        .substack-box h2 { font-family: var(--serif); font-size: 2.2rem; font-style: italic; margin-bottom: 15px; color: #fff; }
-        .substack-box p { color: #999; font-family: var(--body-serif); }
-        .subscribe-form { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
-        .email-input { background: transparent; border: 1px solid #333; padding: 12px; color: white; width: 300px; outline: none; }
-        .sub-btn { background: var(--paper); color: #000; border: none; padding: 12px 30px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
-        .footer-contact { border-top: 1px solid var(--border); padding-top: 40px; display: flex; justify-content: space-between; align-items: center; }
-        .footer-contact a { color: #bbb; text-decoration: none; }
-        .footer-contact a:hover { color: var(--accent); }
-        .social-icons { display: flex; gap: 20px; }
-        .social-icons a { color: #555; font-size: 1.2rem; transition: 0.3s; }
-        .social-icons a:hover { color: var(--accent); }
-
-        @media (max-width: 768px) {
-            .hero { grid-template-columns: 1fr; text-align: center; }
-            .timeline-row { grid-template-columns: 1fr; }
-            .work-slide { flex-direction: column; text-align: center; }
-            .work-info { padding-right: 0; margin-bottom: 30px; }
-            .work-visual { text-align: center; }
-            .footer-contact { flex-direction: column; gap: 20px; }
-            .subscribe-form { flex-direction: column; align-items: center; }
-            .email-input { width: 100%; max-width: 320px; }
-        }
-    .custom-subscribe {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-.sub-btn-link {
-    background: var(--paper);
-    color: #000;
-    border: 1px solid var(--paper);
-    padding: 12px 30px;
-    font-weight: 700;
+    justify-content: space-between;
+  }
+  .topbar-title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 1px;
+  }
+  .topbar-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 10px 4px 8px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-size: 10px;
+    font-family: var(--font);
     cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: 0.3s;
-}
+    transition: color 0.2s;
+  }
+  .nav-btn.active { color: var(--accent); }
+  .nav-btn svg { width: 22px; height: 22px; }
 
-.sub-btn-link:hover {
-    background: transparent;
-    color: var(--paper);
-}
+  /* ── PAGES ── */
+  .page { display: none; padding: 16px 16px 90px; }
+  .page.active { display: block; }
 
-.sub-note {
-    margin-top: 14px;
-    font-size: 0.8rem;
-    color: #666;
-    font-family: var(--body-serif);
-}
-    
-    
-    </style>
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0a192f 0%, #0d2137 50%, #0a1628 100%);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 24px 20px 20px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label { font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .hero-title { font-size: 26px; font-weight: 700; line-height: 1.2; color: var(--text); }
+  .hero-title span { color: var(--accent); }
+  .hero-date { font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .hero-members {
+    display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;
+  }
+  .member-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(79,195,247,0.1);
+    border: 0.5px solid rgba(79,195,247,0.25);
+    border-radius: 20px;
+    padding: 5px 12px 5px 8px;
+    font-size: 12px; color: var(--accent2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .member-chip:hover, .member-chip.active-member {
+    background: rgba(79,195,247,0.2);
+    border-color: rgba(79,195,247,0.5);
+  }
+  .member-avatar {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; letter-spacing: 0.04em; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 20px 0 10px;
+  }
+  .section-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .section-badge {
+    font-size: 11px; background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: 20px; padding: 2px 10px; color: var(--muted);
+  }
+
+  /* ── DAY CARD ── */
+  .day-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .day-card-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px;
+  }
+  .day-badge {
+    min-width: 44px; height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+  }
+  .day-badge-num { font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .day-badge-label { font-size: 9px; color: var(--muted); letter-spacing: 0.04em; }
+  .day-card-info { flex: 1; min-width: 0; }
+  .day-card-date { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .day-card-title { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .day-card-sub { font-size: 12px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .day-chevron { color: var(--dim); transition: transform 0.2s; font-size: 18px; }
+  .day-card.open .day-chevron { transform: rotate(90deg); }
+
+  /* tag strips */
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 16px 12px; }
+  .tag {
+    font-size: 11px; padding: 3px 9px;
+    border-radius: 20px; font-weight: 500;
+  }
+  .tag-aurora { background: rgba(163,113,247,0.15); color: var(--purple); border: 0.5px solid rgba(163,113,247,0.3); }
+  .tag-activity { background: rgba(79,195,247,0.12); color: var(--accent); border: 0.5px solid rgba(79,195,247,0.25); }
+  .tag-warning { background: rgba(240,164,67,0.12); color: var(--amber); border: 0.5px solid rgba(240,164,67,0.3); }
+  .tag-booked { background: rgba(86,211,100,0.1); color: var(--green); border: 0.5px solid rgba(86,211,100,0.25); }
+  .tag-london { background: rgba(57,211,195,0.1); color: var(--teal); border: 0.5px solid rgba(57,211,195,0.25); }
+
+  /* ── DAY DETAIL (expanded) ── */
+  .day-detail { display: none; border-top: 0.5px solid var(--border); }
+  .day-card.open .day-detail { display: block; }
+
+  .spot-list { padding: 8px 0; }
+  .spot-item {
+    display: flex; gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    position: relative;
+  }
+  .spot-item:last-child { border-bottom: none; }
+  .spot-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    margin-top: 6px; flex-shrink: 0;
+  }
+  .spot-dot-drive { background: var(--dim); }
+  .spot-dot-sight { background: var(--accent); }
+  .spot-dot-food { background: var(--amber); }
+  .spot-dot-warn { background: var(--red); }
+  .spot-dot-stay { background: var(--green); }
+  .spot-dot-booked { background: var(--purple); }
+  .spot-content { flex: 1; min-width: 0; }
+  .spot-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .spot-name a { color: var(--accent); text-decoration: none; }
+  .spot-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .spot-note {
+    font-size: 11px; color: var(--amber);
+    background: rgba(240,164,67,0.08);
+    border-left: 2px solid var(--amber);
+    padding: 4px 8px;
+    margin-top: 4px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ── HOTEL CARD ── */
+  .hotel-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    padding: 14px 16px;
+  }
+  .hotel-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .hotel-night {
+    min-width: 36px; height: 36px;
+    background: var(--bg3); border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--accent); text-align: center; line-height: 1.2;
+  }
+  .hotel-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .hotel-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .hotel-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .hotel-pill {
+    font-size: 11px; padding: 3px 9px;
+    border-radius: 20px; background: var(--bg3);
+    border: 0.5px solid var(--border2); color: var(--muted);
+  }
+  .hotel-pill.ok { color: var(--green); background: rgba(86,211,100,0.08); border-color: rgba(86,211,100,0.2); }
+  .hotel-pill.warn { color: var(--amber); background: rgba(240,164,67,0.08); border-color: rgba(240,164,67,0.25); }
+  .hotel-cancel {
+    font-size: 11px; color: var(--amber);
+    background: rgba(240,164,67,0.08);
+    border: 0.5px solid rgba(240,164,67,0.2);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ── MEMBER PAGE ── */
+  .member-tabs {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .member-tab {
+    flex: 1; min-width: 80px;
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 13px; color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .member-tab.active {
+    background: rgba(79,195,247,0.1);
+    border-color: rgba(79,195,247,0.35);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .member-panel { display: none; }
+  .member-panel.active { display: block; }
+  .member-profile {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .profile-avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    font-size: 20px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--bg); flex-shrink: 0;
+  }
+  .profile-name { font-size: 18px; font-weight: 700; color: var(--text); }
+  .profile-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .info-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+  }
+  .info-card-title {
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .info-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 7px 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    gap: 12px;
+  }
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-key { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+  .info-val { font-size: 13px; color: var(--text); text-align: right; font-weight: 500; }
+  .info-val.accent { color: var(--accent); }
+  .info-val.green { color: var(--green); }
+  .info-val.amber { color: var(--amber); }
+
+  .flight-card {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .flight-route {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 700; margin-bottom: 6px;
+  }
+  .flight-arrow { color: var(--accent); font-size: 18px; }
+  .flight-detail { font-size: 12px; color: var(--muted); }
+  .flight-code {
+    display: inline-block; background: rgba(79,195,247,0.1);
+    border: 0.5px solid rgba(79,195,247,0.25);
+    border-radius: 4px; padding: 1px 8px;
+    font-size: 12px; color: var(--accent); font-weight: 600;
+    margin-top: 6px;
+  }
+
+  /* ── EMERGENCY ── */
+  .emerg-card {
+    background: rgba(248,81,73,0.08);
+    border: 0.5px solid rgba(248,81,73,0.25);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+  }
+  .emerg-title {
+    font-size: 11px; font-weight: 600;
+    color: var(--red); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 8px;
+  }
+  .link-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    margin-bottom: 6px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .link-card a { color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 500; }
+  .link-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .arrow-ext { color: var(--dim); font-size: 16px; }
+
+  /* ── TIPS ── */
+  .tip-card {
+    background: var(--card);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .tip-card b { color: var(--amber); }
+
+  /* ── NOTICE BANNER ── */
+  .notice {
+    background: rgba(240,164,67,0.08);
+    border: 0.5px solid rgba(240,164,67,0.25);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 12px; color: var(--amber);
+    margin-bottom: 12px;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .notice-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── SCROLL HINT ── */
+  .scroll-fade {
+    position: fixed; bottom: 56px;
+    left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    height: 32px;
+    background: linear-gradient(transparent, rgba(13,17,23,0.8));
+    pointer-events: none;
+  }
+
+  /* ── DASHBOARD ── */
+  .db-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 20px 0 14px;
+  }
+  .db-trip-label { font-size: 10px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; }
+  .db-trip-title { font-size: 24px; font-weight: 700; line-height: 1.1; }
+  .db-trip-title span { color: var(--accent); }
+  .db-countdown {
+    background: var(--card); border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 10px 14px;
+    text-align: center; min-width: 64px;
+  }
+  .db-countdown-num { font-size: 26px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .db-countdown-label { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: 0.06em; }
+  .db-today-card {
+    background: var(--card); border: 0.5px solid var(--border2);
+    border-radius: var(--radius); margin-bottom: 12px; overflow: hidden;
+  }
+  .db-today-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px 8px; border-bottom: 0.5px solid var(--border);
+  }
+  .db-today-dayinfo { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; flex:1; }
+  .db-nav-arrow {
+    background: none; border: none; color: var(--muted);
+    font-size: 22px; line-height: 1; cursor: pointer;
+    padding: 2px 8px; border-radius: 6px; transition: color 0.15s, background 0.15s;
+  }
+  .db-nav-arrow:hover { color: var(--accent); background: rgba(79,195,247,0.08); }
+  .db-today-inner { padding: 12px 14px 14px; }
+  .db-today-route { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .db-today-hotel { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .db-spot-mini {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0; font-size: 12px; color: var(--muted);
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+  }
+  .db-spot-mini:last-child { border-bottom: none; }
+  .db-spot-mini-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .db-spot-mini-name { color: var(--text); flex: 1; }
+  .db-warn-strip {
+    display: flex; align-items: flex-start; gap: 8px;
+    background: rgba(240,164,67,0.08); border-left: 2px solid var(--amber);
+    padding: 8px 12px; font-size: 12px; color: var(--amber);
+  }
+  .db-pre-trip { padding: 20px 14px; text-align: center; }
+  .db-pre-trip-num { font-size: 40px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .db-pre-trip-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .db-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .db-widget-card {
+    background: var(--card); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 12px 12px 8px;
+  }
+  .db-widget-title {
+    font-size: 10px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 5px; margin-bottom: 10px;
+  }
+  .db-widget-icon { font-size: 12px; color: var(--accent); }
+  .db-widget-sub { color: var(--dim); font-size: 9px; margin-left: 2px; text-transform: none; letter-spacing: 0; }
+  .db-widget-refresh {
+    font-size: 10px; color: var(--dim); cursor: pointer; margin-top: 8px;
+    padding-top: 6px; border-top: 0.5px solid var(--border); text-align: right;
+  }
+  .db-widget-refresh:hover { color: var(--accent); }
+  .db-loading { font-size: 11px; color: var(--dim); padding: 4px 0; }
+  .db-temp-main { font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
+  .db-temp-feels { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .db-weather-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 8px; padding-top: 6px; border-top: 0.5px solid var(--border);
+  }
+  .db-weather-item { text-align: center; flex: 1; }
+  .db-weather-item-val { font-size: 12px; font-weight: 600; color: var(--text); }
+  .db-weather-item-key { font-size: 9px; color: var(--muted); margin-top: 1px; }
+  .db-weather-desc { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .db-wind-warn { font-size: 10px; color: var(--amber); margin-top: 3px; }
+  .db-snow-warn { font-size: 10px; color: var(--accent); margin-top: 3px; }
+  .db-kp-bar-wrap { display: flex; align-items: flex-end; gap: 3px; height: 40px; margin: 4px 0 6px; }
+  .db-kp-bar { flex: 1; border-radius: 2px 2px 0 0; }
+  .db-kp-val { font-size: 26px; font-weight: 700; line-height: 1; }
+  .db-kp-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .db-aurora-status { font-size: 11px; margin-top: 4px; font-weight: 500; }
+  .db-aurora-tip { font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+  .db-road-card {
+    background: var(--card); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
+  }
+  .db-road-btn {
+    flex: 1; min-width: 90px;
+    background: var(--bg3); border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 10px 10px 8px;
+    font-size: 12px; font-weight: 600; color: var(--text);
+    text-decoration: none; display: block; text-align: center; transition: all 0.15s;
+  }
+  .db-road-btn span { font-size: 10px; color: var(--muted); font-weight: 400; display: block; margin-top: 2px; }
+  .db-road-btn:hover { border-color: rgba(79,195,247,0.4); color: var(--accent); }
+  .db-road-primary { background: rgba(79,195,247,0.08); border-color: rgba(79,195,247,0.3); color: var(--accent); }
+  .db-members-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  /* ── 行程內住宿區塊 ── */
+  .day-hotel-block {
+    margin: 0 16px 14px;
+    padding: 12px 14px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+  }
+  .day-hotel-name {
+    font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 4px;
+  }
+  .day-hotel-room {
+    font-size: 11px; color: var(--muted); margin-bottom: 8px; line-height: 1.5;
+  }
+  .day-hotel-meta {
+    display: flex; gap: 5px; flex-wrap: wrap;
+  }
+
+  /* ── 天氣雙欄 ── */
+  .db-weather-full {
+    background: var(--card); border: 0.5px solid var(--border2);
+    border-radius: var(--radius); padding: 12px 12px 10px; margin-bottom: 10px;
+  }
+  .db-weather-full .db-widget-title { margin-bottom: 10px; display: flex; align-items: center; }
+  .db-weather-sub {
+    background: var(--bg3); border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm); padding: 10px;
+  }
+  .db-weather-sub-label {
+    font-size: 9px; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px;
+  }
+  /* 極光橫跨雙欄 */
+  .db-2col .db-widget-card[style*="grid-column"] {
+    grid-column: 1 / 3;
+  }
+
+
+</style>
 </head>
 <body>
 
-    <div class="top-bar">Musical Theatre &bull; Writing &bull; Translation &bull; Development</div>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div>
+    <div class="topbar-title">冰島 × 倫敦</div>
+    <div class="topbar-sub">2026.11.03 — 11.18 · 4人</div>
+  </div>
+  <div style="font-size:11px;color:var(--muted);text-align:right">
+    16天<br>自駕環島
+  </div>
+</div>
 
-    <div class="container">
-        <section class="hero">
-            <div class="hero-text">
-                <h1>Chandler<br>Chen.</h1>
-                <p>故事開發、劇場文字工作者。現任天作之合劇場；榮耀基金會：綠光劇團。經營部落格與臉書萬人社團「我們都愛音樂劇」，專職音樂劇企劃，文案，翻譯、創作與開發。TPAC音樂劇創作人才培訓計畫第一屆學員，近期作詞作品包括天作之合劇場《飲食男女》、《阿堯Shemenayha!》；SML樂劇創製《阿媽的比基尼》作詞；2023臺北兒童藝術節-童創基地《我的初戀是頭鹿》作詞（臺北戲劇獎最佳音樂劇）；2023TIFA布蘭卡李《巴黎舞會》中文譯配。</p>
-            </div>
-            <div class="hero-img">
-                <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&q=80&w=600" alt="Chandler Chen Portrait">
-            </div>
-        </section>
+<!-- PAGES -->
+
+<!-- ====== PAGE: 首頁 Dashboard ====== -->
+<div class="page active" id="page-home">
+
+  <div class="db-header">
+    <div class="db-header-left">
+      <div class="db-trip-label">Family Road Trip</div>
+      <div class="db-trip-title">冰島 <span>×</span> 倫敦</div>
     </div>
+    <div class="db-countdown">
+      <div class="db-countdown-num" id="db-days-num">—</div>
+      <div class="db-countdown-label" id="db-days-label">計算中</div>
+    </div>
+  </div>
 
-    <section class="featured-works-section">
-        <div class="container">
-            <div class="swiper work-slider">
-                <div class="swiper-wrapper">
-                    
-                    <div class="swiper-slide work-slide">
-                        <div class="work-info">
-                            <h2>飲食男女</h2>
-                            <span class="work-tagline">作詞</span>
-                            <p>冉天豪作曲，與張芯慈共同作詞，改編自李安同名電影，為國內首部登上北中南三國家級場館大劇院之音樂劇作品。並於疫情期間連演三年屢屢創下完售佳績</p>
-                        </div>
-                        <div class="work-visual">
-                            <img src="https://via.placeholder.com/280x380/333/fff?text=%E9%A3%B2%E9%A3%9F%E7%94%B7%E5%A5%B3" alt="飲食男女">
-                        </div>
-                    </div>
+  <div class="db-today-card">
+    <div class="db-today-nav">
+      <button class="db-nav-arrow" onclick="dashShiftDay(-1)">&#8249;</button>
+      <div class="db-today-dayinfo" id="db-today-label">載入中</div>
+      <button class="db-nav-arrow" onclick="dashShiftDay(1)">&#8250;</button>
+    </div>
+    <div id="db-today-content">
+      <div style="color:var(--muted);font-size:13px;padding:8px 0">偵測日期中…</div>
+    </div>
+  </div>
 
-                                        <div class="swiper-slide work-slide">
-                        <div class="work-info">
-                            <h2>阿堯Shemenayha!</h2>
-                            <span class="work-tagline">作詞</span>
-                            <p>冉天豪作曲，改編自小說妖怪鳴歌錄。故事描寫台灣妖怪傳奇與殖民壓迫，以奇幻色彩鋪寫民族血淚。</p>
-                        </div>
-                        <div class="work-visual">
-                            <img src="https://via.placeholder.com/280x380/333/fff?text=%E9%A3%B2%E9%A3%9F%E7%94%B7%E5%A5%B3" alt="飲食男女">
-                        </div>
-                    </div>
+  <div class="db-weather-full">
+    <div class="db-widget-title" style="margin-bottom:10px">
+      <span class="db-widget-icon">&#9670;</span> 天氣
+      <span class="db-widget-refresh" style="margin-left:auto;margin-top:0;padding:0;border:none" onclick="fetchWeather()">重新整理</span>
+    </div>
+    <div class="db-2col" style="margin-bottom:0">
+      <div class="db-weather-sub">
+        <div class="db-weather-sub-label" id="db-weather-from-loc">出發地</div>
+        <div id="db-weather-from-content"><div class="db-loading">抓取中</div></div>
+      </div>
+      <div class="db-weather-sub">
+        <div class="db-weather-sub-label" id="db-weather-to-loc">目的地</div>
+        <div id="db-weather-to-content"><div class="db-loading">抓取中</div></div>
+      </div>
+    </div>
+  </div>
 
-                    <div class="swiper-slide work-slide">
-                        <div class="work-info">
-                            <h2>我的初戀是頭鹿</h2>
-                            <span class="work-tagline">作詞｜第一屆臺北戲劇獎最佳音樂劇</span>
-                            <p>2023 臺北兒童藝術節－童創基地作品，故事描述一名放牛班學生「阿朱」為了追到一見鐘情的校花，意外踏入神秘組織「鹿」的青春故事。</p>
-                        </div>
-                        <div class="work-visual">
-                            <img src="https://via.placeholder.com/280x380/444/fff?text=%E6%88%91%E7%9A%84%E5%88%9D%E6%88%80%E6%98%AF%E9%A0%AD%E9%B9%BF" alt="我的初戀是頭鹿">
-                        </div>
-                    </div>
+  <div class="db-2col" style="margin-top:8px">
+    <div class="db-widget-card" style="grid-column:1/3">
+      <div class="db-widget-title">
+        <span class="db-widget-icon">&#10022;</span> 極光 Kp 指數
+        <span class="db-widget-refresh" style="margin-left:auto;margin-top:0;padding:0;border:none" onclick="fetchAurora()">重新整理</span>
+      </div>
+      <div id="db-aurora-content"><div class="db-loading">抓取中</div></div>
+    </div>
+  </div>
 
-                    <div class="swiper-slide work-slide">
-                        <div class="work-info">
-                            <h2>阿媽的比基尼</h2>
-                            <span class="work-tagline">部分作詞｜第一屆讀劇匯優選</span>
-                            <p>2024 音樂劇《阿媽的比基尼》部分作詞，改編自彭素華得獎小說《奶奶的比基尼》，描寫祖孫踏上環島冒險，追逐身份、自由與夢想。</p>
-                        </div>
-                        <div class="work-visual">
-                            <img src="https://via.placeholder.com/280x380/555/fff?text=%E9%98%BF%E5%AA%BD%E7%9A%84%E6%AF%94%E5%9F%BA%E5%B0%BC" alt="阿媽的比基尼">
-                        </div>
-                    </div>
+  <div class="db-road-card">
+    <div class="db-widget-title" style="margin-bottom:10px">
+      <span class="db-widget-icon">&#11042;</span> 道路資訊
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="https://road.is" target="_blank" class="db-road-btn db-road-primary">
+        road.is<br><span>路況地圖</span>
+      </a>
+      <a href="https://safetravel.is" target="_blank" class="db-road-btn">
+        safetravel.is<br><span>安全警報</span>
+      </a>
+      <a href="https://vedur.is" target="_blank" class="db-road-btn">
+        vedur.is<br><span>氣象局</span>
+      </a>
+    </div>
+  </div>
 
-                </div>
+  <div class="db-members-row">
+    <div class="member-chip" onclick="switchPage('people','hank')">
+      <div class="member-avatar">H</div> Hank
+    </div>
+    <div class="member-chip" onclick="switchPage('people','lily')">
+      <div class="member-avatar" style="background:var(--purple)">L</div> Lily
+    </div>
+    <div class="member-chip" onclick="switchPage('people','bro')">
+      <div class="member-avatar" style="background:var(--green)">哥</div> 哥哥
+    </div>
+    <div class="member-chip" onclick="switchPage('people','sis')">
+      <div class="member-avatar" style="background:var(--amber)">妹</div> 妹妹
+    </div>
+  </div>
 
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
+</div>
+
+<!-- ====== PAGE: 每日行程 ====== -->
+<div class="page" id="page-days">
+  <div id="day-list"></div>
+</div>
+
+
+<!-- ====== PAGE: 成員 ====== -->
+<div class="page" id="page-people">
+  <div class="member-tabs" id="member-tabs">
+    <div class="member-tab active" data-member="hank" onclick="switchMember('hank')">Hank</div>
+    <div class="member-tab" data-member="lily" onclick="switchMember('lily')">Lily</div>
+    <div class="member-tab" data-member="bro" onclick="switchMember('bro')">哥哥</div>
+    <div class="member-tab" data-member="sis" onclick="switchMember('sis')">妹妹</div>
+  </div>
+  <div id="member-content"></div>
+</div>
+
+<!-- ====== PAGE: 緊急資訊 ====== -->
+<div class="page" id="page-emergency">
+
+  <div class="notice">
+    <span class="notice-icon">⚠</span>
+    <span>11月冰島：看到加油站就加滿。出發前務必查 road.is 與 safetravel.is。</span>
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">重要提醒</span>
+  </div>
+
+  <div class="tip-card"><b>信用卡 PIN</b>：冰島自助加油必須4位數PIN碼，出國前聯絡銀行設定「預借現金密碼」。</div>
+  <div class="tip-card"><b>付費隧道</b>：Vaðlaheiðargöng（眾神瀑布→阿克雷里），過後3小時內上官網付費，否則吃罰款。</div>
+  <div class="tip-card"><b>停車計費</b>：阿克雷里市中心停車需「時鐘卡」，放前擋風玻璃；平日10:00–16:00超時加收。</div>
+  <div class="tip-card"><b>車門安全</b>：冰島冬季風力驚人，開關車門務必雙手抓緊，以免車門被吹斷。</div>
+
+  <div class="section-header" style="margin-top:8px">
+    <span class="section-title">緊急電話</span>
+  </div>
+
+  <div class="emerg-card">
+    <div class="info-row"><span class="info-key">冰島緊急救援</span><span class="info-val accent">112</span></div>
+    <div class="info-row"><span class="info-key">一般警察</span><span class="info-val">444-1000</span></div>
+    <div class="info-row"><span class="info-key">Europcar 24h</span><span class="info-val">565-3434</span></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">重要訂單號碼</span>
+  </div>
+
+  <div class="info-card">
+    <div class="info-card-title">訂單資訊</div>
+    <div class="info-row"><span class="info-key">租車</span><span class="info-val accent">794086510</span></div>
+    <div class="info-row"><span class="info-key">藍冰洞</span><span class="info-val accent">GAD-T127724182</span></div>
+    <div class="info-row"><span class="info-key">十二宮船之旅</span><span class="info-val accent">ICE-87570313</span></div>
+    <div class="info-row"><span class="info-key">住宿平台</span><span class="info-val">Flygo booking</span></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">即時資訊網站</span>
+  </div>
+
+  <div class="link-card">
+    <div><a href="https://road.is" target="_blank">road.is</a><div class="link-desc">冰島即時路況・封路資訊</div></div>
+    <span class="arrow-ext">↗</span>
+  </div>
+  <div class="link-card">
+    <div><a href="https://safetravel.is" target="_blank">safetravel.is</a><div class="link-desc">安全警報・惡劣天氣預警</div></div>
+    <span class="arrow-ext">↗</span>
+  </div>
+  <div class="link-card">
+    <div><a href="https://vedur.is" target="_blank">vedur.is</a><div class="link-desc">冰島氣象局官網</div></div>
+    <span class="arrow-ext">↗</span>
+  </div>
+  <div class="link-card">
+    <div><a href="https://www.vegagerdin.is/vefsjur/vegar/vegagjald/" target="_blank">Vaðlaheiðargöng 付費</a><div class="link-desc">過隧道後3小時內付費</div></div>
+    <span class="arrow-ext">↗</span>
+  </div>
+  <div class="link-card">
+    <div><a href="https://glacieradventure.is" target="_blank">glacieradventure.is</a><div class="link-desc">藍冰洞集合點資訊</div></div>
+    <span class="arrow-ext">↗</span>
+  </div>
+  <div class="link-card">
+    <div><a href="https://cn.guidetoiceland.is/book-holiday-trips/dc-3-plane-wreck-shuttle" target="_blank">飛機殘骸接駁</a><div class="link-desc">Sólheimasandur 付費接駁</div></div>
+    <span class="arrow-ext">↗</span>
+  </div>
+
+  <div class="section-header" style="margin-top:20px">
+    <span class="section-title">藍冰洞集合地點</span>
+  </div>
+  <div class="tip-card">
+    <b>Glacier Adventure Base Camp</b><br>
+    位於 Hali Country Hotel 西13公里、Jökulsárlón 冰川潟湖東67公里。<br>
+    出發前20分鐘抵達。取消政策：出發前1天100%收費。
+  </div>
+
+  <div class="section-header" style="margin-top:20px">
+    <span class="section-title">加油注意事項</span>
+  </div>
+  <div class="tip-card">
+    <b>自助加油</b>：需4位數信用卡PIN碼（預借現金密碼），插卡後輸入PIN再選金額。<br>
+    若刷不過可在 <b>N1</b> 或 <b>Olis</b> 人工櫃台購買 Prepaid Card。
+  </div>
+  <div class="tip-card">
+    <b>東部補給</b>：D7（11/09）在 Egilsstaðir 一定要加滿油並在 Bónus/Krónan 超市採買至少兩天補給。
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-btn active" onclick="switchPage('home')" id="nav-home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    首頁
+  </button>
+  <button class="nav-btn" onclick="switchPage('days')" id="nav-days">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    行程
+  </button>
+  <button class="nav-btn" onclick="switchPage('people')" id="nav-people">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    成員
+  </button>
+  <button class="nav-btn" onclick="switchPage('emergency')" id="nav-emergency">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    任務
+  </button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA LAYER — 修改旅遊內容只需改這裡
+// ═══════════════════════════════════════════
+
+const DAYS = [
+  {
+    d: 1, date: '11/03 (二)', label: '抵達冰島',
+    hotel: 'Aurora Hotel at Reykjavik-Keflavik',
+    tags: ['住宿含早'],
+    spots: [
+      { type: 'sight', name: '深夜抵達 KEF 機場', meta: '桃園 → 倫敦 → KEF' },
+      { type: 'stay', name: '⌂ Aurora Hotel — 機場酒店', meta: '含早餐 · 兩間雙床房' },
+    ]
+  },
+  {
+    d: 2, date: '11/04 (三)', label: '黃金圈',
+    hotel: 'Hotel Gullfoss',
+    km: '約207km',
+    tags: ['極光機會', '採買日'],
+    spots: [
+      { type: 'warn', name: '09:00 取車 (Europcar KEF)', note: '主要駕駛：TACHENG CHEN，訂單 794086510' },
+      { type: 'food', name: 'Costco Iceland 採買', meta: '黃金圈路上 · 最晚17:00完成', note: '可久放食材、零食、熟食午餐備用' },
+      { type: 'sight', name: 'Brúarfoss 藍色秘境瀑布', meta: '136km · 2h | 停 Brúarfoss Parking' },
+      { type: 'sight', name: 'Geysir 蓋錫爾間歇泉', meta: '18.8km · 20min | 停 Geysir Parking' },
+      { type: 'food', name: 'Geysir Centre 午餐', meta: '或使用 Costco 熟食' },
+      { type: 'sight', name: 'Gullfoss 黃金瀑布', meta: '9.8km · 10min | 冰島最大瀑布' },
+      { type: 'stay', name: '⌂ Hotel Gullfoss', meta: '含早餐 · 極光機會' },
+    ]
+  },
+  {
+    d: 3, date: '11/05 (四)', label: '南岸瀑布 → Vík',
+    hotel: 'Hotel Katla by Keahotels',
+    km: '約201km',
+    tags: ['極光機會', '景點密集'],
+    spots: [
+      { type: 'sight', name: 'Seljalandsfoss 塞里雅蘭瀑布', meta: '115km · 1.5h | 冬天後方步道不開放' },
+      { type: 'sight', name: 'Skógafoss 斯科加爾瀑布', meta: '30.4km · 30min | 冰島最具代表性瀑布' },
+      { type: 'sight', name: 'Sólheimasandur 飛機殘骸', meta: '需付費接駁車', note: '若去此景點可能犧牲Vík周邊部分景點' },
+      { type: 'sight', name: 'Dyrhólaey 迪霍拉里半島', meta: '25.6km · 24min | 黑沙灘看夕陽' },
+      { type: 'sight', name: 'Reynisfjall 觀景台', meta: '17.9km · 17min' },
+      { type: 'sight', name: 'Vík 小鎮 + Reynisdrangar 礁石', meta: '11.7km · 13min | 可吃烤羊頭' },
+      { type: 'food', name: 'Krónan Vík 超市補給', meta: '700公尺 · 步行' },
+      { type: 'stay', name: '⌂ Hotel Katla by Keahotels', meta: '含早餐 · 極光機會' },
+    ]
+  },
+  {
+    d: 4, date: '11/06 (五)', label: '冰川 → 潟湖橡皮艇',
+    hotel: 'Hali Country Hotel',
+    km: '約256km',
+    tags: ['極光機會', '橡皮艇已訂', '偏趕'],
+    spots: [
+      { type: 'sight', name: 'Fjaðrárgljúfur 羽毛河峽谷', meta: '63.6km · 47min' },
+      { type: 'sight', name: 'Lómagnúpur 南岸標誌性巨石', meta: '45.9km · 37min' },
+      { type: 'sight', name: 'Svínafellsjökull 冰川', meta: '33.8km · 33min' },
+      { type: 'food', name: 'Freysnes 午餐', meta: '2.3km · 11min' },
+      { type: 'sight', name: 'Fjallsárlón 冰川潟湖', meta: '43.3km · 46min' },
+      { type: 'booked', name: '⚓ 十二宮船之旅 14:05出發', meta: 'Fjallsárlón · 4人 · ISK 67,600', note: '訂單：ICE-87570313 · 11/04 14:05前可全額退款' },
+      { type: 'stay', name: '⌂ Hali Country Hotel', meta: '海景公寓 · 極光機會 · 24km · 19min' },
+    ]
+  },
+  {
+    d: 5, date: '11/07 (六)', label: '藍冰洞 + 鑽石沙灘',
+    hotel: 'Hali Country Hotel',
+    km: '短程',
+    tags: ['極光機會', '冰洞已訂'],
+    spots: [
+      { type: 'booked', name: '❄ 藍冰洞 09:00出發（6小時）', meta: 'Glacier Adventure Base Camp · 4人 · ISK 137,268', note: '訂單：GAD-T127724182 · 待付款 · 出發前20min抵達集合點' },
+      { type: 'sight', name: 'Jökulsárlón 鑽石沙灘', meta: '約13.6km · 10min | 冰洞後前往' },
+      { type: 'stay', name: '⌂ Hali Country Hotel（連住）', meta: '極光機會' },
+    ]
+  },
+  {
+    d: 6, date: '11/08 (日)', label: '東峽灣移動',
+    hotel: 'Hotel Stadarborg',
+    km: '約320km（偏趕）',
+    tags: ['東峽灣', '注意天氣'],
+    spots: [
+      { type: 'sight', name: 'HOFN 赫本補給', meta: '65.5km · 52min | 加油、補給', note: '整體車程長，東峽灣沿海彎路，天色變化快' },
+      { type: 'sight', name: 'Vestrahorn 西角山天空之鏡', meta: '16.2km · 20min' },
+      { type: 'food', name: 'Hafið Bistro 午餐', meta: '97.7km · 1h25min | 10:00–16:00' },
+      { type: 'sight', name: 'Green Rock', meta: '34.4km · 28min' },
+      { type: 'sight', name: 'Meleyri Beach', meta: '25.4km · 21min' },
+      { type: 'stay', name: '⌂ Hotel Stadarborg', meta: '含早餐 · 7.5km · 8min' },
+    ]
+  },
+  {
+    d: 7, date: '11/09 (一)', label: '米湖區',
+    hotel: 'Slow Travel Mývatn',
+    km: '約332km（最趕一天）',
+    tags: ['極光機會', '全程最長'],
+    spots: [
+      { type: 'warn', name: 'Egilsstaðir 一定加滿油', meta: '96.3km · 1h20min | Bónus 或 Krónan 超市', note: '買好至少兩天補給，後段補給站稀少' },
+      { type: 'sight', name: 'Fjallakaffi (Möðrudalur) 冰島最高農場', meta: '推薦羊肉湯 · 小型加油泵（油較貴）', note: '注意：「經常封路需要運氣才能到達」' },
+      { type: 'sight', name: 'Stuðlagil Canyon 石柱峽谷', meta: '71.7km · 1h3min | 路況顛簸、常有積雪', note: '若放棄此點改走西岸輕鬆許多' },
+      { type: 'sight', name: 'Námaskarð 地熱區', meta: '126km · 1h44min' },
+      { type: 'sight', name: 'Skútustaðagígar 偽火山口 + Höfði 觀景台', meta: '19.2km · 18min' },
+      { type: 'stay', name: '⌂ Slow Travel Mývatn（極光）', meta: '兩臥室公寓 · 廚房 · 12.6km · 13min' },
+    ]
+  },
+  {
+    d: 8, date: '11/10 (二)', label: '眾神瀑布 → 阿克雷里',
+    hotel: 'Hotel Halond (Akureyri)',
+    km: '約87km',
+    tags: ['賞鯨待確認'],
+    spots: [
+      { type: 'sight', name: 'Goðafoss 眾神瀑布', meta: '52km · 47min' },
+      { type: 'sight', name: '阿克雷里大教堂', meta: '35.3km · 33min' },
+      { type: 'food', name: '阿克雷里市區超市採買', meta: 'Bónus / Krónan / Extra verslun' },
+      { type: 'sight', name: '冰島機車博物館（可選）', meta: 'Motorcycle Museum of Iceland' },
+      { type: 'stay', name: '⌂ Hotel Halond', meta: '含高速網路 · 不含早' },
+    ]
+  },
+  {
+    d: 9, date: '11/11 (三)', label: '北部移動 → Laugarbakki',
+    hotel: 'Hótel Laugarbakki',
+    km: '約275km',
+    tags: ['犀牛石', '可騎馬'],
+    spots: [
+      { type: 'sight', name: 'Hrútey Island 布蘭河小島', meta: '146km · 1h48min' },
+      { type: 'food', name: 'Blönduóskirkja 教堂附近午餐', meta: '加油 · 超市補給 · 0.8km · 3min' },
+      { type: 'sight', name: 'Vatnsnes 半島：Hvítserkur 犀牛石', meta: '81.4km · 1h20min | 可近距觀察海豹', note: '天氣不好可改去 Kolugljúfur 巨人峽谷' },
+      { type: 'stay', name: '⌂ Hótel Laugarbakki', meta: '含早餐 · 可騎冰島馬 · 47.4km · 56min' },
+    ]
+  },
+  {
+    d: 10, date: '11/12 (四)', label: '斯奈山半島 → 教堂山',
+    hotel: 'Kirkjufell Guesthouse',
+    km: '約195km',
+    tags: ['極光機會', '教堂山'],
+    spots: [
+      { type: 'sight', name: 'Súgandisey 燈塔島', meta: '157km · 2h19min | 俯瞰布雷扎灣無數小島' },
+      { type: 'food', name: 'Sjávarpakkhúsið (Stykkishólmur) 午餐', meta: '0.3km' },
+      { type: 'sight', name: 'Stykkishólmskirkja 教堂', meta: '0.85km · 3min' },
+      { type: 'sight', name: 'Berserkjahraun 狂暴者熔岩', meta: '21.8km · 20min | 鯊魚博物館暫時關閉' },
+      { type: 'stay', name: '⌂ Kirkjufell Guesthouse 先入住', meta: '14.8km · 13min | 四人家庭房' },
+      { type: 'sight', name: 'Kirkjufell 教堂山（可入住後再去）', meta: '3.3km · 5min' },
+      { type: 'food', name: 'Harbour Café 晚餐', meta: '0.5km | 海鮮濃湯、烤鮭魚、羊排' },
+    ]
+  },
+  {
+    d: 11, date: '11/13 (五)', label: '斯奈山 → 雷克雅維克',
+    hotel: '凱亞雷克雅未克燈光酒店',
+    km: '約174km（+藍湖50km）',
+    tags: ['極光機會', '市區觀光'],
+    spots: [
+      { type: 'sight', name: 'Ytri Tunga 海岸賞海豹', meta: '往雷克雅維克路上' },
+      { type: 'sight', name: 'Búðakirkja 黑教堂', meta: '雷克雅維克前' },
+      { type: 'sight', name: '哈爾格林姆斯教堂', meta: '174km · 2h21min' },
+      { type: 'sight', name: '冰島國立美術館', meta: '' },
+      { type: 'sight', name: '哈帕歌劇院', meta: '' },
+      { type: 'sight', name: '太陽航海者 + 彩虹街', meta: '' },
+      { type: 'sight', name: 'Blue Lagoon（可選）', meta: '50km · 49min', note: '建議提前網路預訂，可考慮刪除省時間' },
+      { type: 'stay', name: '⌂ 凱亞雷克雅未克燈光酒店', meta: '含超棒早餐 · 兩間雙床房' },
+    ]
+  },
+  {
+    d: 12, date: '11/14 (六)', label: '冰島 → 倫敦',
+    hotel: '倫敦青旅',
+    tags: ['飛機日', '英國入境'],
+    spots: [
+      { type: 'warn', name: '還車 — Europcar KEF 機場', meta: '09:00 還車 | 訂單 794086510' },
+      { type: 'sight', name: '雷克雅維克 → 倫敦 Heathrow T5', meta: 'British Airways BA8881' },
+      { type: 'warn', name: '英國入境', note: '確認簽證/電子旅行授權(ETA)狀態，台灣護照入境英國需ETA' },
+      { type: 'stay', name: '⌂ 倫敦青旅', meta: '四人一間私人衛浴 · 11/8前免費取消' },
+    ]
+  },
+  {
+    d: 13, date: '11/15 (日)', label: '倫敦 D1',
+    hotel: '倫敦青旅',
+    tags: ['倫敦'],
+    spots: [
+      { type: 'sight', name: '倫敦行程待規劃', meta: '可補充景點' },
+    ]
+  },
+  {
+    d: 14, date: '11/16 (一)', label: '倫敦 D2',
+    hotel: '倫敦青旅',
+    tags: ['倫敦'],
+    spots: [{ type: 'sight', name: '倫敦行程待規劃', meta: '' }]
+  },
+  {
+    d: 15, date: '11/17 (二)', label: '倫敦 D3',
+    hotel: '倫敦青旅',
+    tags: ['倫敦'],
+    spots: [{ type: 'sight', name: '倫敦行程待規劃', meta: '' }]
+  },
+  {
+    d: 16, date: '11/18 (三)', label: '倫敦 → 桃園',
+    hotel: '',
+    tags: ['回程'],
+    spots: [
+      { type: 'warn', name: '倫敦 Heathrow → 桃園', meta: '返台' },
+    ]
+  },
+];
+
+const HOTELS = [
+  { nights: 'D1', date: '11/03', name: 'Aurora Hotel at Reykjavik-Keflavik Airport Terminal', area: 'KEF 機場', room: '兩間房/兩單床/含早餐', eur: 367.01, twd: 13433, cancelDeadline: '10/30', via: 'Flygo' },
+  { nights: 'D2', date: '11/04', name: 'Hotel Gullfoss', area: '西南山區', room: '兩間房/兩單床/含早餐/高速網路', eur: 363.6, twd: 13344, cancelDeadline: '10/20', via: 'Flygo' },
+  { nights: 'D3', date: '11/05', name: 'Hotel Katla by Keahotels', area: 'Vík', room: '兩間房/兩單床/含早餐', eur: 498.16, twd: 18234, cancelDeadline: '10/20', via: 'Flygo' },
+  { nights: 'D4–D5', date: '11/06–07', name: 'Hali Country Hotel', area: '東南冰川', room: '海景兩臥室公寓/高速網路/不含餐', eur: 745.94, twd: 27303, cancelDeadline: '10/18', via: 'Flygo', note: '可購買外帶午餐' },
+  { nights: 'D6', date: '11/08', name: 'Hotel Stadarborg', area: '東峽灣', room: '兩間房/兩單床/含早餐', eur: 311.85, twd: 11529, cancelDeadline: '10/30', via: 'Flygo' },
+  { nights: 'D7', date: '11/09', name: 'Slow Travel Mývatn - Þúfa', area: '米湖', room: '兩單床兩臥室公寓/廚房/不含餐', eur: 171, twd: 6322, cancelDeadline: '11/04', via: 'Flygo', altNote: '備選：胡薩維克 Bjarnabúð 海景公寓 €233.75' },
+  { nights: 'D8', date: '11/10', name: 'Hotel Halond', area: '阿克雷里', room: '兩間房/兩單床/不含餐/高速網路', eur: 325.51, twd: 11914, cancelDeadline: '10/28', via: 'Flygo' },
+  { nights: 'D9', date: '11/11', name: 'Hótel Laugarbakki', area: '勞加爾壩基', room: '兩間房/兩單床/含早餐', eur: 352, twd: 12901, cancelDeadline: '11/01', via: 'Flygo' },
+  { nights: 'D10', date: '11/12', name: 'Kirkjufell Guesthouse and Apartments', area: '斯奈山半島', room: '四單床家庭房/高速網路/簡易廚房/不含餐', eur: 240, twd: 8796, cancelDeadline: '11/01', via: 'Flygo' },
+  { nights: 'D11', date: '11/13', name: '凱亞雷克雅未克燈光酒店', area: '雷克雅維克', room: '兩間房/兩單床/含超棒早餐', eur: 395.04, twd: 14602, cancelDeadline: '11/05', via: 'Flygo' },
+  { nights: 'D12–D15', date: '11/14–17', name: '倫敦青旅', area: '倫敦', room: '四人一間/私人衛浴/不含早餐', eur: 563.26, twd: 23977, cancelDeadline: '11/08', via: 'Flygo' },
+];
+
+const MEMBERS = {
+  hank: {
+    name: 'Hank', role: '主要駕駛',
+    color: '#4fc3f7',
+    flights: [
+      { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03 · 座位 62B', code: '訂單：富邦卡', twd: 45804 },
+      { route: 'KEF → 倫敦 LHR', detail: '2026/11/14 · 座位 17B · T5', code: 'BA8881 · 訂單：YWBN7U', twd: 9084 },
+    ],
+    passport: { number: '請自行填入', expiry: '請確認效期 > 2027/05', visa: '英國 ETA 需申請' },
+    note: '主要登記駕駛：TACHENG CHEN，Europcar 訂單 794086510'
+  },
+  lily: {
+    name: 'Lily', role: '副駕 / 訂房統籌',
+    color: '#a371f7',
+    flights: [
+      { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03 · 座位 62A', code: '訂單：好市多卡', twd: 46124 },
+      { route: 'KEF → 倫敦 LHR', detail: '2026/11/14 · 座位 17A · T5', code: 'BA8881 · 訂單：YWQISH', twd: 9084 },
+    ],
+    passport: { number: '請自行填入', expiry: '請確認效期 > 2027/05', visa: '英國 ETA 需申請' },
+    note: '訂房使用 lilywu_tw@hotmail.com / Flygo 帳號'
+  },
+  bro: {
+    name: '哥哥', role: '旅遊夥伴',
+    color: '#56d364',
+    flights: [
+      { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03', code: '費用 NT$42,300（3/26已轉）', twd: 42300 },
+      { route: 'KEF → 倫敦', detail: '2026/11/14', code: '費用 NT$8,069（3/26已轉）', twd: 8069 },
+    ],
+    passport: { number: '請自行填入', expiry: '請確認效期 > 2027/05', visa: '英國 ETA 需申請' },
+    note: '費用已轉帳給 Hank'
+  },
+  sis: {
+    name: '妹妹', role: '旅遊夥伴',
+    color: '#f0a443',
+    flights: [
+      { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03', code: '費用 NT$42,300（3/26已轉）', twd: 42300 },
+      { route: 'KEF → 倫敦', detail: '2026/11/14', code: '費用 NT$8,048（3/26已轉）', twd: 8048 },
+    ],
+    passport: { number: '請自行填入', expiry: '請確認效期 > 2027/05', visa: '英國 ETA 需申請' },
+    note: '費用已轉帳給 Hank'
+  }
+};
+
+// ═══════════════════════════════════════════
+// RENDER FUNCTIONS
+// ═══════════════════════════════════════════
+
+function renderDays() {
+  const container = document.getElementById('day-list');
+  const tagColors = {
+    '極光機會': 'tag-aurora', '採買日': 'tag-warning',
+    '橡皮艇已訂': 'tag-booked', '冰洞已訂': 'tag-booked',
+    '偏趕': 'tag-warning', '全程最長': 'tag-warning',
+    '注意天氣': 'tag-warning', '東峽灣': 'tag-activity',
+    '飛機日': 'tag-activity', '英國入境': 'tag-london',
+    '倫敦': 'tag-london', '回程': 'tag-london',
+    '賞鯨待確認': 'tag-warning', '犀牛石': 'tag-activity',
+    '可騎馬': 'tag-activity', '教堂山': 'tag-activity',
+    '市區觀光': 'tag-activity', '景點密集': 'tag-warning',
+    '住宿含早': 'tag-booked',
+  };
+
+  container.innerHTML = DAYS.map(day => {
+    const tagsHtml = day.tags.map(t =>
+      `<span class="tag ${tagColors[t] || 'tag-activity'}">${t}</span>`
+    ).join('');
+
+    const spotsHtml = day.spots.map(s => {
+      const dotClass = `spot-dot-${s.type}`;
+      const noteHtml = s.note ? `<div class="spot-note">${s.note}</div>` : '';
+      const nameHtml = s.link
+        ? `<a href="${s.link}" target="_blank">${s.name}</a>`
+        : s.name;
+      return `<div class="spot-item">
+        <div class="spot-dot ${dotClass}"></div>
+        <div class="spot-content">
+          <div class="spot-name">${nameHtml}</div>
+          ${s.meta ? `<div class="spot-meta">${s.meta}</div>` : ''}
+          ${noteHtml}
         </div>
-    </section>
+      </div>`;
+    }).join('');
 
-    <div class="container">
-        <section class="timeline-section">
-            <h2 class="section-label">Creative Index</h2>
+    const kmBadge = day.km ? `<span class="section-badge">${day.km}</span>` : '';
 
-            <div class="timeline-row">
-                <div class="t-year-side">2024~2026 <span class="t-role-label">Teaching</span></div>
-                <div class="t-content">
-                    <h3>NTT 音樂劇人才培育工程 <span class="t-role-label" style="display:inline">音樂劇作詞指導</span></h3>
-                </div>
-            </div>
-
-            <div class="timeline-row">
-                <div class="t-year-side">2024 <span class="t-role-label">Lyricist / Writer</span></div>
-                <div class="t-content">
-                    <h3>音樂劇《阿媽的比基尼》 <span class="t-role-label" style="display:inline">部分作詞</span> <span class="award-badge">第一屆讀劇匯優選</span></h3>
-                    <h3>第三十五屆傳藝金曲獎頒獎典禮 <span class="t-role-label" style="display:inline">典禮撰稿</span></h3>
-                    <h3>《來尬啦！—— Musical Gala Show》瘋狂來尬版 <span class="t-role-label" style="display:inline">主持人、撰稿人</span></h3>
-                    <h3>《我的初戀是頭鹿》 <span class="t-role-label" style="display:inline">作詞</span> <span class="award-badge">第一屆臺北戲劇獎最佳音樂劇</span></h3>
-                </div>
-            </div>
-
-            <div class="timeline-row">
-                <div class="t-year-side">2023 <span class="t-role-label">Translation / Writing</span></div>
-                <div class="t-content">
-                    <h3>Reprise! 音樂劇評論站 <span class="t-role-label" style="display:inline">特約邀稿人</span></h3>
-                    <h3>TIFA 布蘭卡李《巴黎舞會》 <span class="t-role-label" style="display:inline">中文譯配</span></h3>
-                </div>
-            </div>
-
-            <div class="timeline-row">
-                <div class="t-year-side">2022 <span class="t-role-label">Writing / Development</span></div>
-                <div class="t-content">
-                    <h3>Par 表演藝術雜誌 <span class="t-role-label" style="display:inline">專文撰稿</span></h3>
-                    <ul class="sub-list">
-                        <li>《搖滾教室》9月開課！上課前必讀10大「注意事項」</li>
-                        <li>張玉玫：將音樂語言轉換為立體的戲劇語言</li>
-                        <li>魏世芬：從聲音中聽見「人」</li>
-                        <li>陳何家：欣欣向榮、一氣貫通的藝術人生</li>
-                        <li>音樂劇的奇幻之年，各式演出蓬勃發聲——現象七：音樂劇爆量，Ready to Go？</li>
-                        <li>音樂劇爆棚且多元，市場潛力乍現</li>
-                    </ul>
-                    <h3>《阿吉先生》告別演唱會 <span class="t-role-label" style="display:inline">創作統籌</span></h3>
-                </div>
-            </div>
-
-            <div class="timeline-row">
-                <div class="t-year-side">2021 <span class="t-role-label">Lyricist</span></div>
-                <div class="t-content">
-                    <h3>音樂劇《阿堯 Shemenayha!》 <span class="t-role-label" style="display:inline">作詞</span></h3>
-                </div>
-            </div>
-
-            <div class="timeline-row">
-                <div class="t-year-side">2019 <span class="t-role-label">Lyricist</span></div>
-                <div class="t-content">
-                    <h3>音樂劇《飲食男女》 <span class="t-role-label" style="display:inline">作詞</span></h3>
-                </div>
-            </div>
-
-            <div class="timeline-row">
-                <div class="t-year-side">2013 <span class="t-role-label">Translation</span></div>
-                <div class="t-content">
-                    <h3>東尼獎開場典禮開場曲翻譯 <span class="t-role-label" style="display:inline">歌詞翻譯</span></h3>
-                    <ul class="sub-list">
-                        <li><a href="https://www.youtube.com/watch?v=gc4nGoEENIg" target="_blank" rel="noopener noreferrer">YouTube 連結</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <section class="footer-cta">
-        <div class="container">
-            <div class="substack-box">
-                <h2>訂閱音樂劇的ㄅㄆㄇ</h2>
-                <p>從ㄅ到ㄦ，每月不定期出刊的音樂劇產業新聞與創作心得</p>
-                <form class="subscribe-form">
-                <div class="subscribe-form custom-subscribe">
-        <a href="https://wealllovemusical.substack.com" target="_blank" rel="noopener noreferrer" class="sub-btn-link">
-           點我訂閱電子報
-        </a>
-    </div>
-                
-                </form>
-            </div>
-            <div class="footer-contact">
-                <div>
-                    <a href="mailto:hello@yourname.com">cheno6604@gmail.com</a>
-                    <p style="font-size: 0.7rem; color: #444; margin-top: 10px;">&copy; 2026 Chandler Chen</p>
-                </div>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-threads"></i></a>
-                </div>
-            </div>
+    // 找對應住宿資料
+    const hotel = HOTELS.find(h => {
+      const nights = h.nights.replace('D','');
+      const parts = nights.includes('–') ? nights.split('–').map(Number) : [Number(nights), Number(nights)];
+      return day.d >= parts[0] && day.d <= parts[1];
+    });
+    let hotelHtml = '';
+    if (hotel) {
+      const now = new Date();
+      const [m, d] = hotel.cancelDeadline.split('/').map(Number);
+      const deadline = new Date(2026, m - 1, d);
+      const isPast = now > deadline;
+      const deadlineClass = isPast ? 'warn' : 'ok';
+      const deadlineText = isPast ? `取消截止已過 (${hotel.cancelDeadline})` : `免費取消至 ${hotel.cancelDeadline}`;
+      const noteHtml = hotel.note ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">📌 ${hotel.note}</div>` : '';
+      const altHtml = hotel.altNote ? `<div style="font-size:11px;color:var(--amber);margin-top:3px">備選：${hotel.altNote}</div>` : '';
+      hotelHtml = `<div class="day-hotel-block">
+        <div class="day-hotel-name">⌂ ${hotel.name}</div>
+        <div class="day-hotel-room">${hotel.room}</div>
+        <div class="day-hotel-meta">
+          <span class="hotel-pill">€${hotel.eur}</span>
+          <span class="hotel-pill">NT$${hotel.twd.toLocaleString()}</span>
+          <span class="hotel-pill ${deadlineClass}">⏰ ${deadlineText}</span>
         </div>
-    </section>
+        ${noteHtml}${altHtml}
+      </div>`;
+    }
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        var swiper = new Swiper(".work-slider", {
-            loop: true,
-            effect: "fade",
-            fadeEffect: { crossFade: true },
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-    </script>
+    return `<div class="day-card" id="day-${day.d}" onclick="toggleDay(${day.d})">
+      <div class="day-card-header">
+        <div class="day-badge">
+          <div class="day-badge-num">${day.d}</div>
+          <div class="day-badge-label">DAY</div>
+        </div>
+        <div class="day-card-info">
+          <div class="day-card-date">${day.date}</div>
+          <div class="day-card-title">${day.label}</div>
+          <div class="day-card-sub">${day.hotel || ''}</div>
+        </div>
+        ${kmBadge}
+        <div class="day-chevron">›</div>
+      </div>
+      <div class="tag-row">${tagsHtml}</div>
+      <div class="day-detail">
+        <div class="spot-list">${spotsHtml}</div>
+        ${hotelHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderHotels() {
+  const container = document.getElementById('hotel-list');
+  const now = new Date();
+
+  container.innerHTML = `<div class="notice"><span class="notice-icon">⚠</span><span>所有住宿均透過 Flygo booking 預訂，下方顯示各住宿免費取消截止日。</span></div>` +
+  HOTELS.map(h => {
+    const [m, d] = h.cancelDeadline.split('/').map(Number);
+    const deadline = new Date(2026, m - 1, d);
+    const isPast = now > deadline;
+    const deadlineClass = isPast ? 'warn' : 'ok';
+    const deadlineText = isPast ? `取消截止已過 (${h.cancelDeadline})` : `免費取消至 ${h.cancelDeadline}`;
+    const noteHtml = h.note ? `<div style="font-size:12px;color:var(--muted);margin-top:4px">📌 ${h.note}</div>` : '';
+    const altHtml = h.altNote ? `<div style="font-size:11px;color:var(--amber);margin-top:4px">備選：${h.altNote}</div>` : '';
+
+    return `<div class="hotel-card">
+      <div class="hotel-header">
+        <div class="hotel-night">${h.nights}</div>
+        <div style="flex:1;min-width:0">
+          <div class="hotel-name">${h.name}</div>
+          <div class="hotel-sub">${h.date} · ${h.area}</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px">${h.room}</div>
+      <div class="hotel-meta">
+        <span class="hotel-pill">€${h.eur}</span>
+        <span class="hotel-pill">NT$${h.twd.toLocaleString()}</span>
+        <span class="hotel-pill ok">${h.via}</span>
+      </div>
+      <div class="hotel-cancel">
+        <span style="font-size:14px">⏰</span>
+        <span class="${deadlineClass}">${deadlineText}</span>
+      </div>
+      ${noteHtml}${altHtml}
+    </div>`;
+  }).join('');
+}
+
+function renderMember(id) {
+  const m = MEMBERS[id];
+  if (!m) return;
+  const container = document.getElementById('member-content');
+
+  const flightsHtml = m.flights.map(f => `
+    <div class="flight-card">
+      <div class="flight-route">
+        ${f.route.replace('→', '<span class="flight-arrow">→</span>')}
+      </div>
+      <div class="flight-detail">${f.detail}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+        <span class="flight-code">${f.code}</span>
+        <span style="font-size:12px;color:var(--amber)">NT$${f.twd.toLocaleString()}</span>
+      </div>
+    </div>`).join('');
+
+  container.innerHTML = `
+    <div class="member-profile">
+      <div class="profile-avatar" style="background:${m.color}">${m.name[0]}</div>
+      <div>
+        <div class="profile-name">${m.name}</div>
+        <div class="profile-role">${m.role}</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">護照 & 簽證</div>
+      <div class="info-row"><span class="info-key">護照號碼</span><span class="info-val">${m.passport.number}</span></div>
+      <div class="info-row"><span class="info-key">護照效期</span><span class="info-val amber">${m.passport.expiry}</span></div>
+      <div class="info-row"><span class="info-key">英國入境</span><span class="info-val amber">${m.passport.visa}</span></div>
+    </div>
+
+    <div class="section-header"><span class="section-title">機票資訊</span></div>
+    ${flightsHtml}
+
+    ${m.note ? `<div class="tip-card" style="margin-top:8px">${m.note}</div>` : ''}
+  `;
+}
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+
+function switchPage(page, subParam) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  const pageEl = document.getElementById('page-' + page);
+  if (pageEl) { pageEl.classList.add('active'); pageEl.scrollTop = 0; }
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+
+  if (page === 'people') {
+    const member = subParam || 'hank';
+    switchMember(member);
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function switchMember(id) {
+  document.querySelectorAll('.member-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.member === id);
+  });
+  renderMember(id);
+}
+
+function toggleDay(d) {
+  const card = document.getElementById('day-' + d);
+  card.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+
+renderDays();
+renderMember('hank');
+
+// ═══════════════════════════════════════════
+// DASHBOARD — 每日座標對應表（Open-Meteo 用）
+// ═══════════════════════════════════════════
+const DAY_COORDS = [
+  // 每筆: from=出發地, to=住宿/目的地
+  { from:{lat:63.985,lon:-22.605,place:'KEF 機場'},   to:{lat:63.985,lon:-22.605,place:'KEF 機場'} },   // D1 抵達
+  { from:{lat:63.985,lon:-22.605,place:'KEF 機場'},   to:{lat:64.329,lon:-20.121,place:'古佛斯'} },     // D2 黃金圈
+  { from:{lat:64.329,lon:-20.121,place:'古佛斯'},     to:{lat:63.419,lon:-19.006,place:'Vík'} },        // D3 南岸
+  { from:{lat:63.419,lon:-19.006,place:'Vík'},        to:{lat:64.007,lon:-16.380,place:'瓦特納冰川'} }, // D4 冰川
+  { from:{lat:64.007,lon:-16.380,place:'瓦特納冰川'}, to:{lat:64.007,lon:-16.380,place:'瓦特納冰川'} }, // D5 冰洞
+  { from:{lat:64.007,lon:-16.380,place:'瓦特納冰川'}, to:{lat:64.950,lon:-13.997,place:'東峽灣'} },     // D6 東峽灣
+  { from:{lat:64.950,lon:-13.997,place:'東峽灣'},     to:{lat:65.600,lon:-17.000,place:'米湖'} },       // D7 米湖
+  { from:{lat:65.600,lon:-17.000,place:'米湖'},       to:{lat:65.683,lon:-18.100,place:'阿克雷里'} },   // D8 阿克雷里
+  { from:{lat:65.683,lon:-18.100,place:'阿克雷里'},   to:{lat:65.136,lon:-20.287,place:'Laugarbakki'} },// D9
+  { from:{lat:65.136,lon:-20.287,place:'Laugarbakki'},to:{lat:64.932,lon:-23.306,place:'斯奈山半島'} }, // D10
+  { from:{lat:64.932,lon:-23.306,place:'斯奈山半島'}, to:{lat:64.135,lon:-21.895,place:'雷克雅維克'} }, // D11
+  { from:{lat:64.135,lon:-21.895,place:'雷克雅維克'}, to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D12 飛倫敦
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D13
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D14
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D15
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:25.077,lon:121.232, place:'桃園'} },      // D16 回程
+];
+
+const TRIP_START = new Date('2026-11-03T00:00:00+00:00');
+const TRIP_END   = new Date('2026-11-18T23:59:59+00:00');
+
+let dashCurrentDay = null; // 1-based, null = auto
+
+// ── 計算今天是第幾天 ──
+function calcTripDay() {
+  const now = new Date();
+  if (now < TRIP_START) return { status: 'before', daysLeft: Math.ceil((TRIP_START - now) / 86400000) };
+  if (now > TRIP_END)   return { status: 'after' };
+  const dayNum = Math.floor((now - TRIP_START) / 86400000) + 1;
+  return { status: 'during', day: Math.min(dayNum, 16) };
+}
+
+// ── 更新倒數 / 旅程狀態 ──
+function updateCountdown() {
+  const info = calcTripDay();
+  const numEl = document.getElementById('db-days-num');
+  const lblEl = document.getElementById('db-days-label');
+  if (!numEl) return;
+
+  if (info.status === 'before') {
+    numEl.textContent = info.daysLeft;
+    lblEl.textContent = '天後出發';
+  } else if (info.status === 'during') {
+    numEl.textContent = 'D' + info.day;
+    numEl.style.fontSize = '20px';
+    lblEl.textContent = '今天';
+  } else {
+    numEl.textContent = '✓';
+    lblEl.textContent = '旅程結束';
+  }
+}
+
+// ── 渲染今日行程卡 ──
+function renderTodayCard(dayIndex) { // dayIndex = 0-based
+  const day = DAYS[dayIndex];
+  if (!day) return;
+
+  const labelEl = document.getElementById('db-today-label');
+  const contentEl = document.getElementById('db-today-content');
+  if (!labelEl || !contentEl) return;
+
+  const info = calcTripDay();
+  const isToday = info.status === 'during' && (info.day - 1) === dayIndex;
+  const todayBadge = isToday ? '<span style="font-size:10px;background:rgba(79,195,247,0.15);color:var(--accent);border-radius:10px;padding:2px 8px;margin-left:6px">今天</span>' : '';
+
+  labelEl.innerHTML = 'D' + day.d + ' · ' + day.date + ' · ' + day.label + todayBadge;
+
+  // 警告景點（type=warn）
+  const warns = day.spots.filter(s => s.type === 'warn');
+  const warnHtml = warns.map(w =>
+    `<div class="db-warn-strip">⚠ ${w.name}${w.note ? ' — ' + w.note : ''}</div>`
+  ).join('');
+
+  // 主要景點（最多6個）
+  const dotColors = { sight: 'var(--accent)', food: 'var(--amber)', stay: 'var(--green)', booked: 'var(--purple)', warn: 'var(--red)', drive: 'var(--dim)' };
+  const spotsHtml = day.spots.slice(0, 6).map(s =>
+    `<div class="db-spot-mini">
+      <div class="db-spot-mini-dot" style="background:${dotColors[s.type]||'var(--dim)'}"></div>
+      <div class="db-spot-mini-name">${s.name}</div>
+      ${s.meta ? `<div style="font-size:10px;color:var(--dim);flex-shrink:0;max-width:80px;text-align:right">${s.meta.split('|')[0].trim()}</div>` : ''}
+    </div>`
+  ).join('');
+
+  const kmBadge = day.km ? `<div style="font-size:11px;color:var(--muted);margin-bottom:8px">&#9655; ${day.km}</div>` : '';
+  const hotelHtml = day.hotel ? `<div class="db-today-hotel">&#8962; ${day.hotel}</div>` : '';
+
+  contentEl.innerHTML = warnHtml +
+    `<div class="db-today-inner">
+      ${kmBadge}
+      ${hotelHtml}
+      ${spotsHtml}
+      ${day.spots.length > 6 ? `<div style="font-size:11px;color:var(--dim);margin-top:6px">…還有 ${day.spots.length - 6} 個景點，點行程頁查看完整</div>` : ''}
+    </div>`;
+
+  // 更新天氣地點
+  fetchWeatherForDay(dayIndex);
+}
+
+// ── 切換日期 ──
+function dashShiftDay(delta) {
+  const info = calcTripDay();
+  if (dashCurrentDay === null) {
+    dashCurrentDay = info.status === 'during' ? info.day - 1 : 0;
+  }
+  dashCurrentDay = Math.max(0, Math.min(15, dashCurrentDay + delta));
+  renderTodayCard(dashCurrentDay);
+}
+
+// ── 天氣 API (Open-Meteo, 免費, 無需 key) ──
+const WMO_CODES = {
+  0:'晴', 1:'晴時多雲', 2:'多雲', 3:'陰',
+  45:'霧', 48:'凍霧',
+  51:'毛毛雨', 53:'毛毛雨', 55:'濃毛毛雨',
+  61:'小雨', 63:'中雨', 65:'大雨',
+  71:'小雪', 73:'中雪', 75:'大雪', 77:'冰晶',
+  80:'陣雨', 81:'陣雨', 82:'大陣雨',
+  85:'陣雪', 86:'大陣雪',
+  95:'雷暴', 96:'雷暴夾冰雹', 99:'強雷暴',
+};
+
+async function fetchOneWeather(coord, contentId, locId) {
+  const locEl = document.getElementById(locId);
+  const contentEl = document.getElementById(contentId);
+  if (!contentEl) return;
+  if (locEl) locEl.textContent = coord.place;
+  contentEl.innerHTML = '<div class="db-loading">抓取中…</div>';
+  try {
+    const tz = coord.lat > 40 ? 'Atlantic%2FReykjavik' : 'Asia%2FTaipei';
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coord.lat}&longitude=${coord.lon}&current=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m,snowfall&wind_speed_unit=ms&timezone=${tz}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const c = data.current;
+    const desc = WMO_CODES[c.weathercode] || '未知';
+    const windMs = Math.round(c.windspeed_10m * 10) / 10;
+    const windWarn = windMs >= 15 ? `<div class="db-wind-warn">&#9650; 強風 ${windMs}m/s</div>` : '';
+    const snowWarn = (c.snowfall > 0 || [71,73,75,77,85,86].includes(c.weathercode))
+      ? `<div class="db-snow-warn">&#10052; 有雪</div>` : '';
+    contentEl.innerHTML = `
+      <div class="db-temp-main">${Math.round(c.temperature_2m)}°C</div>
+      <div class="db-temp-feels">體感 ${Math.round(c.apparent_temperature)}°C</div>
+      <div class="db-weather-desc">${desc}</div>
+      ${windWarn}${snowWarn}
+      <div class="db-weather-row">
+        <div class="db-weather-item">
+          <div class="db-weather-item-val">${windMs}<span style="font-size:9px">m/s</span></div>
+          <div class="db-weather-item-key">風速</div>
+        </div>
+        <div class="db-weather-item">
+          <div class="db-weather-item-val">${Math.round(c.precipitation * 10)/10}<span style="font-size:9px">mm</span></div>
+          <div class="db-weather-item-key">降水</div>
+        </div>
+        <div class="db-weather-item">
+          <div class="db-weather-item-val">${Math.round(c.snowfall * 10)/10}<span style="font-size:9px">cm</span></div>
+          <div class="db-weather-item-key">雪量</div>
+        </div>
+      </div>`;
+  } catch(e) {
+    contentEl.innerHTML = '<div class="db-loading" style="color:var(--red)">失敗，重試</div>';
+  }
+}
+
+async function fetchWeatherForDay(dayIndex) {
+  const coords = DAY_COORDS[dayIndex];
+  if (!coords) return;
+  // 出發地與目的地相同時只顯示一個（D1, D5 連住等）
+  const samePlace = coords.from.place === coords.to.place;
+  const fromEl = document.getElementById('db-weather-from-content');
+  const toEl = document.getElementById('db-weather-to-content');
+  const fromLocEl = document.getElementById('db-weather-from-loc');
+  const toLocEl = document.getElementById('db-weather-to-loc');
+  if (samePlace) {
+    if (fromLocEl) fromLocEl.textContent = coords.from.place;
+    if (toLocEl) toLocEl.style.display = 'none';
+    if (toEl) toEl.style.display = 'none';
+    const wrap = toEl && toEl.closest('.db-weather-sub');
+    if (wrap) wrap.style.display = 'none';
+    // 讓 from 欄佔滿寬度
+    const fromWrap = fromEl && fromEl.closest('.db-weather-sub');
+    if (fromWrap) fromWrap.style.gridColumn = '1/3';
+    fetchOneWeather(coords.from, 'db-weather-from-content', 'db-weather-from-loc');
+  } else {
+    // 恢復雙欄
+    ['db-weather-from-content','db-weather-to-content'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.style.display = ''; const w = el.closest('.db-weather-sub'); if(w) { w.style.display=''; w.style.gridColumn=''; } }
+    });
+    if (toLocEl) toLocEl.style.display = '';
+    Promise.all([
+      fetchOneWeather(coords.from, 'db-weather-from-content', 'db-weather-from-loc'),
+      fetchOneWeather(coords.to,   'db-weather-to-content',   'db-weather-to-loc'),
+    ]);
+  }
+}
+
+function fetchWeather() {
+  const idx = dashCurrentDay !== null ? dashCurrentDay : (()=>{
+    const info = calcTripDay();
+    return info.status === 'during' ? info.day - 1 : 0;
+  })();
+  fetchWeatherForDay(idx);
+}
+
+// ── 極光 (NOAA Kp 指數) ──
+async function fetchAurora() {
+  const contentEl = document.getElementById('db-aurora-content');
+  if (!contentEl) return;
+  contentEl.innerHTML = '<div class="db-loading">抓取中…</div>';
+  try {
+    const res = await fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
+    const data = await res.json();
+    // 取最近幾筆 (跳過 header row)
+    const rows = data.slice(1).slice(-8);
+    const latest = rows[rows.length - 1];
+    const kp = parseFloat(latest[1]);
+
+    // 顏色與狀態
+    let kpColor, status, tip;
+    if (kp < 2) {
+      kpColor = 'var(--dim)'; status = '極光不可見';
+      tip = '需 Kp ≥ 4 才可能目視，目前活動低。';
+    } else if (kp < 4) {
+      kpColor = 'var(--teal)'; status = '微弱極光';
+      tip = '遠離光害、等夜晚22:00後，晴天條件下或許可見。';
+    } else if (kp < 6) {
+      kpColor = 'var(--green)'; status = '可見極光！';
+      tip = '良好機會。需晴天、無月光干擾，遠離市區光害。';
+    } else {
+      kpColor = 'var(--amber)'; status = '強極光活動！';
+      tip = '絕佳機會！即使有輕微雲層也可能看到。';
+    }
+
+    // mini bar chart（最近8筆）
+    const maxKp = 9;
+    const barsHtml = rows.map(r => {
+      const v = Math.max(0.1, parseFloat(r[1]));
+      const h = Math.round((v / maxKp) * 36);
+      const bc = v >= 4 ? 'var(--green)' : v >= 2 ? 'var(--teal)' : 'var(--dim)';
+      return `<div class="db-kp-bar" style="height:${h}px;background:${bc};flex:1;border-radius:2px 2px 0 0"></div>`;
+    }).join('');
+
+    contentEl.innerHTML = `
+      <div style="display:flex;align-items:flex-end;gap:8px">
+        <div>
+          <div class="db-kp-val" style="color:${kpColor}">${kp.toFixed(1)}</div>
+          <div class="db-kp-label">Kp 指數</div>
+        </div>
+        <div style="flex:1;display:flex;align-items:flex-end;gap:2px;height:40px;margin-bottom:2px">${barsHtml}</div>
+      </div>
+      <div class="db-aurora-status" style="color:${kpColor}">${status}</div>
+      <div class="db-aurora-tip">${tip}</div>
+      <div style="font-size:9px;color:var(--dim);margin-top:4px">來源：NOAA</div>`;
+  } catch(e) {
+    contentEl.innerHTML = '<div class="db-loading" style="color:var(--red)">抓取失敗<br><span style="font-size:9px">請連接網路後重試</span></div>';
+  }
+}
+
+// ── Dashboard 初始化 ──
+function initDashboard() {
+  updateCountdown();
+  const info = calcTripDay();
+  let startIdx;
+  if (info.status === 'before') startIdx = 0;
+  else if (info.status === 'during') startIdx = info.day - 1;
+  else startIdx = 15;
+
+  dashCurrentDay = startIdx;
+  renderTodayCard(startIdx);
+  fetchAurora();
+  // 天氣由 renderTodayCard 內的 fetchWeatherForDay 觸發
+}
+
+
+initDashboard();
+
+</script>
 </body>
 </html>
