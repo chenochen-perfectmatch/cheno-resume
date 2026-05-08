@@ -535,6 +535,72 @@
   .db-road-btn:hover { border-color: rgba(79,195,247,0.4); color: var(--accent); }
   .db-road-primary { background: rgba(79,195,247,0.08); border-color: rgba(79,195,247,0.3); color: var(--accent); }
   .db-members-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  /* ══ 清單頁 ══ */
+  .task-overview {
+    background: var(--card); border: 0.5px solid var(--border2);
+    border-radius: var(--radius); padding: 16px;
+    margin-bottom: 12px; margin-top: 4px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .task-overview-title { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+  .task-overview-bar-wrap {
+    flex: 1; height: 6px; background: var(--bg3);
+    border-radius: 3px; overflow: hidden;
+  }
+  .task-overview-bar { height: 100%; background: var(--green); border-radius: 3px; transition: width 0.3s; }
+  .task-overview-num { font-size: 12px; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+
+  .task-group {
+    background: var(--card); border: 0.5px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 8px; overflow: hidden;
+  }
+  .task-group-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 14px 8px;
+  }
+  .task-group-icon { font-size: 16px; flex-shrink: 0; }
+  .task-group-label { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .task-group-count { font-size: 11px; color: var(--muted); flex-shrink: 0; }
+
+  .task-progress-bar {
+    height: 2px; background: var(--bg3); margin: 0 14px 10px;
+    border-radius: 1px; overflow: hidden;
+  }
+  .task-progress-fill { height: 100%; background: var(--accent); border-radius: 1px; transition: width 0.25s; }
+
+  .task-items { padding: 0 0 6px; }
+  .task-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 9px 14px;
+    border-top: 0.5px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: background 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .task-item:active { background: rgba(255,255,255,0.03); }
+  .task-checkbox {
+    width: 20px; height: 20px; flex-shrink: 0;
+    border-radius: 5px;
+    border: 1.5px solid var(--border2);
+    background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--bg);
+    margin-top: 1px; transition: all 0.15s;
+  }
+  .task-done .task-checkbox {
+    background: var(--green); border-color: var(--green);
+    color: var(--bg);
+  }
+  .task-text {
+    font-size: 13px; color: var(--text); line-height: 1.5; flex: 1;
+    transition: color 0.15s;
+  }
+  .task-done .task-text {
+    color: var(--dim);
+    text-decoration: line-through;
+    text-decoration-color: var(--border2);
+  }
+
   /* ══ 行程頁 Tab 架構 ══ */
   .day-tab-bar {
     display: flex;
@@ -775,7 +841,7 @@
   <div id="member-content"></div>
 </div>
 
-<!-- ====== PAGE: 緊急資訊 ====== -->
+<!-- ====== PAGE: 重要資訊 ====== -->
 <div class="page" id="page-emergency">
 
   <div class="notice">
@@ -786,7 +852,6 @@
   <div class="section-header">
     <span class="section-title">重要提醒</span>
   </div>
-
   <div class="tip-card"><b>信用卡 PIN</b>：冰島自助加油必須4位數PIN碼，出國前聯絡銀行設定「預借現金密碼」。</div>
   <div class="tip-card"><b>付費隧道</b>：Vaðlaheiðargöng（眾神瀑布→阿克雷里），過後3小時內上官網付費，否則吃罰款。</div>
   <div class="tip-card"><b>停車計費</b>：阿克雷里市中心停車需「時鐘卡」，放前擋風玻璃；平日10:00–16:00超時加收。</div>
@@ -795,7 +860,6 @@
   <div class="section-header" style="margin-top:8px">
     <span class="section-title">緊急電話</span>
   </div>
-
   <div class="emerg-card">
     <div class="info-row"><span class="info-key">冰島緊急救援</span><span class="info-val accent">112</span></div>
     <div class="info-row"><span class="info-key">一般警察</span><span class="info-val">444-1000</span></div>
@@ -805,7 +869,6 @@
   <div class="section-header">
     <span class="section-title">重要訂單號碼</span>
   </div>
-
   <div class="info-card">
     <div class="info-card-title">訂單資訊</div>
     <div class="info-row"><span class="info-key">租車</span><span class="info-val accent">794086510</span></div>
@@ -817,7 +880,6 @@
   <div class="section-header">
     <span class="section-title">即時資訊網站</span>
   </div>
-
   <div class="link-card">
     <div><a href="https://road.is" target="_blank">road.is</a><div class="link-desc">冰島即時路況・封路資訊</div></div>
     <span class="arrow-ext">↗</span>
@@ -862,6 +924,19 @@
   <div class="tip-card">
     <b>東部補給</b>：D7（11/09）在 Egilsstaðir 一定要加滿油並在 Bónus/Krónan 超市採買至少兩天補給。
   </div>
+
+  <div class="section-header" style="margin-top:20px">
+    <span class="section-title">廚房守則</span>
+  </div>
+  <div class="tip-card"><b>入住後</b>：先燒開水，第一次煮沸後倒掉（或消毒餐具），第二次煮沸後裝滿個人水壺並多備一壺。</div>
+  <div class="tip-card"><b>餐具處理</b>：晚餐後即清洗自備餐具晾乾，隔日再用；優先使用住宿點餐具。</div>
+  <div class="tip-card"><b>無廚房住宿</b>：使用自備220V電鍋煮晚餐，搭配自備餐具（鋼碗/筷/盤/刀叉/大湯瓢/矽膠鏟）。</div>
+
+</div>
+
+<!-- ====== PAGE: 清單 ====== -->
+<div class="page" id="page-tasks">
+  <div id="tasks-container"></div>
 </div>
 
 <!-- BOTTOM NAV -->
@@ -879,8 +954,12 @@
     成員
   </button>
   <button class="nav-btn" onclick="switchPage('emergency')" id="nav-emergency">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-    任務
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    資訊
+  </button>
+  <button class="nav-btn" onclick="switchPage('tasks')" id="nav-tasks">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+    清單
   </button>
 </div>
 
@@ -1386,6 +1465,9 @@ function switchPage(page, subParam) {
     const member = subParam || 'hank';
     switchMember(member);
   }
+  if (page === 'tasks') {
+    renderTasks();
+  }
 
   window.scrollTo(0, 0);
 }
@@ -1685,6 +1767,172 @@ function initDashboard() {
   // 天氣由 renderTodayCard 內的 fetchWeatherForDay 觸發
 }
 
+
+
+// ═══════════════════════════════════════════
+// TASKS — 代辦清單資料（可自由增刪）
+// ═══════════════════════════════════════════
+const TASK_GROUPS = [
+  {
+    id: 'predep', label: '出發前必辦', icon: '✈',
+    items: [
+      { id: 'pd01', text: '信用卡設定4位數預借現金PIN碼（加油必用）' },
+      { id: 'pd02', text: '申請英國ETA（台灣護照入境英國必須）' },
+      { id: 'pd03', text: '確認護照效期至少至2027/05' },
+      { id: 'pd04', text: '藍冰洞費用付款（GAD-T127724182，ISK 137,268）' },
+      { id: 'pd05', text: '下載 road.is App（冰島路況）' },
+      { id: 'pd06', text: '下載 safetravel.is App（安全警報）' },
+      { id: 'pd07', text: '網卡4張已備妥' },
+      { id: 'pd08', text: '旅遊保險確認承保範圍' },
+    ]
+  },
+  {
+    id: 'luggage', label: '行李清單', icon: '🧳',
+    items: [
+      { id: 'lg01', text: '220V電鍋（6人份）' },
+      { id: 'lg02', text: '鋼碗 × 4' },
+      { id: 'lg03', text: '筷子 × 4套' },
+      { id: 'lg04', text: '盤子 × 4' },
+      { id: 'lg05', text: '刀叉各4組' },
+      { id: 'lg06', text: '大湯瓢' },
+      { id: 'lg07', text: '矽膠鏟' },
+      { id: 'lg08', text: '雪靴（目前4雙）' },
+      { id: 'lg09', text: '冰爪（目前3雙，確認數量）' },
+      { id: 'lg10', text: '室內拖鞋' },
+      { id: 'lg11', text: '短袖上衣 / 短褲（室內穿）' },
+      { id: 'lg12', text: '薄長袖 / 薄長褲（室內穿）' },
+      { id: 'lg13', text: '保暖外層衣物（冬季冰島必備）' },
+      { id: 'lg14', text: '防水外套 / 雨褲' },
+      { id: 'lg15', text: '手套、毛帽、圍巾' },
+    ]
+  },
+  {
+    id: 'food_dry', label: '從台灣帶的乾糧食材', icon: '🍜',
+    items: [
+      { id: 'fd01', text: '白米（夾鏈袋分裝一餐份 × 數包）' },
+      { id: 'fd02', text: '泡麵 × 3+餐份' },
+      { id: 'fd03', text: '日式咖喱塊' },
+      { id: 'fd04', text: '無印良品快煮包 × 1份' },
+      { id: 'fd05', text: '茅乃舍高湯茶包（數份）' },
+      { id: 'fd06', text: '咖啡包 / 可可 / 茶包' },
+      { id: 'fd07', text: '15ml醬油 × 數份' },
+      { id: 'fd08', text: '燒肉醬' },
+      { id: 'fd09', text: '口香糖' },
+    ]
+  },
+  {
+    id: 'supermarket', label: '首次超市採買（D2 Costco）', icon: '🛒',
+    items: [
+      { id: 'sm01', text: '食用油' },
+      { id: 'sm02', text: '鹽 / 黑胡椒' },
+      { id: 'sm03', text: '麵條 / 義大利麵' },
+      { id: 'sm04', text: '義大利麵醬（青醬/白醬/紅醬）' },
+      { id: 'sm05', text: '盒裝雞蛋' },
+      { id: 'sm06', text: '瓶裝水' },
+      { id: 'sm07', text: '罐裝咖啡' },
+      { id: 'sm08', text: '洗潔劑 + 3M菜瓜布' },
+      { id: 'sm09', text: '可久放零食（餅乾、堅果等）' },
+    ]
+  },
+  {
+    id: 'daily_food', label: '每日下午採買（晚餐+隔日早餐）', icon: '🥩',
+    items: [
+      { id: 'df01', text: '羊肉 / 雞腿' },
+      { id: 'df02', text: '彩椒 / 菇類' },
+      { id: 'df03', text: '馬鈴薯 / 胡蘿蔔' },
+      { id: 'df04', text: '雞蛋補充' },
+      { id: 'df05', text: '香蕉 / 蘋果' },
+      { id: 'df06', text: '麵包' },
+      { id: 'df07', text: '果汁 / 牛奶（不要鮮奶）' },
+    ]
+  },
+];
+
+// ── 讀寫 localStorage 狀態 ──
+function getChecked() {
+  try { return JSON.parse(localStorage.getItem('iceland_tasks') || '{}'); } catch { return {}; }
+}
+function setChecked(obj) {
+  try { localStorage.setItem('iceland_tasks', JSON.stringify(obj)); } catch {}
+}
+
+function toggleTask(id) {
+  const checked = getChecked();
+  checked[id] = !checked[id];
+  setChecked(checked);
+  // 更新 UI
+  const el = document.getElementById('task-' + id);
+  if (el) {
+    el.classList.toggle('task-done', !!checked[id]);
+    el.querySelector('.task-checkbox').textContent = checked[id] ? '✓' : '';
+  }
+  updateGroupProgress(id);
+}
+
+function updateGroupProgress(itemId) {
+  // 找這個 item 屬於哪個 group
+  const group = TASK_GROUPS.find(g => g.items.some(i => i.id === itemId));
+  if (!group) return;
+  const checked = getChecked();
+  const done = group.items.filter(i => checked[i.id]).length;
+  const total = group.items.length;
+  const bar = document.getElementById('progress-' + group.id);
+  const label = document.getElementById('progress-label-' + group.id);
+  if (bar) bar.style.width = (done / total * 100) + '%';
+  if (label) label.textContent = `${done}/${total}`;
+}
+
+function renderTasks() {
+  const container = document.getElementById('tasks-container');
+  if (!container) return;
+  const checked = getChecked();
+
+  // 計算整體進度
+  const allItems = TASK_GROUPS.flatMap(g => g.items);
+  const totalDone = allItems.filter(i => checked[i.id]).length;
+  const totalAll = allItems.length;
+  const pct = Math.round(totalDone / totalAll * 100);
+
+  container.innerHTML = `
+    <div class="task-overview">
+      <div class="task-overview-title">整體進度</div>
+      <div class="task-overview-bar-wrap">
+        <div class="task-overview-bar" style="width:${pct}%"></div>
+      </div>
+      <div class="task-overview-num">${totalDone} / ${totalAll}</div>
+    </div>
+    ` + TASK_GROUPS.map(group => {
+    const done = group.items.filter(i => checked[i.id]).length;
+    const total = group.items.length;
+    const pctG = Math.round(done / total * 100);
+    const itemsHtml = group.items.map(item => `
+      <div class="task-item ${checked[item.id] ? 'task-done' : ''}" id="task-${item.id}" onclick="toggleTask('${item.id}')">
+        <div class="task-checkbox">${checked[item.id] ? '✓' : ''}</div>
+        <div class="task-text">${item.text}</div>
+      </div>`).join('');
+
+    return `<div class="task-group">
+      <div class="task-group-header">
+        <span class="task-group-icon">${group.icon}</span>
+        <span class="task-group-label">${group.label}</span>
+        <span class="task-group-count" id="progress-label-${group.id}">${done}/${total}</span>
+      </div>
+      <div class="task-progress-bar">
+        <div class="task-progress-fill" id="progress-${group.id}" style="width:${pctG}%"></div>
+      </div>
+      <div class="task-items">${itemsHtml}</div>
+    </div>`;
+  }).join('') +
+  `<div style="text-align:center;padding:16px 0 4px">
+    <button onclick="resetTasks()" style="background:none;border:0.5px solid var(--border);color:var(--dim);font-size:11px;padding:6px 16px;border-radius:20px;cursor:pointer;font-family:var(--font)">重置所有勾選</button>
+  </div>`;
+}
+
+function resetTasks() {
+  if (!confirm('確定要清除所有勾選紀錄嗎？')) return;
+  try { localStorage.removeItem('iceland_tasks'); } catch {}
+  renderTasks();
+}
 
 initDashboard();
 
