@@ -535,6 +535,85 @@
   .db-road-btn:hover { border-color: rgba(79,195,247,0.4); color: var(--accent); }
   .db-road-primary { background: rgba(79,195,247,0.08); border-color: rgba(79,195,247,0.3); color: var(--accent); }
   .db-members-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  /* ══ 行程頁 Tab 架構 ══ */
+  .day-tab-bar {
+    display: flex;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 12px 16px 10px;
+    position: sticky;
+    top: 52px;
+    z-index: 90;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .day-tab-bar::-webkit-scrollbar { display: none; }
+
+  .day-tab {
+    flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 2px;
+    padding: 8px 10px 6px;
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    min-width: 48px;
+    transition: all 0.15s;
+    font-family: var(--font);
+    position: relative;
+  }
+  .day-tab.active {
+    background: rgba(79,195,247,0.12);
+    border-color: rgba(79,195,247,0.45);
+  }
+  .day-tab-num {
+    font-size: 13px; font-weight: 700;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .day-tab.active .day-tab-num { color: var(--accent); }
+  .day-tab-date {
+    font-size: 9px; color: var(--dim);
+    letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .day-tab.active .day-tab-date { color: var(--accent); opacity: 0.7; }
+  .day-tab-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    margin-top: 2px;
+  }
+
+  /* 行程詳情 */
+  .day-detail-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 16px 0 8px;
+  }
+  .day-detail-date { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .day-detail-title { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+
+  /* 地圖區塊 */
+  .day-map-block {
+    margin-bottom: 12px;
+  }
+  .day-map-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .day-map-open {
+    font-size: 12px; color: var(--accent);
+    text-decoration: none; font-weight: 500;
+  }
+  .day-map-open:hover { text-decoration: underline; }
+  .day-map-frame {
+    width: 100%; height: 220px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 0.5px solid var(--border2);
+    background: var(--bg3);
+  }
+
   /* ── 行程內住宿區塊 ── */
   .day-hotel-block {
     margin: 0 16px 14px;
@@ -677,8 +756,11 @@
 </div>
 
 <!-- ====== PAGE: 每日行程 ====== -->
-<div class="page" id="page-days">
-  <div id="day-list"></div>
+<div class="page" id="page-days" style="padding:0 0 90px">
+  <!-- 固定頂部：橫向日期捲軸 -->
+  <div class="day-tab-bar" id="day-tab-bar"></div>
+  <!-- 下方內容區 -->
+  <div id="day-detail-panel" style="padding:0 16px"></div>
 </div>
 
 
@@ -819,6 +901,7 @@ const DAYS = [
   },
   {
     d: 2, date: '11/04 (三)', label: '黃金圈',
+    mapQuery: 'Golden Circle Iceland Geysir Gullfoss',
     hotel: 'Hotel Gullfoss',
     km: '約207km',
     tags: ['極光機會', '採買日'],
@@ -834,6 +917,7 @@ const DAYS = [
   },
   {
     d: 3, date: '11/05 (四)', label: '南岸瀑布 → Vík',
+    mapQuery: 'Vik i Myrdal Iceland',
     hotel: 'Hotel Katla by Keahotels',
     km: '約201km',
     tags: ['極光機會', '景點密集'],
@@ -850,6 +934,7 @@ const DAYS = [
   },
   {
     d: 4, date: '11/06 (五)', label: '冰川 → 潟湖橡皮艇',
+    mapQuery: 'Fjallsarlon Iceberg Lagoon Iceland',
     hotel: 'Hali Country Hotel',
     km: '約256km',
     tags: ['極光機會', '橡皮艇已訂', '偏趕'],
@@ -865,6 +950,7 @@ const DAYS = [
   },
   {
     d: 5, date: '11/07 (六)', label: '藍冰洞 + 鑽石沙灘',
+    mapQuery: 'Diamond Beach Jokulsarlon Iceland',
     hotel: 'Hali Country Hotel',
     km: '短程',
     tags: ['極光機會', '冰洞已訂'],
@@ -876,6 +962,7 @@ const DAYS = [
   },
   {
     d: 6, date: '11/08 (日)', label: '東峽灣移動',
+    mapQuery: 'Vestrahorn Iceland East Fjords',
     hotel: 'Hotel Stadarborg',
     km: '約320km（偏趕）',
     tags: ['東峽灣', '注意天氣'],
@@ -890,6 +977,7 @@ const DAYS = [
   },
   {
     d: 7, date: '11/09 (一)', label: '米湖區',
+    mapQuery: 'Lake Myvatn Iceland',
     hotel: 'Slow Travel Mývatn',
     km: '約332km（最趕一天）',
     tags: ['極光機會', '全程最長'],
@@ -904,6 +992,7 @@ const DAYS = [
   },
   {
     d: 8, date: '11/10 (二)', label: '眾神瀑布 → 阿克雷里',
+    mapQuery: 'Godafoss Waterfall Iceland Akureyri',
     hotel: 'Hotel Halond (Akureyri)',
     km: '約87km',
     tags: ['賞鯨待確認'],
@@ -917,6 +1006,7 @@ const DAYS = [
   },
   {
     d: 9, date: '11/11 (三)', label: '北部移動 → Laugarbakki',
+    mapQuery: 'Vatnsnes Peninsula Iceland Hvitserkur',
     hotel: 'Hótel Laugarbakki',
     km: '約275km',
     tags: ['犀牛石', '可騎馬'],
@@ -929,6 +1019,7 @@ const DAYS = [
   },
   {
     d: 10, date: '11/12 (四)', label: '斯奈山半島 → 教堂山',
+    mapQuery: 'Kirkjufell Mountain Iceland Snaefellsnes',
     hotel: 'Kirkjufell Guesthouse',
     km: '約195km',
     tags: ['極光機會', '教堂山'],
@@ -944,6 +1035,7 @@ const DAYS = [
   },
   {
     d: 11, date: '11/13 (五)', label: '斯奈山 → 雷克雅維克',
+    mapQuery: 'Reykjavik Iceland',
     hotel: '凱亞雷克雅未克燈光酒店',
     km: '約174km（+藍湖50km）',
     tags: ['極光機會', '市區觀光'],
@@ -960,6 +1052,7 @@ const DAYS = [
   },
   {
     d: 12, date: '11/14 (六)', label: '冰島 → 倫敦',
+    mapQuery: 'London Heathrow Terminal 5',
     hotel: '倫敦青旅',
     tags: ['飛機日', '英國入境'],
     spots: [
@@ -971,6 +1064,7 @@ const DAYS = [
   },
   {
     d: 13, date: '11/15 (日)', label: '倫敦 D1',
+    mapQuery: 'London city centre',
     hotel: '倫敦青旅',
     tags: ['倫敦'],
     spots: [
@@ -979,18 +1073,21 @@ const DAYS = [
   },
   {
     d: 14, date: '11/16 (一)', label: '倫敦 D2',
+    mapQuery: 'London Soho Covent Garden',
     hotel: '倫敦青旅',
     tags: ['倫敦'],
     spots: [{ type: 'sight', name: '倫敦行程待規劃', meta: '' }]
   },
   {
     d: 15, date: '11/17 (二)', label: '倫敦 D3',
+    mapQuery: 'London Tower Bridge Borough Market',
     hotel: '倫敦青旅',
     tags: ['倫敦'],
     spots: [{ type: 'sight', name: '倫敦行程待規劃', meta: '' }]
   },
   {
     d: 16, date: '11/18 (三)', label: '倫敦 → 桃園',
+    mapQuery: 'London Heathrow Airport',
     hotel: '',
     tags: ['回程'],
     spots: [
@@ -1061,7 +1158,39 @@ const MEMBERS = {
 // ═══════════════════════════════════════════
 
 function renderDays() {
-  const container = document.getElementById('day-list');
+  const tabBar = document.getElementById('day-tab-bar');
+  if (!tabBar) return;
+
+  // 橫向日期 tab
+  tabBar.innerHTML = DAYS.map(day => {
+    const tagColors = { '極光機會':'aurora','採買日':'warn','橡皮艇已訂':'booked','冰洞已訂':'booked',
+      '偏趕':'warn','全程最長':'warn','注意天氣':'warn','飛機日':'ok','英國入境':'london','倫敦':'london','回程':'london' };
+    const alertTag = day.tags.find(t => tagColors[t] === 'warn');
+    const auroraTag = day.tags.find(t => tagColors[t] === 'aurora');
+    const dot = alertTag ? 'var(--amber)' : auroraTag ? 'var(--purple)' : day.tags.find(t=>tagColors[t]==='london') ? 'var(--teal)' : 'var(--dim)';
+    return `<button class="day-tab" id="daytab-${day.d}" onclick="selectDay(${day.d})">
+      <div class="day-tab-num">D${day.d}</div>
+      <div class="day-tab-date">${day.date.split(' ')[0]}</div>
+      <div class="day-tab-dot" style="background:${dot}"></div>
+    </button>`;
+  }).join('');
+
+  // 預設選第一天
+  selectDay(1);
+}
+
+function selectDay(d) {
+  // 高亮 tab
+  document.querySelectorAll('.day-tab').forEach(el => el.classList.remove('active'));
+  const activeTab = document.getElementById('daytab-' + d);
+  if (activeTab) {
+    activeTab.classList.add('active');
+    activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  const day = DAYS.find(x => x.d === d);
+  if (!day) return;
+
   const tagColors = {
     '極光機會': 'tag-aurora', '採買日': 'tag-warning',
     '橡皮艇已訂': 'tag-booked', '冰洞已訂': 'tag-booked',
@@ -1075,79 +1204,93 @@ function renderDays() {
     '住宿含早': 'tag-booked',
   };
 
-  container.innerHTML = DAYS.map(day => {
-    const tagsHtml = day.tags.map(t =>
-      `<span class="tag ${tagColors[t] || 'tag-activity'}">${t}</span>`
-    ).join('');
+  const tagsHtml = day.tags.map(t =>
+    `<span class="tag ${tagColors[t] || 'tag-activity'}">${t}</span>`
+  ).join('');
 
-    const spotsHtml = day.spots.map(s => {
-      const dotClass = `spot-dot-${s.type}`;
-      const noteHtml = s.note ? `<div class="spot-note">${s.note}</div>` : '';
-      const nameHtml = s.link
-        ? `<a href="${s.link}" target="_blank">${s.name}</a>`
-        : s.name;
-      return `<div class="spot-item">
-        <div class="spot-dot ${dotClass}"></div>
-        <div class="spot-content">
-          <div class="spot-name">${nameHtml}</div>
-          ${s.meta ? `<div class="spot-meta">${s.meta}</div>` : ''}
-          ${noteHtml}
-        </div>
-      </div>`;
-    }).join('');
-
-    const kmBadge = day.km ? `<span class="section-badge">${day.km}</span>` : '';
-
-    // 找對應住宿資料
-    const hotel = HOTELS.find(h => {
-      const nights = h.nights.replace('D','');
-      const parts = nights.includes('–') ? nights.split('–').map(Number) : [Number(nights), Number(nights)];
-      return day.d >= parts[0] && day.d <= parts[1];
-    });
-    let hotelHtml = '';
-    if (hotel) {
-      const now = new Date();
-      const [m, d] = hotel.cancelDeadline.split('/').map(Number);
-      const deadline = new Date(2026, m - 1, d);
-      const isPast = now > deadline;
-      const deadlineClass = isPast ? 'warn' : 'ok';
-      const deadlineText = isPast ? `取消截止已過 (${hotel.cancelDeadline})` : `免費取消至 ${hotel.cancelDeadline}`;
-      const noteHtml = hotel.note ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">📌 ${hotel.note}</div>` : '';
-      const altHtml = hotel.altNote ? `<div style="font-size:11px;color:var(--amber);margin-top:3px">備選：${hotel.altNote}</div>` : '';
-      hotelHtml = `<div class="day-hotel-block">
-        <div class="day-hotel-name">⌂ ${hotel.name}</div>
-        <div class="day-hotel-room">${hotel.room}</div>
-        <div class="day-hotel-meta">
-          <span class="hotel-pill">€${hotel.eur}</span>
-          <span class="hotel-pill">NT$${hotel.twd.toLocaleString()}</span>
-          <span class="hotel-pill ${deadlineClass}">⏰ ${deadlineText}</span>
-        </div>
-        ${noteHtml}${altHtml}
-      </div>`;
-    }
-
-    return `<div class="day-card" id="day-${day.d}" onclick="toggleDay(${day.d})">
-      <div class="day-card-header">
-        <div class="day-badge">
-          <div class="day-badge-num">${day.d}</div>
-          <div class="day-badge-label">DAY</div>
-        </div>
-        <div class="day-card-info">
-          <div class="day-card-date">${day.date}</div>
-          <div class="day-card-title">${day.label}</div>
-          <div class="day-card-sub">${day.hotel || ''}</div>
-        </div>
-        ${kmBadge}
-        <div class="day-chevron">›</div>
-      </div>
-      <div class="tag-row">${tagsHtml}</div>
-      <div class="day-detail">
-        <div class="spot-list">${spotsHtml}</div>
-        ${hotelHtml}
+  const dotColors = { sight:'var(--accent)', food:'var(--amber)', stay:'var(--green)', booked:'var(--purple)', warn:'var(--red)', drive:'var(--dim)' };
+  const spotsHtml = day.spots.map(s => {
+    const noteHtml = s.note ? `<div class="spot-note">${s.note}</div>` : '';
+    const nameHtml = s.link ? `<a href="${s.link}" target="_blank">${s.name}</a>` : s.name;
+    return `<div class="spot-item">
+      <div class="spot-dot spot-dot-${s.type}"></div>
+      <div class="spot-content">
+        <div class="spot-name">${nameHtml}</div>
+        ${s.meta ? `<div class="spot-meta">${s.meta}</div>` : ''}
+        ${noteHtml}
       </div>
     </div>`;
   }).join('');
+
+  // 住宿
+  const hotel = HOTELS.find(h => {
+    const nights = h.nights.replace('D','');
+    const parts = nights.includes('–') ? nights.split('–').map(Number) : [Number(nights), Number(nights)];
+    return day.d >= parts[0] && day.d <= parts[1];
+  });
+  let hotelHtml = '';
+  if (hotel) {
+    const now = new Date();
+    const [m, dv] = hotel.cancelDeadline.split('/').map(Number);
+    const deadline = new Date(2026, m - 1, dv);
+    const isPast = now > deadline;
+    const deadlineText = isPast ? `取消截止已過 (${hotel.cancelDeadline})` : `免費取消至 ${hotel.cancelDeadline}`;
+    const noteHtml = hotel.note ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">📌 ${hotel.note}</div>` : '';
+    const altHtml = hotel.altNote ? `<div style="font-size:11px;color:var(--amber);margin-top:3px">備選：${hotel.altNote}</div>` : '';
+    hotelHtml = `<div class="day-hotel-block">
+      <div class="day-hotel-name">⌂ ${hotel.name}</div>
+      <div class="day-hotel-room">${hotel.room}</div>
+      <div class="day-hotel-meta">
+        <span class="hotel-pill">€${hotel.eur}</span>
+        <span class="hotel-pill">NT$${hotel.twd.toLocaleString()}</span>
+        <span class="hotel-pill ${isPast?'warn':'ok'}">⏰ ${deadlineText}</span>
+      </div>
+      ${noteHtml}${altHtml}
+    </div>`;
+  }
+
+  // Google Maps embed + 開啟連結
+  const query = encodeURIComponent(day.mapQuery || day.label + ' Iceland');
+  const mapEmbedUrl = `https://maps.google.com/maps?q=${query}&output=embed&z=10`;
+  const mapOpenUrl = `https://maps.google.com/maps?q=${query}`;
+  const kmBadge = day.km ? `<span class="section-badge" style="margin-left:auto">${day.km}</span>` : '';
+
+  const panel = document.getElementById('day-detail-panel');
+  panel.innerHTML = `
+    <div class="day-detail-header">
+      <div>
+        <div class="day-detail-date">${day.date}</div>
+        <div class="day-detail-title">${day.label}</div>
+      </div>
+      ${kmBadge}
+    </div>
+    <div class="tag-row" style="padding:0 0 12px">${tagsHtml}</div>
+
+    <div class="spot-list" style="background:var(--card);border:0.5px solid var(--border);border-radius:var(--radius);margin-bottom:10px">
+      ${spotsHtml}
+    </div>
+
+    ${hotelHtml}
+
+    <div class="day-map-block">
+      <div class="day-map-header">
+        <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">&#9670; 地圖</span>
+        <a href="${mapOpenUrl}" target="_blank" class="day-map-open">在 Google Maps 開啟 ↗</a>
+      </div>
+      <div class="day-map-frame">
+        <iframe
+          src="${mapEmbedUrl}"
+          width="100%" height="100%"
+          style="border:0;border-radius:8px"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  `;
 }
+
+function toggleDay(d) { selectDay(d); }
 
 function renderHotels() {
   const container = document.getElementById('hotel-list');
