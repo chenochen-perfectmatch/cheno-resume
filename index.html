@@ -11,8 +11,8 @@
     /* 冰島夜空色系 */
     --bg: #080d14;
     --bg2: #0d1520;
-    --bg3: #111d2a;
-    --card: #152030;
+    --bg3: rgba(12,22,38,0.75);
+    --card: rgba(16,28,46,0.72);
     --border: rgba(100,180,255,0.08);
     --border2: rgba(100,180,255,0.15);
     --text: #e8f0f8;
@@ -40,8 +40,10 @@
   body {
     background: var(--bg);
     background-image:
-      radial-gradient(ellipse at 20% 0%, rgba(93,232,200,0.04) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 10%, rgba(184,127,255,0.04) 0%, transparent 50%);
+      url('https://static.liontech.com.tw/cmspic/PIC2405-001973/M_PIC2405-001973.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
     color: var(--text);
     font-family: var(--font);
     font-size: 15px;
@@ -49,6 +51,22 @@
     min-height: 100vh;
     max-width: 430px;
     margin: 0 auto;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(6,10,18,0.78);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 0;
+    pointer-events: none;
+    max-width: 430px;
+    margin: 0 auto;
+  }
+  .page, .topbar, .bottom-nav {
+    position: relative;
+    z-index: 1;
   }
 
   /* ── TOP BAR ── */
