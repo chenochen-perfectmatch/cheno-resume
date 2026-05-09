@@ -1865,14 +1865,22 @@ async function fetchAurora() {
   try {
     const res = await fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
     const data = await res.json();
-    // 取最近幾筆 (跳過 header row)
-    const rows = data.slice(1).slice(-8);
+
+    // 過濾掉 header（第一欄不是數字的列）並取最近8筆
+    const rows = data
+      .filter(r => r && !isNaN(parseFloat(r[1])))
+      .slice(-8);
+
+    if (!rows.length) throw new Error('no data');
+
     const latest = rows[rows.length - 1];
     const kp = parseFloat(latest[1]);
 
     // 顏色與狀態
     let kpColor, status, tip;
-    if (kp < 2) {
+    if (isNaN(kp)) {
+      kpColor = 'var(--dim)'; status = '資料異常'; tip = '請稍後重試。';
+    } else if (kp < 2) {
       kpColor = 'var(--dim)'; status = '極光不可見';
       tip = '需 Kp ≥ 4 才可能目視，目前活動低。';
     } else if (kp < 4) {
@@ -1886,10 +1894,10 @@ async function fetchAurora() {
       tip = '絕佳機會！即使有輕微雲層也可能看到。';
     }
 
-    // mini bar chart（最近8筆）
+    // mini bar chart（最近8筆，NaN 的顯示為 0）
     const maxKp = 9;
     const barsHtml = rows.map(r => {
-      const v = Math.max(0.1, parseFloat(r[1]));
+      const v = Math.max(0.1, parseFloat(r[1]) || 0);
       const h = Math.round((v / maxKp) * 36);
       const bc = v >= 4 ? 'var(--green)' : v >= 2 ? 'var(--teal)' : 'var(--dim)';
       return `<div class="db-kp-bar" style="height:${h}px;background:${bc};flex:1;border-radius:2px 2px 0 0"></div>`;
@@ -1898,7 +1906,7 @@ async function fetchAurora() {
     contentEl.innerHTML = `
       <div style="display:flex;align-items:flex-end;gap:8px">
         <div>
-          <div class="db-kp-val" style="color:${kpColor}">${kp.toFixed(1)}</div>
+          <div class="db-kp-val" style="color:${kpColor}">${isNaN(kp) ? '—' : kp.toFixed(1)}</div>
           <div class="db-kp-label">Kp 指數</div>
         </div>
         <div style="flex:1;display:flex;align-items:flex-end;gap:2px;height:40px;margin-bottom:2px">${barsHtml}</div>
