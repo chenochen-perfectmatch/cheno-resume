@@ -680,6 +680,24 @@
   .task-progress-fill { height: 100%; background: var(--accent); border-radius: 1px; transition: width 0.25s; }
 
   .task-items { padding: 0 0 6px; }
+  .task-add-btn {
+    display: flex; align-items: center;
+    padding: 9px 14px;
+    font-size: 12px; color: var(--accent);
+    cursor: pointer; opacity: 0.7;
+    border-top: 0.5px solid rgba(255,255,255,0.04);
+    transition: opacity 0.15s;
+  }
+  .task-add-btn:hover { opacity: 1; }
+  .task-custom { position: relative; }
+  .task-delete {
+    background: none; border: none;
+    color: var(--dim); font-size: 12px;
+    cursor: pointer; padding: 2px 4px;
+    flex-shrink: 0; line-height: 1;
+    transition: color 0.15s;
+  }
+  .task-delete:hover { color: var(--red); }
   .task-item {
     display: flex; align-items: flex-start; gap: 12px;
     padding: 9px 14px;
@@ -830,6 +848,8 @@
 
 
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -1606,7 +1626,11 @@ function switchPage(page, subParam) {
     switchMember(member);
   }
   if (page === 'tasks') {
-    renderTasks();
+    if (fbReady) renderTasks();
+    else {
+      const container = document.getElementById('tasks-container');
+      if (container) container.innerHTML = '<div style="padding:24px 16px;color:var(--muted);font-size:13px;text-align:center">連線中…</div>';
+    }
   }
 
   window.scrollTo(0, 0);
@@ -1617,11 +1641,6 @@ function switchMember(id) {
     t.classList.toggle('active', t.dataset.member === id);
   });
   renderMember(id);
-}
-
-function toggleDay(d) {
-  const card = document.getElementById('day-' + d);
-  card.classList.toggle('open');
 }
 
 // ═══════════════════════════════════════════
@@ -2049,71 +2068,183 @@ const TASK_GROUPS = [
   },
 ];
 
-// ── 讀寫 localStorage 狀態 ──
-function getChecked() {
-  try { return JSON.parse(localStorage.getItem('iceland_tasks') || '{}'); } catch { return {}; }
-}
-function setChecked(obj) {
-  try { localStorage.setItem('iceland_tasks', JSON.stringify(obj)); } catch {}
-}
+// ═══════════════════════════════════════════
+// FIREBASE 初始化 (compat SDK)
+// ═══════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyBOwdxvNoaThSERplelXsXl3_iGsN9Kk8g",
+  authDomain: "iceland-2026-134f8.firebaseapp.com",
+  databaseURL: "https://iceland-2026-134f8-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "iceland-2026-134f8",
+  storageBucket: "iceland-2026-134f8.firebasestorage.app",
+  messagingSenderId: "566671007255",
+  appId: "1:566671007255:web:fa4a285e2d7e85e1554652"
+};
+firebase.initializeApp(firebaseConfig);
+const fbdb = firebase.database();
 
+// ── 資料路徑 ──
+const checkedRef = fbdb.ref('tasks/checked');
+const customRef  = fbdb.ref('tasks/custom');
+const groupsRef  = fbdb.ref('tasks/groups');
+
+// ── 本地快取 ──
+var fbChecked = {};
+var fbCustom  = {};
+var fbGroups  = {};
+var fbReady   = false;
+
+// ── 即時監聽 ──
+checkedRef.on('value', snap => {
+  fbChecked = snap.val() || {};
+  if (fbReady) renderTasks();
+});
+customRef.on('value', snap => {
+  fbCustom = snap.val() || {};
+  if (fbReady) renderTasks();
+});
+groupsRef.on('value', snap => {
+  fbGroups = snap.val() || {};
+  Object.keys(fbGroups).forEach(id => {
+    const el = document.getElementById('group-' + id);
+    if (el) el.classList.toggle('open', !!fbGroups[id]);
+  });
+});
+
+// ── 勾選同步 ──
 function toggleTask(id) {
-  const checked = getChecked();
-  checked[id] = !checked[id];
-  setChecked(checked);
-  // 更新 UI
+  const newVal = !fbChecked[id];
+  checkedRef.update({ [id]: newVal });
+  fbChecked[id] = newVal;
   const el = document.getElementById('task-' + id);
   if (el) {
-    el.classList.toggle('task-done', !!checked[id]);
-    el.querySelector('.task-checkbox').textContent = checked[id] ? '✓' : '';
+    el.classList.toggle('task-done', newVal);
+    el.querySelector('.task-checkbox').textContent = newVal ? '✓' : '';
   }
-  updateGroupProgress(id);
+  recomputeProgress(id);
+  recomputeOverall();
 }
 
-function updateGroupProgress(itemId) {
-  // 找這個 item 屬於哪個 group
-  const group = TASK_GROUPS.find(g => g.items.some(i => i.id === itemId));
-  if (!group) return;
-  const checked = getChecked();
-  const done = group.items.filter(i => checked[i.id]).length;
-  const total = group.items.length;
-  const bar = document.getElementById('progress-' + group.id);
-  const label = document.getElementById('progress-label-' + group.id);
-  if (bar) bar.style.width = (done / total * 100) + '%';
-  if (label) label.textContent = `${done}/${total}`;
+function recomputeProgress(itemId) {
+  // 找 built-in group
+  const builtinGroup = TASK_GROUPS.find(g => g.items.some(i => i.id === itemId));
+  if (builtinGroup) {
+    const allIds = [
+      ...builtinGroup.items.map(i => i.id),
+      ...Object.values(fbCustom[builtinGroup.id] || {}).map(c => c._key || ''),
+    ];
+    const done = allIds.filter(id => fbChecked[id]).length;
+    const total = allIds.length;
+    const bar = document.getElementById('progress-' + builtinGroup.id);
+    const lbl = document.getElementById('progress-label-' + builtinGroup.id);
+    if (bar) bar.style.width = (total ? done/total*100 : 0) + '%';
+    if (lbl) lbl.textContent = `${done}/${total}`;
+    return;
+  }
+  // 找 custom group
+  for (const gid of Object.keys(fbCustom)) {
+    const items = Object.entries(fbCustom[gid] || {});
+    if (items.some(([k]) => k === itemId)) {
+      const done = items.filter(([k]) => fbChecked[k]).length;
+      const bar = document.getElementById('progress-' + gid);
+      const lbl = document.getElementById('progress-label-' + gid);
+      if (bar) bar.style.width = (items.length ? done/items.length*100 : 0) + '%';
+      if (lbl) lbl.textContent = `${done}/${items.length}`;
+    }
+  }
 }
 
+function recomputeOverall() {
+  const allBuiltin = TASK_GROUPS.flatMap(g => g.items.map(i => i.id));
+  const allCustom  = Object.values(fbCustom).flatMap(g => Object.keys(g));
+  const all = [...allBuiltin, ...allCustom];
+  const done = all.filter(id => fbChecked[id]).length;
+  const pct  = all.length ? Math.round(done/all.length*100) : 0;
+  const bar  = document.getElementById('overview-bar');
+  const num  = document.getElementById('overview-num');
+  if (bar) bar.style.width = pct + '%';
+  if (num) num.textContent = `${done} / ${all.length}`;
+}
+
+// ── 新增自訂項目 ──
+function showAddItem(groupId) {
+  const modal = document.getElementById('add-item-modal');
+  const input = document.getElementById('add-item-input');
+  if (!modal || !input) return;
+  modal.dataset.groupId = groupId;
+  input.value = '';
+  modal.style.display = 'flex';
+  setTimeout(() => input.focus(), 100);
+}
+
+function hideAddItem() {
+  const modal = document.getElementById('add-item-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function confirmAddItem() {
+  const modal = document.getElementById('add-item-modal');
+  const input = document.getElementById('add-item-input');
+  if (!modal || !input) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const groupId = modal.dataset.groupId;
+  const newRef = fbdb.ref(`tasks/custom/${groupId}`).push();
+  newRef.set({ text, done: false });
+  hideAddItem();
+}
+
+// ── 刪除自訂項目 ──
+function deleteCustomItem(groupId, itemKey, e) {
+  e.stopPropagation();
+  fbdb.ref(`tasks/custom/${groupId}/${itemKey}`).remove();
+  checkedRef.child(itemKey).remove();
+}
+
+// ── 展開/收合（同步到 Firebase） ──
+function getGroupOpen(id) { return !!fbGroups[id]; }
+
+function toggleGroup(id) {
+  const el = document.getElementById('group-' + id);
+  if (!el) return;
+  const isOpen = el.classList.toggle('open');
+  groupsRef.update({ [id]: isOpen });
+}
+
+// ── 渲染清單 ──
 function renderTasks() {
   const container = document.getElementById('tasks-container');
   if (!container) return;
-  const checked = getChecked();
+  if (typeof fbCustom === 'undefined' || typeof fbChecked === 'undefined') return;
 
-  // 計算整體進度
-  const allItems = TASK_GROUPS.flatMap(g => g.items);
-  const totalDone = allItems.filter(i => checked[i.id]).length;
-  const totalAll = allItems.length;
-  const pct = Math.round(totalDone / totalAll * 100);
+  const allBuiltin = TASK_GROUPS.flatMap(g => g.items.map(i => i.id));
+  const allCustom  = Object.values(fbCustom).flatMap(g => Object.keys(g));
+  const all = [...allBuiltin, ...allCustom];
+  const totalDone = all.filter(id => fbChecked[id]).length;
+  const pct = all.length ? Math.round(totalDone/all.length*100) : 0;
 
-  container.innerHTML = `
-    <div class="task-overview">
-      <div class="task-overview-title">整體進度</div>
-      <div class="task-overview-bar-wrap">
-        <div class="task-overview-bar" style="width:${pct}%"></div>
-      </div>
-      <div class="task-overview-num">${totalDone} / ${totalAll}</div>
-    </div>
-    ` + TASK_GROUPS.map(group => {
-    const done = group.items.filter(i => checked[i.id]).length;
-    const total = group.items.length;
-    const pctG = Math.round(done / total * 100);
+  const groupsHtml = TASK_GROUPS.map(group => {
+    const customItems = Object.entries(fbCustom[group.id] || {});
+    const allIds = [...group.items.map(i => i.id), ...customItems.map(([k]) => k)];
+    const done  = allIds.filter(id => fbChecked[id]).length;
+    const total = allIds.length;
+    const pctG  = total ? Math.round(done/total*100) : 0;
     const isOpen = getGroupOpen(group.id);
-    const itemsHtml = group.items.map(item => `
-      <div class="task-item ${checked[item.id] ? 'task-done' : ''}" id="task-${item.id}" onclick="toggleTask('${item.id}')">
-        <div class="task-checkbox">${checked[item.id] ? '✓' : ''}</div>
+
+    const builtinHtml = group.items.map(item => `
+      <div class="task-item ${fbChecked[item.id] ? 'task-done':''}" id="task-${item.id}" onclick="toggleTask('${item.id}')">
+        <div class="task-checkbox">${fbChecked[item.id] ? '✓':''}</div>
         <div class="task-text">${item.text}</div>
       </div>`).join('');
 
-    return `<div class="task-group ${isOpen ? 'open' : ''}" id="group-${group.id}">
+    const customHtml = customItems.map(([key, val]) => `
+      <div class="task-item task-custom ${fbChecked[key] ? 'task-done':''}" id="task-${key}" onclick="toggleTask('${key}')">
+        <div class="task-checkbox">${fbChecked[key] ? '✓':''}</div>
+        <div class="task-text">${val.text}</div>
+        <button class="task-delete" onclick="deleteCustomItem('${group.id}','${key}',event)">✕</button>
+      </div>`).join('');
+
+    return `<div class="task-group ${isOpen?'open':''}" id="group-${group.id}">
       <div class="task-group-header" onclick="toggleGroup('${group.id}')">
         <span class="task-group-icon">${group.icon}</span>
         <span class="task-group-label">${group.label}</span>
@@ -2125,46 +2256,52 @@ function renderTasks() {
           <div class="task-progress-bar">
             <div class="task-progress-fill" id="progress-${group.id}" style="width:${pctG}%"></div>
           </div>
-          <div class="task-items">${itemsHtml}</div>
+          <div class="task-items">
+            ${builtinHtml}${customHtml}
+            <div class="task-add-btn" onclick="showAddItem('${group.id}')">＋ 新增項目</div>
+          </div>
         </div>
       </div>
     </div>`;
-  }).join('') +
-  `<div style="text-align:center;padding:16px 0 4px">
-    <button onclick="resetTasks()" style="background:none;border:0.5px solid var(--border);color:var(--dim);font-size:11px;padding:6px 16px;border-radius:20px;cursor:pointer;font-family:var(--font)">重置所有勾選</button>
-  </div>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="task-overview">
+      <div class="task-overview-title">整體進度</div>
+      <div class="task-overview-bar-wrap">
+        <div class="task-overview-bar" id="overview-bar" style="width:${pct}%"></div>
+      </div>
+      <div class="task-overview-num" id="overview-num">${totalDone} / ${all.length}</div>
+    </div>
+    ${groupsHtml}
+    <div style="text-align:center;padding:16px 0 8px">
+      <button onclick="resetTasks()" style="background:none;border:0.5px solid var(--border);color:var(--dim);font-size:11px;padding:6px 16px;border-radius:20px;cursor:pointer;font-family:var(--font)">重置所有勾選</button>
+    </div>`;
+
+  fbReady = true;
 }
 
 function resetTasks() {
   if (!confirm('確定要清除所有勾選紀錄嗎？')) return;
-  try { localStorage.removeItem('iceland_tasks'); } catch {}
-  renderTasks();
-}
-
-function getGroupOpen(id) {
-  try {
-    const state = JSON.parse(localStorage.getItem('iceland_groups') || '{}');
-    return !!state[id]; // 預設收合，有明確 true 才展開
-  } catch { return false; }
-}
-
-function setGroupOpen(id, open) {
-  try {
-    const state = JSON.parse(localStorage.getItem('iceland_groups') || '{}');
-    state[id] = open;
-    localStorage.setItem('iceland_groups', JSON.stringify(state));
-  } catch {}
-}
-
-function toggleGroup(id) {
-  const el = document.getElementById('group-' + id);
-  if (!el) return;
-  const isOpen = el.classList.toggle('open');
-  setGroupOpen(id, isOpen);
+  checkedRef.set({});
 }
 
 initDashboard();
 
+
+
 </script>
-</body>
-</html>
+
+<!-- 新增項目 Modal -->
+<div id="add-item-modal" style="display:none;position:fixed;inset:0;z-index:999;align-items:flex-end;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px)" onclick="if(event.target===this)hideAddItem()">
+  <div style="background:var(--card);border:0.5px solid var(--border2);border-radius:16px 16px 0 0;width:100%;max-width:430px;padding:20px 16px 32px">
+    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:14px">新增項目</div>
+    <input id="add-item-input" type="text" placeholder="輸入項目內容…"
+      onkeydown="if(event.key==='Enter')confirmAddItem()"
+      style="width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:12px 14px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;box-sizing:border-box">
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button onclick="hideAddItem()" style="flex:1;background:none;border:0.5px solid var(--border2);color:var(--muted);padding:11px;border-radius:var(--radius-sm);font-size:13px;cursor:pointer;font-family:var(--font)">取消</button>
+      <button onclick="confirmAddItem()" style="flex:2;background:var(--accent);border:none;color:var(--bg);padding:11px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">新增</button>
+    </div>
+  </div>
+</div>
