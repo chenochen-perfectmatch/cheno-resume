@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- saved from url=(0034)https://cheno-resume.onrender.com/ -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./冰島 × 倫敦 2026.11_files/css2" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>冰島 × 倫敦 2026.11</title>
 <style>
@@ -630,6 +630,37 @@
   .db-road-primary { background: rgba(79,195,247,0.08); border-color: rgba(79,195,247,0.3); color: var(--accent); }
   .db-members-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
   /* ══ 清單頁 ══ */
+
+  /* 分類頁籤 */
+  .task-cat-bar {
+    display: flex; gap: 6px;
+    padding: 12px 16px 10px;
+    position: sticky; top: 52px; z-index: 90;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .task-cat-bar::-webkit-scrollbar { display: none; }
+  .task-cat-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border2);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 12px; font-weight: 500;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.18s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .task-cat-btn.active {
+    background: var(--accent); border-color: var(--accent);
+    color: var(--bg); font-weight: 700;
+  }
+
+  /* 整體進度 */
   .task-overview {
     background: var(--card); border: 0.5px solid var(--border2);
     border-radius: var(--radius); padding: 16px;
@@ -644,6 +675,7 @@
   .task-overview-bar { height: 100%; background: var(--green); border-radius: 3px; transition: width 0.3s; }
   .task-overview-num { font-size: 12px; color: var(--accent); font-weight: 600; flex-shrink: 0; }
 
+  /* 群組卡片 */
   .task-group {
     background: var(--card); border: 0.5px solid var(--border);
     border-radius: var(--radius); margin-bottom: 8px; overflow: hidden;
@@ -651,8 +683,7 @@
   .task-group-header {
     display: flex; align-items: center; gap: 8px;
     padding: 12px 14px 10px;
-    cursor: pointer;
-    user-select: none;
+    cursor: pointer; user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
   .task-group-header:active { background: rgba(255,255,255,0.02); }
@@ -664,21 +695,17 @@
     transition: transform 0.22s ease; margin-left: 4px; line-height: 1;
   }
   .task-group.open .task-group-chevron { transform: rotate(90deg); }
-
   .task-group-body {
-    display: grid;
-    grid-template-rows: 0fr;
+    display: grid; grid-template-rows: 0fr;
     transition: grid-template-rows 0.25s ease;
   }
   .task-group.open .task-group-body { grid-template-rows: 1fr; }
   .task-group-body-inner { overflow: hidden; }
-
   .task-progress-bar {
     height: 2px; background: var(--bg3); margin: 0 14px 10px;
     border-radius: 1px; overflow: hidden;
   }
   .task-progress-fill { height: 100%; background: var(--accent); border-radius: 1px; transition: width 0.25s; }
-
   .task-items { padding: 0 0 6px; }
   .task-add-btn {
     display: flex; align-items: center;
@@ -698,37 +725,88 @@
     transition: color 0.15s;
   }
   .task-delete:hover { color: var(--red); }
+
+  /* 任務列 */
   .task-item {
-    display: flex; align-items: flex-start; gap: 12px;
+    display: flex; align-items: flex-start; gap: 10px;
     padding: 9px 14px;
     border-top: 0.5px solid rgba(255,255,255,0.04);
-    cursor: pointer;
-    transition: background 0.1s;
+    cursor: pointer; transition: background 0.1s;
     -webkit-tap-highlight-color: transparent;
   }
   .task-item:active { background: rgba(255,255,255,0.03); }
   .task-checkbox {
     width: 20px; height: 20px; flex-shrink: 0;
-    border-radius: 5px;
-    border: 1.5px solid var(--border2);
+    border-radius: 5px; border: 1.5px solid var(--border2);
     background: var(--bg3);
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 700; color: var(--bg);
     margin-top: 1px; transition: all 0.15s;
   }
-  .task-done .task-checkbox {
-    background: var(--green); border-color: var(--green);
-    color: var(--bg);
-  }
+  .task-done .task-checkbox { background: var(--green); border-color: var(--green); color: var(--bg); }
+  .task-body { flex: 1; min-width: 0; }
   .task-text {
-    font-size: 13px; color: var(--text); line-height: 1.5; flex: 1;
+    font-size: 13px; color: var(--text); line-height: 1.5;
     transition: color 0.15s;
   }
   .task-done .task-text {
-    color: var(--dim);
-    text-decoration: line-through;
+    color: var(--dim); text-decoration: line-through;
     text-decoration-color: var(--border2);
   }
+
+  /* 成員標籤列 */
+  .task-assignees {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px;
+  }
+  .assignee-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 2px 7px;
+    border-radius: 10px; font-size: 10px; font-weight: 600;
+    border: 0.5px solid; opacity: 0.85;
+  }
+  .assignee-badge.hank  { color: #4fc3f7; border-color: rgba(79,195,247,0.35); background: rgba(79,195,247,0.1); }
+  .assignee-badge.lily  { color: #a371f7; border-color: rgba(163,113,247,0.35); background: rgba(163,113,247,0.1); }
+  .assignee-badge.bro   { color: #56d364; border-color: rgba(86,211,100,0.35); background: rgba(86,211,100,0.1); }
+  .assignee-badge.sis   { color: #f0a443; border-color: rgba(240,164,67,0.35); background: rgba(240,164,67,0.1); }
+
+  /* 成員頁：我的任務 */
+  .my-tasks-section { margin-top: 16px; }
+  .my-tasks-empty {
+    padding: 16px; text-align: center;
+    font-size: 12px; color: var(--dim);
+  }
+  .my-task-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px;
+    border-top: 0.5px solid rgba(255,255,255,0.04);
+    cursor: pointer; transition: background 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .my-task-item:active { background: rgba(255,255,255,0.03); }
+  .my-task-item:first-child { border-top: none; }
+  .my-task-group-label {
+    font-size: 10px; color: var(--muted); margin-top: 2px;
+  }
+
+  /* 新增 modal 成員選擇器 */
+  .assign-picker {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+  }
+  .assign-chip {
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 12px;
+    border-radius: 20px; border: 1px solid var(--border2);
+    background: var(--bg3);
+    font-size: 12px; font-family: var(--font);
+    cursor: pointer; transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .assign-chip.selected-hank { border-color: #4fc3f7; background: rgba(79,195,247,0.15); color: #4fc3f7; }
+  .assign-chip.selected-lily { border-color: #a371f7; background: rgba(163,113,247,0.15); color: #a371f7; }
+  .assign-chip.selected-bro  { border-color: #56d364; background: rgba(86,211,100,0.15); color: #56d364; }
+  .assign-chip.selected-sis  { border-color: #f0a443; background: rgba(240,164,67,0.15); color: #f0a443; }
+  .assign-chip:not([class*="selected"]) { color: var(--muted); }
 
   /* ══ 行程頁 Tab 架構 ══ */
   .day-tab-bar {
@@ -848,8 +926,8 @@
 
 
 </style>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -867,32 +945,29 @@
 <!-- PAGES -->
 
 <!-- ====== PAGE: 首頁 Dashboard ====== -->
-<div class="page active" id="page-home">
+<div class="page" id="page-home">
 
   <div class="db-hero">
     <!-- 極光波浪 SVG -->
     <svg class="db-hero-aurora" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
       <defs>
-        <linearGradient id="aur1" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#5de8c8" stop-opacity="0"/>
-          <stop offset="30%" stop-color="#5de8c8" stop-opacity="0.35"/>
-          <stop offset="60%" stop-color="#b87fff" stop-opacity="0.25"/>
-          <stop offset="100%" stop-color="#4fc8f0" stop-opacity="0"/>
-        </linearGradient>
-        <linearGradient id="aur2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#b87fff" stop-opacity="0"/>
-          <stop offset="40%" stop-color="#4fc8f0" stop-opacity="0.2"/>
-          <stop offset="70%" stop-color="#5de8c8" stop-opacity="0.3"/>
-          <stop offset="100%" stop-color="#b87fff" stop-opacity="0"/>
-        </linearGradient>
-        <filter id="blur1"><feGaussianBlur stdDeviation="6"/></filter>
+        <lineargradient id="aur1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#5de8c8" stop-opacity="0"></stop>
+          <stop offset="30%" stop-color="#5de8c8" stop-opacity="0.35"></stop>
+          <stop offset="60%" stop-color="#b87fff" stop-opacity="0.25"></stop>
+          <stop offset="100%" stop-color="#4fc8f0" stop-opacity="0"></stop>
+        </lineargradient>
+        <lineargradient id="aur2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#b87fff" stop-opacity="0"></stop>
+          <stop offset="40%" stop-color="#4fc8f0" stop-opacity="0.2"></stop>
+          <stop offset="70%" stop-color="#5de8c8" stop-opacity="0.3"></stop>
+          <stop offset="100%" stop-color="#b87fff" stop-opacity="0"></stop>
+        </lineargradient>
+        <filter id="blur1"><fegaussianblur stdDeviation="6"></fegaussianblur></filter>
       </defs>
-      <path d="M0,90 C60,60 120,100 180,75 C240,50 300,85 360,65 C380,58 395,62 400,60 L400,0 L0,0Z"
-            fill="url(#aur1)" filter="url(#blur1)" opacity="0.7"/>
-      <path d="M0,110 C80,85 150,115 220,90 C290,65 340,95 400,80 L400,0 L0,0Z"
-            fill="url(#aur2)" filter="url(#blur1)" opacity="0.5"/>
-      <path d="M0,130 C50,110 120,140 200,118 C280,96 340,125 400,108 L400,160 L0,160Z"
-            fill="rgba(93,232,200,0.04)"/>
+      <path d="M0,90 C60,60 120,100 180,75 C240,50 300,85 360,65 C380,58 395,62 400,60 L400,0 L0,0Z" fill="url(#aur1)" filter="url(#blur1)" opacity="0.7"></path>
+      <path d="M0,110 C80,85 150,115 220,90 C290,65 340,95 400,80 L400,0 L0,0Z" fill="url(#aur2)" filter="url(#blur1)" opacity="0.5"></path>
+      <path d="M0,130 C50,110 120,140 200,118 C280,96 340,125 400,108 L400,160 L0,160Z" fill="rgba(93,232,200,0.04)"></path>
     </svg>
     <div class="db-hero-glow"></div>
     <div class="db-hero-glow2"></div>
@@ -903,36 +978,65 @@
         <div class="db-trip-dates">11.03 — 11.18 &nbsp;·&nbsp; 4人 &nbsp;·&nbsp; 自駕環島</div>
       </div>
       <div class="db-countdown">
-        <div class="db-countdown-num" id="db-days-num">—</div>
-        <div class="db-countdown-label" id="db-days-label">計算中</div>
+        <div class="db-countdown-num" id="db-days-num">177</div>
+        <div class="db-countdown-label" id="db-days-label">天後出發</div>
       </div>
     </div>
   </div>
 
   <div class="db-today-card">
     <div class="db-today-nav">
-      <button class="db-nav-arrow" onclick="dashShiftDay(-1)">&#8249;</button>
-      <div class="db-today-dayinfo" id="db-today-label">載入中</div>
-      <button class="db-nav-arrow" onclick="dashShiftDay(1)">&#8250;</button>
+      <button class="db-nav-arrow" onclick="dashShiftDay(-1)">‹</button>
+      <div class="db-today-dayinfo" id="db-today-label">D1 · 11/03 (二) · 抵達冰島</div>
+      <button class="db-nav-arrow" onclick="dashShiftDay(1)">›</button>
     </div>
-    <div id="db-today-content">
-      <div style="color:var(--muted);font-size:13px;padding:8px 0">偵測日期中…</div>
+    <div id="db-today-content"><div class="db-today-inner">
+      
+      <div class="db-today-hotel">⌂ Aurora Hotel at Reykjavik-Keflavik</div>
+      <div class="db-spot-mini">
+      <div class="db-spot-mini-dot" style="background:var(--accent)"></div>
+      <div class="db-spot-mini-name">深夜抵達 KEF 機場</div>
+      <div style="font-size:10px;color:var(--dim);flex-shrink:0;max-width:80px;text-align:right">桃園 → 倫敦 → KEF</div>
+    </div><div class="db-spot-mini">
+      <div class="db-spot-mini-dot" style="background:var(--green)"></div>
+      <div class="db-spot-mini-name">⌂ Aurora Hotel — 機場酒店</div>
+      <div style="font-size:10px;color:var(--dim);flex-shrink:0;max-width:80px;text-align:right">含早餐 · 兩間雙床房</div>
     </div>
+      
+    </div></div>
   </div>
 
   <div class="db-weather-full">
     <div class="db-widget-title" style="margin-bottom:10px">
-      <span class="db-widget-icon">&#9670;</span> 天氣
+      <span class="db-widget-icon">◆</span> 天氣
       <span class="db-widget-refresh" style="margin-left:auto;margin-top:0;padding:0;border:none" onclick="fetchWeather()">重新整理</span>
     </div>
     <div class="db-2col" style="margin-bottom:0">
-      <div class="db-weather-sub">
-        <div class="db-weather-sub-label" id="db-weather-from-loc">出發地</div>
-        <div id="db-weather-from-content"><div class="db-loading">抓取中</div></div>
+      <div class="db-weather-sub" style="grid-column: 1 / 3;">
+        <div class="db-weather-sub-label" id="db-weather-from-loc">KEF 機場</div>
+        <div id="db-weather-from-content">
+      <div class="db-temp-main">7°C</div>
+      <div class="db-temp-feels">體感 5°C</div>
+      <div class="db-weather-desc">陰</div>
+      
+      <div class="db-weather-row">
+        <div class="db-weather-item">
+          <div class="db-weather-item-val">1.7<span style="font-size:9px">m/s</span></div>
+          <div class="db-weather-item-key">風速</div>
+        </div>
+        <div class="db-weather-item">
+          <div class="db-weather-item-val">0<span style="font-size:9px">mm</span></div>
+          <div class="db-weather-item-key">降水</div>
+        </div>
+        <div class="db-weather-item">
+          <div class="db-weather-item-val">0<span style="font-size:9px">cm</span></div>
+          <div class="db-weather-item-key">雪量</div>
+        </div>
+      </div></div>
       </div>
-      <div class="db-weather-sub">
-        <div class="db-weather-sub-label" id="db-weather-to-loc">目的地</div>
-        <div id="db-weather-to-content"><div class="db-loading">抓取中</div></div>
+      <div class="db-weather-sub" style="display: none;">
+        <div class="db-weather-sub-label" id="db-weather-to-loc" style="display: none;">目的地</div>
+        <div id="db-weather-to-content" style="display: none;"><div class="db-loading">抓取中</div></div>
       </div>
     </div>
   </div>
@@ -940,41 +1044,41 @@
   <div class="db-2col" style="margin-top:8px">
     <div class="db-widget-card" style="grid-column:1/3">
       <div class="db-widget-title">
-        <span class="db-widget-icon">&#10022;</span> 極光 Kp 指數
+        <span class="db-widget-icon">✦</span> 極光 Kp 指數
         <span class="db-widget-refresh" style="margin-left:auto;margin-top:0;padding:0;border:none" onclick="fetchAurora()">重新整理</span>
       </div>
-      <div id="db-aurora-content"><div class="db-loading">抓取中</div></div>
+      <div id="db-aurora-content"><div class="db-loading" style="color:var(--red)">抓取失敗<br><span style="font-size:9px">請連接網路後重試</span></div></div>
     </div>
   </div>
 
   <div class="db-road-card">
     <div class="db-widget-title" style="margin-bottom:10px">
-      <span class="db-widget-icon">&#11042;</span> 道路資訊
+      <span class="db-widget-icon">⬢</span> 道路資訊
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <a href="https://road.is" target="_blank" class="db-road-btn db-road-primary">
+      <a href="https://road.is/" target="_blank" class="db-road-btn db-road-primary">
         road.is<br><span>路況地圖</span>
       </a>
-      <a href="https://safetravel.is" target="_blank" class="db-road-btn">
+      <a href="https://safetravel.is/" target="_blank" class="db-road-btn">
         safetravel.is<br><span>安全警報</span>
       </a>
-      <a href="https://vedur.is" target="_blank" class="db-road-btn">
+      <a href="https://vedur.is/" target="_blank" class="db-road-btn">
         vedur.is<br><span>氣象局</span>
       </a>
     </div>
   </div>
 
   <div class="db-members-row">
-    <div class="member-chip" onclick="switchPage('people','hank')">
+    <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;hank&#39;)">
       <div class="member-avatar">H</div> Hank
     </div>
-    <div class="member-chip" onclick="switchPage('people','lily')">
+    <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;lily&#39;)">
       <div class="member-avatar" style="background:var(--purple)">L</div> Lily
     </div>
-    <div class="member-chip" onclick="switchPage('people','bro')">
+    <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;bro&#39;)">
       <div class="member-avatar" style="background:var(--green)">哥</div> 哥哥
     </div>
-    <div class="member-chip" onclick="switchPage('people','sis')">
+    <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;sis&#39;)">
       <div class="member-avatar" style="background:var(--amber)">妹</div> 妹妹
     </div>
   </div>
@@ -984,21 +1088,174 @@
 <!-- ====== PAGE: 每日行程 ====== -->
 <div class="page" id="page-days" style="padding:0 0 90px">
   <!-- 固定頂部：橫向日期捲軸 -->
-  <div class="day-tab-bar" id="day-tab-bar"></div>
+  <div class="day-tab-bar" id="day-tab-bar"><button class="day-tab active" id="daytab-1" onclick="selectDay(1)">
+      <div class="day-tab-num">D1</div>
+      <div class="day-tab-date">11/03</div>
+      <div class="day-tab-dot" style="background:var(--dim)"></div>
+    </button><button class="day-tab" id="daytab-2" onclick="selectDay(2)">
+      <div class="day-tab-num">D2</div>
+      <div class="day-tab-date">11/04</div>
+      <div class="day-tab-dot" style="background:var(--amber)"></div>
+    </button><button class="day-tab" id="daytab-3" onclick="selectDay(3)">
+      <div class="day-tab-num">D3</div>
+      <div class="day-tab-date">11/05</div>
+      <div class="day-tab-dot" style="background:var(--purple)"></div>
+    </button><button class="day-tab" id="daytab-4" onclick="selectDay(4)">
+      <div class="day-tab-num">D4</div>
+      <div class="day-tab-date">11/06</div>
+      <div class="day-tab-dot" style="background:var(--amber)"></div>
+    </button><button class="day-tab" id="daytab-5" onclick="selectDay(5)">
+      <div class="day-tab-num">D5</div>
+      <div class="day-tab-date">11/07</div>
+      <div class="day-tab-dot" style="background:var(--purple)"></div>
+    </button><button class="day-tab" id="daytab-6" onclick="selectDay(6)">
+      <div class="day-tab-num">D6</div>
+      <div class="day-tab-date">11/08</div>
+      <div class="day-tab-dot" style="background:var(--amber)"></div>
+    </button><button class="day-tab" id="daytab-7" onclick="selectDay(7)">
+      <div class="day-tab-num">D7</div>
+      <div class="day-tab-date">11/09</div>
+      <div class="day-tab-dot" style="background:var(--amber)"></div>
+    </button><button class="day-tab" id="daytab-8" onclick="selectDay(8)">
+      <div class="day-tab-num">D8</div>
+      <div class="day-tab-date">11/10</div>
+      <div class="day-tab-dot" style="background:var(--dim)"></div>
+    </button><button class="day-tab" id="daytab-9" onclick="selectDay(9)">
+      <div class="day-tab-num">D9</div>
+      <div class="day-tab-date">11/11</div>
+      <div class="day-tab-dot" style="background:var(--dim)"></div>
+    </button><button class="day-tab" id="daytab-10" onclick="selectDay(10)">
+      <div class="day-tab-num">D10</div>
+      <div class="day-tab-date">11/12</div>
+      <div class="day-tab-dot" style="background:var(--purple)"></div>
+    </button><button class="day-tab" id="daytab-11" onclick="selectDay(11)">
+      <div class="day-tab-num">D11</div>
+      <div class="day-tab-date">11/13</div>
+      <div class="day-tab-dot" style="background:var(--purple)"></div>
+    </button><button class="day-tab" id="daytab-12" onclick="selectDay(12)">
+      <div class="day-tab-num">D12</div>
+      <div class="day-tab-date">11/14</div>
+      <div class="day-tab-dot" style="background:var(--teal)"></div>
+    </button><button class="day-tab" id="daytab-13" onclick="selectDay(13)">
+      <div class="day-tab-num">D13</div>
+      <div class="day-tab-date">11/15</div>
+      <div class="day-tab-dot" style="background:var(--teal)"></div>
+    </button><button class="day-tab" id="daytab-14" onclick="selectDay(14)">
+      <div class="day-tab-num">D14</div>
+      <div class="day-tab-date">11/16</div>
+      <div class="day-tab-dot" style="background:var(--teal)"></div>
+    </button><button class="day-tab" id="daytab-15" onclick="selectDay(15)">
+      <div class="day-tab-num">D15</div>
+      <div class="day-tab-date">11/17</div>
+      <div class="day-tab-dot" style="background:var(--teal)"></div>
+    </button><button class="day-tab" id="daytab-16" onclick="selectDay(16)">
+      <div class="day-tab-num">D16</div>
+      <div class="day-tab-date">11/18</div>
+      <div class="day-tab-dot" style="background:var(--teal)"></div>
+    </button></div>
   <!-- 下方內容區 -->
-  <div id="day-detail-panel" style="padding:0 16px"></div>
+  <div id="day-detail-panel" style="padding:0 16px">
+    <div class="day-detail-header">
+      <div>
+        <div class="day-detail-date">11/03 (二)</div>
+        <div class="day-detail-title">抵達冰島</div>
+      </div>
+      
+    </div>
+    <div class="tag-row" style="padding:0 0 12px"><span class="tag tag-booked">住宿含早</span></div>
+
+    <div class="spot-list" style="background:var(--card);border:0.5px solid var(--border);border-radius:var(--radius);margin-bottom:10px">
+      <div class="spot-item">
+      <div class="spot-dot spot-dot-sight"></div>
+      <div class="spot-content">
+        <div class="spot-name">深夜抵達 KEF 機場</div>
+        <div class="spot-meta">桃園 → 倫敦 → KEF</div>
+        
+      </div>
+    </div><div class="spot-item">
+      <div class="spot-dot spot-dot-stay"></div>
+      <div class="spot-content">
+        <div class="spot-name">⌂ Aurora Hotel — 機場酒店</div>
+        <div class="spot-meta">含早餐 · 兩間雙床房</div>
+        
+      </div>
+    </div>
+    </div>
+
+    <div class="day-hotel-block">
+      <div class="day-hotel-name">⌂ Aurora Hotel at Reykjavik-Keflavik Airport Terminal</div>
+      <div class="day-hotel-room">兩間房/兩單床/含早餐</div>
+      <div class="day-hotel-meta">
+        <span class="hotel-pill">€367.01</span>
+        <span class="hotel-pill">NT$13,433</span>
+        <span class="hotel-pill ok">⏰ 免費取消至 10/30</span>
+      </div>
+      
+    </div>
+
+    <div class="day-map-block">
+      <div class="day-map-header">
+        <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">◆ 地圖</span>
+        <a href="https://www.google.com/maps/d/viewer?mid=1ZBcdIb84_Uh43FZVKZhhpj8CGgsgErk" target="_blank" class="day-map-open">在 My Maps 開啟 ↗</a>
+      </div>
+      <div class="day-map-frame">
+        <iframe src="https://www.google.com/maps/d/embed?mid=1ZBcdIb84_Uh43FZVKZhhpj8CGgsgErk&ll=64.57992708136699,-18.688424499999996&z=7" width="100%" height="100%" style="border:0;border-radius:8px" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 <!-- ====== PAGE: 成員 ====== -->
 <div class="page" id="page-people">
   <div class="member-tabs" id="member-tabs">
-    <div class="member-tab active" data-member="hank" onclick="switchMember('hank')">Hank</div>
-    <div class="member-tab" data-member="lily" onclick="switchMember('lily')">Lily</div>
-    <div class="member-tab" data-member="bro" onclick="switchMember('bro')">哥哥</div>
-    <div class="member-tab" data-member="sis" onclick="switchMember('sis')">妹妹</div>
+    <div class="member-tab" data-member="hank" onclick="switchMember(&#39;hank&#39;)">Hank</div>
+    <div class="member-tab active" data-member="lily" onclick="switchMember(&#39;lily&#39;)">Lily</div>
+    <div class="member-tab" data-member="bro" onclick="switchMember(&#39;bro&#39;)">哥哥</div>
+    <div class="member-tab" data-member="sis" onclick="switchMember(&#39;sis&#39;)">妹妹</div>
   </div>
-  <div id="member-content"></div>
+  <div id="member-content">
+    <div class="member-profile">
+      <div class="profile-avatar" style="background:#a371f7">L</div>
+      <div>
+        <div class="profile-name">Lily</div>
+        <div class="profile-role">副駕 / 訂房統籌</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">護照 &amp; 簽證</div>
+      <div class="info-row"><span class="info-key">護照號碼</span><span class="info-val">請自行填入</span></div>
+      <div class="info-row"><span class="info-key">護照效期</span><span class="info-val amber">請確認效期 &gt; 2027/05</span></div>
+      <div class="info-row"><span class="info-key">英國入境</span><span class="info-val amber">英國 ETA 需申請</span></div>
+    </div>
+
+    <div class="section-header"><span class="section-title">機票資訊</span></div>
+    
+    <div class="flight-card">
+      <div class="flight-route">
+        桃園 <span class="flight-arrow">→</span> KEF
+      </div>
+      <div class="flight-detail">via 倫敦 · 2026/11/03 · 座位 62A</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+        <span class="flight-code">訂單：好市多卡</span>
+        <span style="font-size:12px;color:var(--amber)">NT$46,124</span>
+      </div>
+    </div>
+    <div class="flight-card">
+      <div class="flight-route">
+        KEF <span class="flight-arrow">→</span> 倫敦 LHR
+      </div>
+      <div class="flight-detail">2026/11/14 · 座位 17A · T5</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+        <span class="flight-code">BA8881 · 訂單：YWQISH</span>
+        <span style="font-size:12px;color:var(--amber)">NT$9,084</span>
+      </div>
+    </div>
+
+    <div class="tip-card" style="margin-top:8px">訂房使用 lilywu_tw@hotmail.com / Flygo 帳號</div>
+  </div>
 </div>
 
 <!-- ====== PAGE: 重要資訊 ====== -->
@@ -1041,15 +1298,15 @@
     <span class="section-title">即時資訊網站</span>
   </div>
   <div class="link-card">
-    <div><a href="https://road.is" target="_blank">road.is</a><div class="link-desc">冰島即時路況・封路資訊</div></div>
+    <div><a href="https://road.is/" target="_blank">road.is</a><div class="link-desc">冰島即時路況・封路資訊</div></div>
     <span class="arrow-ext">↗</span>
   </div>
   <div class="link-card">
-    <div><a href="https://safetravel.is" target="_blank">safetravel.is</a><div class="link-desc">安全警報・惡劣天氣預警</div></div>
+    <div><a href="https://safetravel.is/" target="_blank">safetravel.is</a><div class="link-desc">安全警報・惡劣天氣預警</div></div>
     <span class="arrow-ext">↗</span>
   </div>
   <div class="link-card">
-    <div><a href="https://vedur.is" target="_blank">vedur.is</a><div class="link-desc">冰島氣象局官網</div></div>
+    <div><a href="https://vedur.is/" target="_blank">vedur.is</a><div class="link-desc">冰島氣象局官網</div></div>
     <span class="arrow-ext">↗</span>
   </div>
   <div class="link-card">
@@ -1057,7 +1314,7 @@
     <span class="arrow-ext">↗</span>
   </div>
   <div class="link-card">
-    <div><a href="https://glacieradventure.is" target="_blank">glacieradventure.is</a><div class="link-desc">藍冰洞集合點資訊</div></div>
+    <div><a href="https://glacieradventure.is/" target="_blank">glacieradventure.is</a><div class="link-desc">藍冰洞集合點資訊</div></div>
     <span class="arrow-ext">↗</span>
   </div>
   <div class="link-card">
@@ -1095,30 +1352,35 @@
 </div>
 
 <!-- ====== PAGE: 清單 ====== -->
-<div class="page" id="page-tasks">
-  <div id="tasks-container"></div>
+<div class="page active" id="page-tasks">
+  <div class="task-cat-bar" id="task-cat-bar">
+    <button class="task-cat-btn active" onclick="switchTaskCat('predep')" id="cat-btn-predep">✈ 出發前</button>
+    <button class="task-cat-btn" onclick="switchTaskCat('luggage')" id="cat-btn-luggage">🧳 行李</button>
+    <button class="task-cat-btn" onclick="switchTaskCat('local')" id="cat-btn-local">📍 當地待辦</button>
+  </div>
+  <div id="tasks-container" style="padding:0 16px 90px"><div style="padding:24px 16px;color:var(--muted);font-size:13px;text-align:center">連線中…</div></div>
 </div>
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <button class="nav-btn active" onclick="switchPage('home')" id="nav-home">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  <button class="nav-btn" onclick="switchPage(&#39;home&#39;)" id="nav-home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
     首頁
   </button>
-  <button class="nav-btn" onclick="switchPage('days')" id="nav-days">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  <button class="nav-btn" onclick="switchPage(&#39;days&#39;)" id="nav-days">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
     行程
   </button>
-  <button class="nav-btn" onclick="switchPage('people')" id="nav-people">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+  <button class="nav-btn" onclick="switchPage(&#39;people&#39;)" id="nav-people">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
     成員
   </button>
-  <button class="nav-btn" onclick="switchPage('emergency')" id="nav-emergency">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  <button class="nav-btn" onclick="switchPage(&#39;emergency&#39;)" id="nav-emergency">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
     資訊
   </button>
-  <button class="nav-btn" onclick="switchPage('tasks')" id="nav-tasks">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+  <button class="nav-btn active" onclick="switchPage(&#39;tasks&#39;)" id="nav-tasks">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
     清單
   </button>
 </div>
@@ -1488,10 +1750,15 @@ function selectDay(d) {
     </div>`;
   }
 
-  // Google Maps embed + 開啟連結
-  const query = encodeURIComponent(day.mapQuery || day.label + ' Iceland');
-  const mapEmbedUrl = `https://maps.google.com/maps?q=${query}&output=embed&z=10`;
-  const mapOpenUrl = `https://maps.google.com/maps?q=${query}`;
+  // My Maps embed + 開啟連結（以各天座標聚焦）
+  const MY_MAPS_MID = '1ZBcdIb84_Uh43FZVKZhhpj8CGgsgErk';
+  const coordIdx = Math.min(day.d - 1, DAY_COORDS.length - 1);
+  const coord = DAY_COORDS[coordIdx];
+  const centerLat = coord.to.lat;
+  const centerLon = coord.to.lon;
+  const zoomLevel = (centerLat < 55) ? 11 : 9;
+  const mapEmbedUrl = 'https://www.google.com/maps/d/embed?mid=' + MY_MAPS_MID + '&ll=' + centerLat + ',' + centerLon + '&z=' + zoomLevel;
+  const mapOpenUrl  = 'https://www.google.com/maps/d/viewer?mid=' + MY_MAPS_MID + '&ll=' + centerLat + ',' + centerLon + '&z=' + zoomLevel;
   const kmBadge = day.km ? `<span class="section-badge" style="margin-left:auto">${day.km}</span>` : '';
 
   const panel = document.getElementById('day-detail-panel');
@@ -1514,15 +1781,14 @@ function selectDay(d) {
     <div class="day-map-block">
       <div class="day-map-header">
         <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">&#9670; 地圖</span>
-        <a href="${mapOpenUrl}" target="_blank" class="day-map-open">在 Google Maps 開啟 ↗</a>
+        <a href="${mapOpenUrl}" target="_blank" class="day-map-open">在 My Maps 開啟 ↗</a>
       </div>
       <div class="day-map-frame">
         <iframe
           src="${mapEmbedUrl}"
           width="100%" height="100%"
           style="border:0;border-radius:8px"
-          allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
+          allowfullscreen="" loading="lazy">
         </iframe>
       </div>
     </div>
@@ -1605,6 +1871,14 @@ function renderMember(id) {
     ${flightsHtml}
 
     ${m.note ? `<div class="tip-card" style="margin-top:8px">${m.note}</div>` : ''}
+
+    <div class="section-header" style="margin-top:16px">
+      <span class="section-title">我的任務</span>
+      <span style="font-size:11px;color:var(--muted);cursor:pointer" onclick="switchPage('tasks')">查看全部 ›</span>
+    </div>
+    <div class="info-card my-tasks-section">
+      <div id="member-my-tasks-body">${typeof fbReady !== 'undefined' && fbReady ? renderMemberTasks(id) : '<div class="my-tasks-empty">載入中…</div>'}</div>
+    </div>
   `;
 }
 
@@ -1641,9 +1915,7 @@ function switchMember(id) {
     t.classList.toggle('active', t.dataset.member === id);
   });
   renderMember(id);
-}
-
-// ═══════════════════════════════════════════
+}// ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
 
@@ -1938,10 +2210,11 @@ function initDashboard() {
 
 // ═══════════════════════════════════════════
 // TASKS — 代辦清單資料（可自由增刪）
+// cat: 'predep'=出發前, 'luggage'=行李, 'local'=當地待辦
 // ═══════════════════════════════════════════
 const TASK_GROUPS = [
   {
-    id: 'predep', label: '出發前必辦', icon: '✈',
+    id: 'predep', label: '出發前必辦', icon: '✈', cat: 'predep',
     items: [
       { id: 'pd01', text: '信用卡設定4位數預借現金PIN碼（加油必用）' },
       { id: 'pd02', text: '申請英國ETA（台灣護照入境英國必須）' },
@@ -1954,7 +2227,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'lg_suitcase', label: '26吋胖胖箱', icon: '🧳',
+    id: 'lg_suitcase', label: '26吋胖胖箱', icon: '🧳', cat: 'luggage',
     items: [
       { id: 'lg01', text: '淨衣袋：內衣褲 / 手帕 / 長T / 毛襪' },
       { id: 'lg02', text: '睡褲' },
@@ -1980,7 +2253,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'lg_backpack', label: '中背包（飛航/住宿用）', icon: '🎒',
+    id: 'lg_backpack', label: '中背包（飛航/住宿用）', icon: '🎒', cat: 'luggage',
     items: [
       { id: 'bp01', text: 'GT外套' },
       { id: 'bp02', text: 'MB羽絨服' },
@@ -1999,7 +2272,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'lg_wear', label: '身上穿著（出發日）', icon: '👕',
+    id: 'lg_wear', label: '身上穿著（出發日）', icon: '👕', cat: 'luggage',
     items: [
       { id: 'wt01', text: '長T' },
       { id: 'wt02', text: '羽絨背心' },
@@ -2012,7 +2285,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'lg_waistbag', label: '腰包（隨身攜帶）', icon: '👜',
+    id: 'lg_waistbag', label: '腰包（隨身攜帶）', icon: '👜', cat: 'luggage',
     items: [
       { id: 'wb01', text: '藥盒' },
       { id: 'wb02', text: '護照' },
@@ -2025,7 +2298,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'lg_car', label: '租車相關確認', icon: '🚙',
+    id: 'lg_car', label: '租車相關確認', icon: '🚙', cat: 'luggage',
     items: [
       { id: 'cr01', text: '確認車型：四輪傳動 SUV 配雪胎（Toyota RAV4 4x4）' },
       { id: 'cr02', text: '另有 26吋行李箱 × 2 可放後車廂（確認空間）' },
@@ -2035,7 +2308,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'food_dry', label: '從台灣帶的乾糧食材', icon: '🍜',
+    id: 'food_dry', label: '從台灣帶的乾糧食材', icon: '🍜', cat: 'luggage',
     items: [
       { id: 'fd01', text: '白米（夾鏈袋分裝一餐份 × 數包）' },
       { id: 'fd02', text: '泡麵 × 3+餐份' },
@@ -2049,7 +2322,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'supermarket', label: '首次超市採買（D2 Costco）', icon: '🛒',
+    id: 'supermarket', label: '首次超市採買（D2 Costco）', icon: '🛒', cat: 'local',
     items: [
       { id: 'sm01', text: '食用油' },
       { id: 'sm02', text: '鹽 / 黑胡椒' },
@@ -2063,7 +2336,7 @@ const TASK_GROUPS = [
     ]
   },
   {
-    id: 'daily_food', label: '每日下午採買（晚餐+隔日早餐）', icon: '🥩',
+    id: 'daily_food', label: '每日下午採買（晚餐+隔日早餐）', icon: '🥩', cat: 'local',
     items: [
       { id: 'df01', text: '羊肉 / 雞腿' },
       { id: 'df02', text: '彩椒 / 菇類' },
@@ -2073,6 +2346,10 @@ const TASK_GROUPS = [
       { id: 'df06', text: '麵包' },
       { id: 'df07', text: '果汁 / 牛奶（不要鮮奶）' },
     ]
+  },
+  {
+    id: 'local_todo', label: '當地臨時待辦', icon: '📍', cat: 'local',
+    items: []
   },
 ];
 
@@ -2092,24 +2369,53 @@ firebase.initializeApp(firebaseConfig);
 const fbdb = firebase.database();
 
 // ── 資料路徑 ──
-const checkedRef = fbdb.ref('tasks/checked');
-const customRef  = fbdb.ref('tasks/custom');
-const groupsRef  = fbdb.ref('tasks/groups');
+const checkedRef   = fbdb.ref('tasks/checked');
+const customRef    = fbdb.ref('tasks/custom');
+const groupsRef    = fbdb.ref('tasks/groups');
+const assigneesRef = fbdb.ref('tasks/assignees');
 
 // ── 本地快取 ──
-var fbChecked = {};
-var fbCustom  = {};
-var fbGroups  = {};
-var fbReady   = false;
+var fbChecked   = {};
+var fbCustom    = {};
+var fbGroups    = {};
+var fbAssignees = {};
+var fbReady     = false;
+var currentCat  = 'predep';
+
+// ── 成員設定 ──
+const MEMBER_INFO = {
+  hank: { name: 'Hank', label: 'H',  color: '#4fc3f7' },
+  lily: { name: 'Lily', label: 'L',  color: '#a371f7' },
+  bro:  { name: '哥哥', label: '哥', color: '#56d364' },
+  sis:  { name: '妹妹', label: '妹', color: '#f0a443' },
+};
 
 // ── 即時監聽 ──
+// 三個核心資料都拿到後才首次 render；之後任一更新直接 re-render
+var _initLoaded = { checked: false, custom: false, assignees: false };
+
+function _tryInitRender() {
+  if (_initLoaded.checked && _initLoaded.custom && _initLoaded.assignees) {
+    fbReady = true;
+    renderTasks();
+    refreshMemberTasksIfVisible();
+  }
+}
+
 checkedRef.on('value', snap => {
   fbChecked = snap.val() || {};
-  if (fbReady) renderTasks();
+  if (!_initLoaded.checked) { _initLoaded.checked = true; _tryInitRender(); }
+  else if (fbReady) { renderTasks(); refreshMemberTasksIfVisible(); }
 });
 customRef.on('value', snap => {
   fbCustom = snap.val() || {};
-  if (fbReady) renderTasks();
+  if (!_initLoaded.custom) { _initLoaded.custom = true; _tryInitRender(); }
+  else if (fbReady) { renderTasks(); refreshMemberTasksIfVisible(); }
+});
+assigneesRef.on('value', snap => {
+  fbAssignees = snap.val() || {};
+  if (!_initLoaded.assignees) { _initLoaded.assignees = true; _tryInitRender(); }
+  else if (fbReady) { renderTasks(); refreshMemberTasksIfVisible(); }
 });
 groupsRef.on('value', snap => {
   fbGroups = snap.val() || {};
@@ -2118,6 +2424,16 @@ groupsRef.on('value', snap => {
     if (el) el.classList.toggle('open', !!fbGroups[id]);
   });
 });
+
+// ── 分類頁籤切換 ──
+function switchTaskCat(cat) {
+  currentCat = cat;
+  ['predep','luggage','local'].forEach(c => {
+    const btn = document.getElementById('cat-btn-' + c);
+    if (btn) btn.classList.toggle('active', c === cat);
+  });
+  if (fbReady) renderTasks();
+}
 
 // ── 勾選同步 ──
 function toggleTask(id) {
@@ -2131,25 +2447,22 @@ function toggleTask(id) {
   }
   recomputeProgress(id);
   recomputeOverall();
+  refreshMemberTasksIfVisible();
 }
 
 function recomputeProgress(itemId) {
-  // 找 built-in group
   const builtinGroup = TASK_GROUPS.find(g => g.items.some(i => i.id === itemId));
   if (builtinGroup) {
-    const allIds = [
-      ...builtinGroup.items.map(i => i.id),
-      ...Object.values(fbCustom[builtinGroup.id] || {}).map(c => c._key || ''),
-    ];
+    const customItems = Object.keys(fbCustom[builtinGroup.id] || {});
+    const allIds = [...builtinGroup.items.map(i => i.id), ...customItems];
     const done = allIds.filter(id => fbChecked[id]).length;
     const total = allIds.length;
     const bar = document.getElementById('progress-' + builtinGroup.id);
     const lbl = document.getElementById('progress-label-' + builtinGroup.id);
     if (bar) bar.style.width = (total ? done/total*100 : 0) + '%';
-    if (lbl) lbl.textContent = `${done}/${total}`;
+    if (lbl) lbl.textContent = done + '/' + total;
     return;
   }
-  // 找 custom group
   for (const gid of Object.keys(fbCustom)) {
     const items = Object.entries(fbCustom[gid] || {});
     if (items.some(([k]) => k === itemId)) {
@@ -2157,7 +2470,7 @@ function recomputeProgress(itemId) {
       const bar = document.getElementById('progress-' + gid);
       const lbl = document.getElementById('progress-label-' + gid);
       if (bar) bar.style.width = (items.length ? done/items.length*100 : 0) + '%';
-      if (lbl) lbl.textContent = `${done}/${items.length}`;
+      if (lbl) lbl.textContent = done + '/' + items.length;
     }
   }
 }
@@ -2171,16 +2484,18 @@ function recomputeOverall() {
   const bar  = document.getElementById('overview-bar');
   const num  = document.getElementById('overview-num');
   if (bar) bar.style.width = pct + '%';
-  if (num) num.textContent = `${done} / ${all.length}`;
+  if (num) num.textContent = done + ' / ' + all.length;
 }
 
-// ── 新增自訂項目 ──
+// ── 新增自訂項目 Modal ──
 function showAddItem(groupId) {
   const modal = document.getElementById('add-item-modal');
   const input = document.getElementById('add-item-input');
   if (!modal || !input) return;
   modal.dataset.groupId = groupId;
   input.value = '';
+  window._addItemAssignees = {};
+  document.querySelectorAll('.assign-chip').forEach(c => { c.className = 'assign-chip'; });
   modal.style.display = 'flex';
   setTimeout(() => input.focus(), 100);
 }
@@ -2190,6 +2505,16 @@ function hideAddItem() {
   if (modal) modal.style.display = 'none';
 }
 
+function toggleAssignChip(memberId) {
+  if (!window._addItemAssignees) window._addItemAssignees = {};
+  window._addItemAssignees[memberId] = !window._addItemAssignees[memberId];
+  const chip = document.getElementById('assign-chip-' + memberId);
+  if (chip) {
+    chip.className = window._addItemAssignees[memberId]
+      ? 'assign-chip selected-' + memberId : 'assign-chip';
+  }
+}
+
 function confirmAddItem() {
   const modal = document.getElementById('add-item-modal');
   const input = document.getElementById('add-item-input');
@@ -2197,21 +2522,64 @@ function confirmAddItem() {
   const text = input.value.trim();
   if (!text) return;
   const groupId = modal.dataset.groupId;
-  const newRef = fbdb.ref(`tasks/custom/${groupId}`).push();
-  newRef.set({ text, done: false });
+  const newRef = fbdb.ref('tasks/custom/' + groupId).push();
+  newRef.set({ text: text, done: false });
+  const assigned = window._addItemAssignees || {};
+  const filtered = Object.fromEntries(Object.entries(assigned).filter(([,v]) => v));
+  if (Object.keys(filtered).length > 0) {
+    assigneesRef.child(newRef.key).set(filtered);
+  }
   hideAddItem();
 }
 
-// ── 刪除自訂項目 ──
 function deleteCustomItem(groupId, itemKey, e) {
   e.stopPropagation();
-  fbdb.ref(`tasks/custom/${groupId}/${itemKey}`).remove();
+  fbdb.ref('tasks/custom/' + groupId + '/' + itemKey).remove();
   checkedRef.child(itemKey).remove();
+  assigneesRef.child(itemKey).remove();
 }
 
-// ── 展開/收合（同步到 Firebase） ──
-function getGroupOpen(id) { return !!fbGroups[id]; }
+// ── 成員指派 Modal（長按觸發）──
+function showAssignModal(itemId, itemText) {
+  const modal = document.getElementById('assign-modal');
+  if (!modal) return;
+  modal.dataset.itemId = itemId;
+  const titleEl = document.getElementById('assign-modal-title');
+  if (titleEl) titleEl.textContent = itemText.length > 26 ? itemText.slice(0,26) + '…' : itemText;
+  const current = fbAssignees[itemId] || {};
+  Object.keys(MEMBER_INFO).forEach(mid => {
+    const chip = document.getElementById('amodal-chip-' + mid);
+    if (chip) chip.className = current[mid] ? 'assign-chip selected-' + mid : 'assign-chip';
+  });
+  modal.style.display = 'flex';
+}
 
+function hideAssignModal() {
+  const modal = document.getElementById('assign-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function toggleAssignModalChip(memberId) {
+  const modal = document.getElementById('assign-modal');
+  const itemId = modal.dataset.itemId;
+  const current = fbAssignees[itemId] || {};
+  current[memberId] = !current[memberId];
+  fbAssignees[itemId] = current;
+  const filtered = Object.fromEntries(Object.entries(current).filter(([,v]) => v));
+  if (Object.keys(filtered).length > 0) {
+    assigneesRef.child(itemId).set(filtered);
+  } else {
+    assigneesRef.child(itemId).remove();
+  }
+  const chip = document.getElementById('amodal-chip-' + memberId);
+  if (chip) chip.className = current[memberId] ? 'assign-chip selected-' + memberId : 'assign-chip';
+  const badgeEl = document.getElementById('badges-' + itemId);
+  if (badgeEl) badgeEl.innerHTML = renderAssigneeBadges(itemId);
+  refreshMemberTasksIfVisible();
+}
+
+// ── 展開/收合 ──
+function getGroupOpen(id) { return !!fbGroups[id]; }
 function toggleGroup(id) {
   const el = document.getElementById('group-' + id);
   if (!el) return;
@@ -2219,19 +2587,40 @@ function toggleGroup(id) {
   groupsRef.update({ [id]: isOpen });
 }
 
+// ── 成員 Badge HTML ──
+function renderAssigneeBadges(itemId) {
+  const assigned = fbAssignees[itemId] || {};
+  return Object.entries(assigned)
+    .filter(([,v]) => v)
+    .map(([mid]) => {
+      const m = MEMBER_INFO[mid];
+      if (!m) return '';
+      return '<span class="assignee-badge ' + mid + '">' + m.label + '</span>';
+    }).join('');
+}
+
+// ── 長按偵測（行動裝置）──
+var _longPressTimer = null;
+function startLongPress(itemId, itemText) {
+  _longPressTimer = setTimeout(() => { showAssignModal(itemId, itemText); }, 520);
+}
+function cancelLongPress() {
+  if (_longPressTimer) { clearTimeout(_longPressTimer); _longPressTimer = null; }
+}
+
 // ── 渲染清單 ──
 function renderTasks() {
   const container = document.getElementById('tasks-container');
   if (!container) return;
-  if (typeof fbCustom === 'undefined' || typeof fbChecked === 'undefined') return;
 
+  const visibleGroups = TASK_GROUPS.filter(g => g.cat === currentCat);
   const allBuiltin = TASK_GROUPS.flatMap(g => g.items.map(i => i.id));
   const allCustom  = Object.values(fbCustom).flatMap(g => Object.keys(g));
   const all = [...allBuiltin, ...allCustom];
   const totalDone = all.filter(id => fbChecked[id]).length;
   const pct = all.length ? Math.round(totalDone/all.length*100) : 0;
 
-  const groupsHtml = TASK_GROUPS.map(group => {
+  const groupsHtml = visibleGroups.map(function(group) {
     const customItems = Object.entries(fbCustom[group.id] || {});
     const allIds = [...group.items.map(i => i.id), ...customItems.map(([k]) => k)];
     const done  = allIds.filter(id => fbChecked[id]).length;
@@ -2239,52 +2628,63 @@ function renderTasks() {
     const pctG  = total ? Math.round(done/total*100) : 0;
     const isOpen = getGroupOpen(group.id);
 
-    const builtinHtml = group.items.map(item => `
-      <div class="task-item ${fbChecked[item.id] ? 'task-done':''}" id="task-${item.id}" onclick="toggleTask('${item.id}')">
-        <div class="task-checkbox">${fbChecked[item.id] ? '✓':''}</div>
-        <div class="task-text">${item.text}</div>
-      </div>`).join('');
+    const builtinHtml = group.items.map(function(item) {
+      const badges = renderAssigneeBadges(item.id);
+      const safeText = item.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      return '<div class="task-item ' + (fbChecked[item.id] ? 'task-done' : '') + '" id="task-' + item.id + '"'
+        + ' onclick="toggleTask(\'' + item.id + '\')"'
+        + ' oncontextmenu="showAssignModal(\'' + item.id + '\',\'' + safeText + '\');return false;"'
+        + ' ontouchstart="startLongPress(\'' + item.id + '\',\'' + safeText + '\')"'
+        + ' ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()">'
+        + '<div class="task-checkbox">' + (fbChecked[item.id] ? '✓' : '') + '</div>'
+        + '<div class="task-body">'
+        + '<div class="task-text">' + item.text + '</div>'
+        + '<div class="task-assignees" id="badges-' + item.id + '">' + badges + '</div>'
+        + '</div></div>';
+    }).join('');
 
-    const customHtml = customItems.map(([key, val]) => `
-      <div class="task-item task-custom ${fbChecked[key] ? 'task-done':''}" id="task-${key}" onclick="toggleTask('${key}')">
-        <div class="task-checkbox">${fbChecked[key] ? '✓':''}</div>
-        <div class="task-text">${val.text}</div>
-        <button class="task-delete" onclick="deleteCustomItem('${group.id}','${key}',event)">✕</button>
-      </div>`).join('');
+    const customHtml = customItems.map(function(entry) {
+      const key = entry[0]; const val = entry[1];
+      const badges = renderAssigneeBadges(key);
+      const safeText = val.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      return '<div class="task-item task-custom ' + (fbChecked[key] ? 'task-done' : '') + '" id="task-' + key + '"'
+        + ' onclick="toggleTask(\'' + key + '\')"'
+        + ' oncontextmenu="showAssignModal(\'' + key + '\',\'' + safeText + '\');return false;"'
+        + ' ontouchstart="startLongPress(\'' + key + '\',\'' + safeText + '\')"'
+        + ' ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()">'
+        + '<div class="task-checkbox">' + (fbChecked[key] ? '✓' : '') + '</div>'
+        + '<div class="task-body">'
+        + '<div class="task-text">' + val.text + '</div>'
+        + '<div class="task-assignees" id="badges-' + key + '">' + badges + '</div>'
+        + '</div>'
+        + '<button class="task-delete" onclick="deleteCustomItem(\'' + group.id + '\',\'' + key + '\',event)">✕</button>'
+        + '</div>';
+    }).join('');
 
-    return `<div class="task-group ${isOpen?'open':''}" id="group-${group.id}">
-      <div class="task-group-header" onclick="toggleGroup('${group.id}')">
-        <span class="task-group-icon">${group.icon}</span>
-        <span class="task-group-label">${group.label}</span>
-        <span class="task-group-count" id="progress-label-${group.id}">${done}/${total}</span>
-        <span class="task-group-chevron">›</span>
-      </div>
-      <div class="task-group-body">
-        <div class="task-group-body-inner">
-          <div class="task-progress-bar">
-            <div class="task-progress-fill" id="progress-${group.id}" style="width:${pctG}%"></div>
-          </div>
-          <div class="task-items">
-            ${builtinHtml}${customHtml}
-            <div class="task-add-btn" onclick="showAddItem('${group.id}')">＋ 新增項目</div>
-          </div>
-        </div>
-      </div>
-    </div>`;
+    return '<div class="task-group ' + (isOpen ? 'open' : '') + '" id="group-' + group.id + '">'
+      + '<div class="task-group-header" onclick="toggleGroup(\'' + group.id + '\')">'
+      + '<span class="task-group-icon">' + group.icon + '</span>'
+      + '<span class="task-group-label">' + group.label + '</span>'
+      + '<span class="task-group-count" id="progress-label-' + group.id + '">' + done + '/' + total + '</span>'
+      + '<span class="task-group-chevron">›</span>'
+      + '</div>'
+      + '<div class="task-group-body"><div class="task-group-body-inner">'
+      + '<div class="task-progress-bar"><div class="task-progress-fill" id="progress-' + group.id + '" style="width:' + pctG + '%"></div></div>'
+      + '<div class="task-items">' + builtinHtml + customHtml
+      + '<div class="task-add-btn" onclick="showAddItem(\'' + group.id + '\')">＋ 新增項目</div>'
+      + '</div></div></div></div>';
   }).join('');
 
-  container.innerHTML = `
-    <div class="task-overview">
-      <div class="task-overview-title">整體進度</div>
-      <div class="task-overview-bar-wrap">
-        <div class="task-overview-bar" id="overview-bar" style="width:${pct}%"></div>
-      </div>
-      <div class="task-overview-num" id="overview-num">${totalDone} / ${all.length}</div>
-    </div>
-    ${groupsHtml}
-    <div style="text-align:center;padding:16px 0 8px">
-      <button onclick="resetTasks()" style="background:none;border:0.5px solid var(--border);color:var(--dim);font-size:11px;padding:6px 16px;border-radius:20px;cursor:pointer;font-family:var(--font)">重置所有勾選</button>
-    </div>`;
+  container.innerHTML = '<div class="task-overview" style="margin-top:12px">'
+    + '<div class="task-overview-title">整體進度</div>'
+    + '<div class="task-overview-bar-wrap"><div class="task-overview-bar" id="overview-bar" style="width:' + pct + '%"></div></div>'
+    + '<div class="task-overview-num" id="overview-num">' + totalDone + ' / ' + all.length + '</div>'
+    + '</div>'
+    + '<div style="font-size:11px;color:var(--dim);text-align:center;padding:0 0 10px">長按任務可指派成員</div>'
+    + groupsHtml
+    + '<div style="text-align:center;padding:16px 0 8px">'
+    + '<button onclick="resetTasks()" style="background:none;border:0.5px solid var(--border);color:var(--dim);font-size:11px;padding:6px 16px;border-radius:20px;cursor:pointer;font-family:var(--font)">重置所有勾選</button>'
+    + '</div>';
 
   fbReady = true;
 }
@@ -2292,6 +2692,54 @@ function renderTasks() {
 function resetTasks() {
   if (!confirm('確定要清除所有勾選紀錄嗎？')) return;
   checkedRef.set({});
+}
+
+// ── 成員頁：我的任務 ──
+function renderMemberTasks(memberId) {
+  const tasks = [];
+  TASK_GROUPS.forEach(function(group) {
+    group.items.forEach(function(item) {
+      if ((fbAssignees[item.id] || {})[memberId]) {
+        tasks.push({ id: item.id, text: item.text, groupLabel: group.label, groupIcon: group.icon });
+      }
+    });
+    Object.entries(fbCustom[group.id] || {}).forEach(function(entry) {
+      if ((fbAssignees[entry[0]] || {})[memberId]) {
+        tasks.push({ id: entry[0], text: entry[1].text, groupLabel: group.label, groupIcon: group.icon });
+      }
+    });
+  });
+
+  if (tasks.length === 0) {
+    return '<div class="my-tasks-empty">目前沒有指派給你的任務<br><span style="font-size:10px;color:var(--dim)">在清單頁長按任務可指派成員</span></div>';
+  }
+
+  const doneCount = tasks.filter(t => fbChecked[t.id]).length;
+  const pct = tasks.length ? Math.round(doneCount/tasks.length*100) : 0;
+
+  return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:0 2px">'
+    + '<div style="flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden">'
+    + '<div style="height:100%;width:' + pct + '%;background:var(--green);border-radius:3px;transition:width 0.3s"></div></div>'
+    + '<span style="font-size:11px;color:var(--accent);font-weight:600;flex-shrink:0">' + doneCount + '/' + tasks.length + '</span>'
+    + '</div>'
+    + tasks.map(function(t) {
+      return '<div class="my-task-item ' + (fbChecked[t.id] ? 'task-done' : '') + '" id="mytask-' + t.id + '" onclick="toggleTask(\'' + t.id + '\');refreshMemberTasksIfVisible()">'
+        + '<div class="task-checkbox">' + (fbChecked[t.id] ? '✓' : '') + '</div>'
+        + '<div class="task-body">'
+        + '<div class="task-text">' + t.text + '</div>'
+        + '<div class="my-task-group-label">' + t.groupIcon + ' ' + t.groupLabel + '</div>'
+        + '</div></div>';
+    }).join('');
+}
+
+function refreshMemberTasksIfVisible() {
+  const peoplePage = document.getElementById('page-people');
+  if (!peoplePage || !peoplePage.classList.contains('active')) return;
+  const activeTab = document.querySelector('.member-tab.active');
+  if (!activeTab) return;
+  const mid = activeTab.dataset.member;
+  const el = document.getElementById('member-my-tasks-body');
+  if (el) el.innerHTML = renderMemberTasks(mid);
 }
 
 initDashboard();
@@ -2304,12 +2752,35 @@ initDashboard();
 <div id="add-item-modal" style="display:none;position:fixed;inset:0;z-index:999;align-items:flex-end;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px)" onclick="if(event.target===this)hideAddItem()">
   <div style="background:var(--card);border:0.5px solid var(--border2);border-radius:16px 16px 0 0;width:100%;max-width:430px;padding:20px 16px 32px">
     <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:14px">新增項目</div>
-    <input id="add-item-input" type="text" placeholder="輸入項目內容…"
-      onkeydown="if(event.key==='Enter')confirmAddItem()"
-      style="width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:12px 14px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;box-sizing:border-box">
-    <div style="display:flex;gap:8px;margin-top:12px">
+    <input id="add-item-input" type="text" placeholder="輸入項目內容…" onkeydown="if(event.key==='Enter')confirmAddItem()" style="width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:12px 14px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;box-sizing:border-box">
+    <div style="font-size:11px;color:var(--muted);margin-top:12px;margin-bottom:6px">指派給（可多選）</div>
+    <div class="assign-picker">
+      <div class="assign-chip" id="assign-chip-hank" onclick="toggleAssignChip('hank')">H Hank</div>
+      <div class="assign-chip" id="assign-chip-lily" onclick="toggleAssignChip('lily')">L Lily</div>
+      <div class="assign-chip" id="assign-chip-bro"  onclick="toggleAssignChip('bro')">哥 哥哥</div>
+      <div class="assign-chip" id="assign-chip-sis"  onclick="toggleAssignChip('sis')">妹 妹妹</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:14px">
       <button onclick="hideAddItem()" style="flex:1;background:none;border:0.5px solid var(--border2);color:var(--muted);padding:11px;border-radius:var(--radius-sm);font-size:13px;cursor:pointer;font-family:var(--font)">取消</button>
       <button onclick="confirmAddItem()" style="flex:2;background:var(--accent);border:none;color:var(--bg);padding:11px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">新增</button>
     </div>
   </div>
 </div>
+
+<!-- 指派成員 Modal（長按觸發）-->
+<div id="assign-modal" style="display:none;position:fixed;inset:0;z-index:999;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px)" onclick="if(event.target===this)hideAssignModal()">
+  <div style="background:var(--card);border:0.5px solid var(--border2);border-radius:var(--radius);width:calc(100% - 40px);max-width:360px;padding:20px 18px 22px">
+    <div style="font-size:11px;color:var(--muted);margin-bottom:6px">指派任務給</div>
+    <div id="assign-modal-title" style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:16px;line-height:1.4"></div>
+    <div class="assign-picker" style="justify-content:center;gap:10px">
+      <div class="assign-chip" id="amodal-chip-hank" onclick="toggleAssignModalChip('hank')" style="flex:1;justify-content:center">H Hank</div>
+      <div class="assign-chip" id="amodal-chip-lily" onclick="toggleAssignModalChip('lily')" style="flex:1;justify-content:center">L Lily</div>
+      <div class="assign-chip" id="amodal-chip-bro"  onclick="toggleAssignModalChip('bro')"  style="flex:1;justify-content:center">哥 哥哥</div>
+      <div class="assign-chip" id="amodal-chip-sis"  onclick="toggleAssignModalChip('sis')"  style="flex:1;justify-content:center">妹 妹妹</div>
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <button onclick="hideAssignModal()" style="background:none;border:0.5px solid var(--border2);color:var(--muted);padding:8px 28px;border-radius:20px;font-size:13px;cursor:pointer;font-family:var(--font)">完成</button>
+    </div>
+  </div>
+</div>
+</body></html>
