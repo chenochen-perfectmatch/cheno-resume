@@ -1373,6 +1373,27 @@
 // DATA LAYER — 修改旅遊內容只需改這裡
 // ═══════════════════════════════════════════
 
+const DAY_COORDS = [
+  // 每筆: from=出發地, to=住宿/目的地
+  { from:{lat:63.985,lon:-22.605,place:'KEF 機場'},   to:{lat:63.985,lon:-22.605,place:'KEF 機場'} },   // D1 抵達
+  { from:{lat:63.985,lon:-22.605,place:'KEF 機場'},   to:{lat:64.329,lon:-20.121,place:'古佛斯'} },     // D2 黃金圈
+  { from:{lat:64.329,lon:-20.121,place:'古佛斯'},     to:{lat:63.419,lon:-19.006,place:'Vík'} },        // D3 南岸
+  { from:{lat:63.419,lon:-19.006,place:'Vík'},        to:{lat:64.007,lon:-16.380,place:'瓦特納冰川'} }, // D4 冰川
+  { from:{lat:64.007,lon:-16.380,place:'瓦特納冰川'}, to:{lat:64.007,lon:-16.380,place:'瓦特納冰川'} }, // D5 冰洞
+  { from:{lat:64.007,lon:-16.380,place:'瓦特納冰川'}, to:{lat:64.950,lon:-13.997,place:'東峽灣'} },     // D6 東峽灣
+  { from:{lat:64.950,lon:-13.997,place:'東峽灣'},     to:{lat:65.600,lon:-17.000,place:'米湖'} },       // D7 米湖
+  { from:{lat:65.600,lon:-17.000,place:'米湖'},       to:{lat:65.683,lon:-18.100,place:'阿克雷里'} },   // D8 阿克雷里
+  { from:{lat:65.683,lon:-18.100,place:'阿克雷里'},   to:{lat:65.136,lon:-20.287,place:'Laugarbakki'} },// D9
+  { from:{lat:65.136,lon:-20.287,place:'Laugarbakki'},to:{lat:64.932,lon:-23.306,place:'斯奈山半島'} }, // D10
+  { from:{lat:64.932,lon:-23.306,place:'斯奈山半島'}, to:{lat:64.135,lon:-21.895,place:'雷克雅維克'} }, // D11
+  { from:{lat:64.135,lon:-21.895,place:'雷克雅維克'}, to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D12 飛倫敦
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D13
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D14
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D15
+  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:25.077,lon:121.232, place:'桃園'} },      // D16 回程
+];
+
+
 const DAYS = [
   {
     d: 1, date: '11/03 (二)', label: '抵達冰島',
@@ -1904,26 +1925,6 @@ function switchMember(id) {
 // ═══════════════════════════════════════════
 // DASHBOARD — 每日座標對應表（Open-Meteo 用）
 // ═══════════════════════════════════════════
-const DAY_COORDS = [
-  // 每筆: from=出發地, to=住宿/目的地
-  { from:{lat:63.985,lon:-22.605,place:'KEF 機場'},   to:{lat:63.985,lon:-22.605,place:'KEF 機場'} },   // D1 抵達
-  { from:{lat:63.985,lon:-22.605,place:'KEF 機場'},   to:{lat:64.329,lon:-20.121,place:'古佛斯'} },     // D2 黃金圈
-  { from:{lat:64.329,lon:-20.121,place:'古佛斯'},     to:{lat:63.419,lon:-19.006,place:'Vík'} },        // D3 南岸
-  { from:{lat:63.419,lon:-19.006,place:'Vík'},        to:{lat:64.007,lon:-16.380,place:'瓦特納冰川'} }, // D4 冰川
-  { from:{lat:64.007,lon:-16.380,place:'瓦特納冰川'}, to:{lat:64.007,lon:-16.380,place:'瓦特納冰川'} }, // D5 冰洞
-  { from:{lat:64.007,lon:-16.380,place:'瓦特納冰川'}, to:{lat:64.950,lon:-13.997,place:'東峽灣'} },     // D6 東峽灣
-  { from:{lat:64.950,lon:-13.997,place:'東峽灣'},     to:{lat:65.600,lon:-17.000,place:'米湖'} },       // D7 米湖
-  { from:{lat:65.600,lon:-17.000,place:'米湖'},       to:{lat:65.683,lon:-18.100,place:'阿克雷里'} },   // D8 阿克雷里
-  { from:{lat:65.683,lon:-18.100,place:'阿克雷里'},   to:{lat:65.136,lon:-20.287,place:'Laugarbakki'} },// D9
-  { from:{lat:65.136,lon:-20.287,place:'Laugarbakki'},to:{lat:64.932,lon:-23.306,place:'斯奈山半島'} }, // D10
-  { from:{lat:64.932,lon:-23.306,place:'斯奈山半島'}, to:{lat:64.135,lon:-21.895,place:'雷克雅維克'} }, // D11
-  { from:{lat:64.135,lon:-21.895,place:'雷克雅維克'}, to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D12 飛倫敦
-  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D13
-  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D14
-  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:51.508,lon:-0.128, place:'倫敦'} },       // D15
-  { from:{lat:51.508,lon:-0.128, place:'倫敦'},        to:{lat:25.077,lon:121.232, place:'桃園'} },      // D16 回程
-];
-
 const TRIP_START = new Date('2026-11-03T00:00:00+00:00');
 const TRIP_END   = new Date('2026-11-18T23:59:59+00:00');
 
