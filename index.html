@@ -909,8 +909,8 @@
 
 
 </style>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://unpkg.com/firebase@9.23.0/compat/app.js"></script>
+<script src="https://unpkg.com/firebase@9.23.0/compat/database.js"></script>
 </head>
 <body>
 
@@ -1179,10 +1179,10 @@
     <div class="day-map-block">
       <div class="day-map-header">
         <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">◆ 地圖</span>
-        <a href="https://www.google.com/maps/d/viewer?mid=1ZBcdIb84_Uh43FZVKZhhpj8CGgsgErk" target="_blank" class="day-map-open">在 My Maps 開啟 ↗</a>
+        <a href="https://maps.google.com/maps?q=64.329,-20.121" target="_blank" class="day-map-open">在 Google Maps 開啟 ↗</a>
       </div>
       <div class="day-map-frame">
-        <iframe src="https://www.google.com/maps/d/embed?mid=1ZBcdIb84_Uh43FZVKZhhpj8CGgsgErk&ll=64.57992708136699,-18.688424499999996&z=7" width="100%" height="100%" style="border:0;border-radius:8px" allowfullscreen="" loading="lazy">
+        <iframe src="https://maps.google.com/maps?q=64.329,-20.121&output=embed&z=9" width="100%" height="100%" style="border:0;border-radius:8px" allowfullscreen="" loading="lazy">
         </iframe>
       </div>
     </div>
@@ -1734,14 +1734,13 @@ function selectDay(d) {
   }
 
   // My Maps embed + 開啟連結（以各天座標聚焦）
-  const MY_MAPS_MID = '1ZBcdIb84_Uh43FZVKZhhpj8CGgsgErk';
   const coordIdx = Math.min(day.d - 1, DAY_COORDS.length - 1);
   const coord = DAY_COORDS[coordIdx];
   const centerLat = coord.to.lat;
   const centerLon = coord.to.lon;
-  const zoomLevel = (centerLat < 55) ? 11 : 9;
-  const mapEmbedUrl = 'https://www.google.com/maps/d/embed?mid=' + MY_MAPS_MID + '&ll=' + centerLat + ',' + centerLon + '&z=' + zoomLevel;
-  const mapOpenUrl  = 'https://www.google.com/maps/d/viewer?mid=' + MY_MAPS_MID + '&ll=' + centerLat + ',' + centerLon + '&z=' + zoomLevel;
+  const zoomLevel = (centerLat < 55) ? 13 : 10;
+  const mapEmbedUrl = 'https://maps.google.com/maps?q=' + centerLat + ',' + centerLon + '&output=embed&z=' + zoomLevel;
+  const mapOpenUrl  = 'https://maps.google.com/maps?q=' + centerLat + ',' + centerLon + '&z=' + zoomLevel;
   const kmBadge = day.km ? `<span class="section-badge" style="margin-left:auto">${day.km}</span>` : '';
 
   const panel = document.getElementById('day-detail-panel');
@@ -1764,7 +1763,7 @@ function selectDay(d) {
     <div class="day-map-block">
       <div class="day-map-header">
         <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">&#9670; 地圖</span>
-        <a href="${mapOpenUrl}" target="_blank" class="day-map-open">在 My Maps 開啟 ↗</a>
+        <a href="${mapOpenUrl}" target="_blank" class="day-map-open">在 Google Maps 開啟 ↗</a>
       </div>
       <div class="day-map-frame">
         <iframe
@@ -1901,9 +1900,6 @@ function switchMember(id) {
 }// ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
-
-renderDays();
-renderMember('hank');
 
 // ═══════════════════════════════════════════
 // DASHBOARD — 每日座標對應表（Open-Meteo 用）
@@ -2118,7 +2114,10 @@ async function fetchAurora() {
   if (!contentEl) return;
   contentEl.innerHTML = '<div class="db-loading">抓取中…</div>';
   try {
-    const res = await fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
+    // 用 corsproxy 繞過 CORS，讀 NOAA 3天 Kp 預報 JSON
+    const proxy = 'https://corsproxy.io/?';
+    const target = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json';
+    const res = await fetch(proxy + encodeURIComponent(target));
     const data = await res.json();
 
     // 過濾掉 header（第一欄不是數字的列）並取最近8筆
@@ -2367,18 +2366,19 @@ var currentCat  = 'predep';
 
 // ── 成員設定 ──
 const MEMBER_INFO = {
-  hank: { name: 'Hank', label: 'H',  color: '#4fc3f7' },
-  lily: { name: 'Lily', label: 'L',  color: '#a371f7' },
-  bro:  { name: '哥哥', label: '哥', color: '#56d364' },
-  sis:  { name: '妹妹', label: '妹', color: '#f0a443' },
+  hank: { name: 'Hank', label: 'H',  color: '#7B5EA0' },
+  lily: { name: 'Lily', label: 'L',  color: '#C49A3A' },
+  bro:  { name: '哥哥', label: '哥', color: '#9E4A2C' },
+  sis:  { name: '妹妹', label: '妹', color: '#5A6E7A' },
 };
 
 // ── 即時監聽 ──
-// 三個核心資料都拿到後才首次 render；之後任一更新直接 re-render
-var _initLoaded = { checked: false, custom: false, assignees: false };
+// checked + custom 兩個核心資料都拿到後觸發首次 render
+// assignees 是附加資料，不阻擋初始化，有回來就補上
+var _initLoaded = { checked: false, custom: false };
 
 function _tryInitRender() {
-  if (_initLoaded.checked && _initLoaded.custom && _initLoaded.assignees) {
+  if (_initLoaded.checked && _initLoaded.custom) {
     fbReady = true;
     renderTasks();
     refreshMemberTasksIfVisible();
@@ -2397,8 +2397,7 @@ customRef.on('value', snap => {
 });
 assigneesRef.on('value', snap => {
   fbAssignees = snap.val() || {};
-  if (!_initLoaded.assignees) { _initLoaded.assignees = true; _tryInitRender(); }
-  else if (fbReady) { renderTasks(); refreshMemberTasksIfVisible(); }
+  if (fbReady) { renderTasks(); refreshMemberTasksIfVisible(); }
 });
 groupsRef.on('value', snap => {
   fbGroups = snap.val() || {};
@@ -2725,6 +2724,8 @@ function refreshMemberTasksIfVisible() {
   if (el) el.innerHTML = renderMemberTasks(mid);
 }
 
+renderDays();
+renderMember('hank');
 initDashboard();
 
 
