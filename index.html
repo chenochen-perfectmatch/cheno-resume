@@ -3,34 +3,37 @@
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./冰島 × 倫敦 2026.11_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>冰島 × 倫敦 2026.11</title>
 <style>
   :root {
-    /* 冰島夜空色系 */
-    --bg: #080d14;
-    --bg2: #0d1520;
-    --bg3: rgba(12,22,38,0.75);
-    --card: rgba(16,28,46,0.72);
-    --border: rgba(100,180,255,0.08);
-    --border2: rgba(100,180,255,0.15);
-    --text: #e8f0f8;
-    --muted: #6e8aaa;
-    --dim: #3d5570;
-    /* 極光色調 */
-    --accent: #5de8c8;        /* 極光青綠 */
-    --accent2: #7ef5d8;
-    --aurora-purple: #b87fff; /* 極光紫 */
-    --aurora-blue: #4fc8f0;   /* 極光藍 */
-    --green: #4fda8a;
-    --amber: #f5b942;
-    --red: #f06860;
-    --purple: #b87fff;
-    --teal: #5de8c8;
+    /* ── Kjarval 冰島調色盤 ── */
+    --bg:      #F4EFE4;
+    --bg2:     #EBE4D5;
+    --bg3:     rgba(235,228,213,0.82);
+    --card:    rgba(255,253,246,0.92);
+    --border:  rgba(130,108,78,0.15);
+    --border2: rgba(110,88,58,0.28);
+    --text:    #211B12;
+    --muted:   #7A6A50;
+    --dim:     #B0A088;
+    /* Kjarval accent 系 */
+    --accent:  #7B5EA0;          /* 熔岩紫 */
+    --accent2: #9674BC;
+    --lava:    #3A3038;          /* 藍黑熔岩 */
+    --gold:    #C49A3A;          /* 極光金 */
+    --rust:    #9E4A2C;          /* 侵蝕土赭 */
+    --slate:   #5A6E7A;          /* 冰河石板藍 */
+    --moss:    #6B7A54;          /* 苔蘚綠 */
+    --green:   #5A7A44;
+    --amber:   #C49A3A;
+    --red:     #A03828;
+    --purple:  #7B5EA0;
+    --teal:    #5A6E7A;
     /* 漸層 */
-    --grad-aurora: linear-gradient(135deg, #0a2a1a 0%, #0d1e35 40%, #1a0d35 100%);
-    --grad-ice: linear-gradient(180deg, #0d2035 0%, #080d14 100%);
+    --grad-aurora: linear-gradient(135deg, #EDE6D4 0%, #E8DFD0 40%, #EDE8E0 100%);
+    --grad-ice: linear-gradient(180deg, #EBE4D5 0%, #F4EFE4 100%);
     --radius: 14px;
     --radius-sm: 9px;
     --font: 'Noto Sans TC', -apple-system, sans-serif;
@@ -39,8 +42,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body {
     background: var(--bg);
-    background-image:
-      url('https://static.liontech.com.tw/cmspic/PIC2405-001973/M_PIC2405-001973.jpg');
+    background-image: url('https://image.invaluable.com/housePhotos/Rasmussen/42/286742/H0862-L16070916.jpg');
     background-size: cover;
     background-position: center top;
     background-attachment: fixed;
@@ -56,15 +58,15 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: rgba(6,10,18,0.78);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    background: rgba(244,239,228,0.82);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
     z-index: 0;
     pointer-events: none;
     max-width: 430px;
     margin: 0 auto;
   }
-  .page, .topbar, .bottom-nav {
+  .page, .topbar, .bottom-nav, .task-cat-bar {
     position: relative;
     z-index: 1;
   }
@@ -74,30 +76,29 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(8,13,20,0.94);
+    background: rgba(244,239,228,0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 0.5px solid rgba(93,232,200,0.12);
+    border-bottom: 0.5px solid var(--border2);
     padding: 0 16px;
     height: 52px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 1px 24px rgba(93,232,200,0.04);
   }
   .topbar::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(93,232,200,0.3), rgba(184,127,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(123,94,160,0.3), rgba(196,154,58,0.25), transparent);
   }
   .topbar-title {
     font-family: var(--font-display);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.06em;
-    color: var(--accent);
+    color: var(--lava);
     text-transform: uppercase;
   }
   .topbar-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
@@ -110,10 +111,10 @@
     transform: translateX(-50%);
     width: 100%;
     max-width: 430px;
-    background: rgba(13,17,23,0.95);
+    background: rgba(244,239,228,0.97);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-top: 0.5px solid var(--border);
+    border-top: 0.5px solid var(--border2);
     display: flex;
     z-index: 100;
     padding-bottom: env(safe-area-inset-bottom, 0);
@@ -133,7 +134,7 @@
     cursor: pointer;
     transition: color 0.2s;
   }
-  .nav-btn.active { color: var(--accent); text-shadow: 0 0 12px rgba(93,232,200,0.6); }
+  .nav-btn.active { color: var(--accent); }
   .nav-btn svg { width: 22px; height: 22px; }
 
   /* ── PAGES ── */
@@ -142,7 +143,7 @@
 
   /* ── HERO ── */
   .hero {
-    background: linear-gradient(135deg, #0a192f 0%, #0d2137 50%, #0a1628 100%);
+    background: linear-gradient(135deg, rgba(58,48,56,0.07) 0%, rgba(123,94,160,0.07) 50%, rgba(196,154,58,0.07) 100%);
     border: 0.5px solid var(--border2);
     border-radius: var(--radius);
     padding: 24px 20px 20px;
@@ -156,11 +157,11 @@
     top: -30px; right: -30px;
     width: 120px; height: 120px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(196,154,58,0.15) 0%, transparent 70%);
     pointer-events: none;
   }
   .hero-label { font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
-  .hero-title { font-size: 26px; font-weight: 700; line-height: 1.2; color: var(--text); }
+  .hero-title { font-size: 26px; font-weight: 700; line-height: 1.2; color: var(--lava); }
   .hero-title span { color: var(--accent); }
   .hero-date { font-size: 13px; color: var(--muted); margin-top: 8px; }
   .hero-members {
@@ -168,23 +169,23 @@
   }
   .member-chip {
     display: flex; align-items: center; gap: 6px;
-    background: rgba(79,195,247,0.1);
-    border: 0.5px solid rgba(79,195,247,0.25);
+    background: rgba(123,94,160,0.08);
+    border: 0.5px solid rgba(123,94,160,0.22);
     border-radius: 20px;
     padding: 5px 12px 5px 8px;
-    font-size: 12px; color: var(--accent2);
+    font-size: 12px; color: var(--accent);
     cursor: pointer;
     transition: all 0.2s;
   }
   .member-chip:hover, .member-chip.active-member {
-    background: rgba(79,195,247,0.2);
-    border-color: rgba(79,195,247,0.5);
+    background: rgba(123,94,160,0.16);
+    border-color: rgba(123,94,160,0.4);
   }
   .member-avatar {
     width: 22px; height: 22px;
     border-radius: 50%;
-    background: var(--accent);
-    color: var(--bg);
+    background: var(--lava);
+    color: rgba(244,239,228,0.9);
     font-size: 10px; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
   }
@@ -201,7 +202,7 @@
     padding: 12px 10px;
     text-align: center;
   }
-  .stat-num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--lava); }
   .stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; letter-spacing: 0.04em; }
 
   /* ── SECTION HEADER ── */
@@ -209,7 +210,7 @@
     display: flex; align-items: center; justify-content: space-between;
     margin: 20px 0 10px;
   }
-  .section-title { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; }
+  .section-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
   .section-badge {
     font-size: 11px; background: var(--bg3);
     border: 0.5px solid var(--border2);
@@ -237,7 +238,7 @@
     background: var(--bg3);
     border: 0.5px solid var(--border2);
   }
-  .day-badge-num { font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .day-badge-num { font-size: 18px; font-weight: 700; color: var(--lava); line-height: 1; }
   .day-badge-label { font-size: 9px; color: var(--muted); letter-spacing: 0.04em; }
   .day-card-info { flex: 1; min-width: 0; }
   .day-card-date { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
@@ -252,11 +253,11 @@
     font-size: 11px; padding: 3px 9px;
     border-radius: 20px; font-weight: 500;
   }
-  .tag-aurora { background: rgba(163,113,247,0.15); color: var(--purple); border: 0.5px solid rgba(163,113,247,0.3); }
-  .tag-activity { background: rgba(79,195,247,0.12); color: var(--accent); border: 0.5px solid rgba(79,195,247,0.25); }
-  .tag-warning { background: rgba(240,164,67,0.12); color: var(--amber); border: 0.5px solid rgba(240,164,67,0.3); }
-  .tag-booked { background: rgba(86,211,100,0.1); color: var(--green); border: 0.5px solid rgba(86,211,100,0.25); }
-  .tag-london { background: rgba(57,211,195,0.1); color: var(--teal); border: 0.5px solid rgba(57,211,195,0.25); }
+  .tag-aurora  { background: rgba(123,94,160,0.1); color: var(--accent); border: 0.5px solid rgba(123,94,160,0.28); }
+  .tag-activity{ background: rgba(90,110,122,0.1); color: var(--slate); border: 0.5px solid rgba(90,110,122,0.28); }
+  .tag-warning { background: rgba(196,154,58,0.12); color: #8A6018; border: 0.5px solid rgba(196,154,58,0.35); }
+  .tag-booked  { background: rgba(90,122,68,0.1); color: var(--green); border: 0.5px solid rgba(90,122,68,0.28); }
+  .tag-london  { background: rgba(90,110,122,0.1); color: var(--slate); border: 0.5px solid rgba(90,110,122,0.28); }
 
   /* ── DAY DETAIL (expanded) ── */
   .day-detail { display: none; border-top: 0.5px solid var(--border); }
@@ -275,19 +276,19 @@
     margin-top: 6px; flex-shrink: 0;
   }
   .spot-dot-drive { background: var(--dim); }
-  .spot-dot-sight { background: var(--accent); }
-  .spot-dot-food { background: var(--amber); }
-  .spot-dot-warn { background: var(--red); }
-  .spot-dot-stay { background: var(--green); }
-  .spot-dot-booked { background: var(--purple); }
+  .spot-dot-sight { background: var(--slate); }
+  .spot-dot-food  { background: var(--gold); }
+  .spot-dot-warn  { background: var(--red); }
+  .spot-dot-stay  { background: var(--green); }
+  .spot-dot-booked{ background: var(--accent); }
   .spot-content { flex: 1; min-width: 0; }
   .spot-name { font-size: 13px; font-weight: 500; color: var(--text); }
   .spot-name a { color: var(--accent); text-decoration: none; }
   .spot-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
   .spot-note {
-    font-size: 11px; color: var(--amber);
-    background: rgba(240,164,67,0.08);
-    border-left: 2px solid var(--amber);
+    font-size: 11px; color: #8A6018;
+    background: rgba(196,154,58,0.08);
+    border-left: 2px solid var(--gold);
     padding: 4px 8px;
     margin-top: 4px;
     border-radius: 0 4px 4px 0;
@@ -307,7 +308,7 @@
     background: var(--bg3); border-radius: var(--radius-sm);
     border: 0.5px solid var(--border2);
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: var(--accent); text-align: center; line-height: 1.2;
+    font-size: 11px; font-weight: 700; color: var(--lava); text-align: center; line-height: 1.2;
   }
   .hotel-name { font-size: 14px; font-weight: 600; color: var(--text); }
   .hotel-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
@@ -317,12 +318,12 @@
     border-radius: 20px; background: var(--bg3);
     border: 0.5px solid var(--border2); color: var(--muted);
   }
-  .hotel-pill.ok { color: var(--green); background: rgba(86,211,100,0.08); border-color: rgba(86,211,100,0.2); }
-  .hotel-pill.warn { color: var(--amber); background: rgba(240,164,67,0.08); border-color: rgba(240,164,67,0.25); }
+  .hotel-pill.ok   { color: var(--green); background: rgba(90,122,68,0.08); border-color: rgba(90,122,68,0.2); }
+  .hotel-pill.warn { color: #8A6018; background: rgba(196,154,58,0.08); border-color: rgba(196,154,58,0.25); }
   .hotel-cancel {
-    font-size: 11px; color: var(--amber);
-    background: rgba(240,164,67,0.08);
-    border: 0.5px solid rgba(240,164,67,0.2);
+    font-size: 11px; color: #8A6018;
+    background: rgba(196,154,58,0.08);
+    border: 0.5px solid rgba(196,154,58,0.2);
     border-radius: 6px;
     padding: 6px 10px;
     margin-top: 8px;
@@ -346,8 +347,8 @@
     transition: all 0.2s;
   }
   .member-tab.active {
-    background: rgba(79,195,247,0.1);
-    border-color: rgba(79,195,247,0.35);
+    background: rgba(123,94,160,0.1);
+    border-color: rgba(123,94,160,0.32);
     color: var(--accent);
     font-weight: 600;
   }
@@ -366,7 +367,7 @@
     border-radius: 50%;
     font-size: 20px; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
-    color: var(--bg); flex-shrink: 0;
+    color: rgba(244,239,228,0.92); flex-shrink: 0;
   }
   .profile-name { font-size: 18px; font-weight: 700; color: var(--text); }
   .profile-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
@@ -386,15 +387,15 @@
   .info-row {
     display: flex; justify-content: space-between; align-items: flex-start;
     padding: 7px 0;
-    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    border-bottom: 0.5px solid var(--border);
     gap: 12px;
   }
   .info-row:last-child { border-bottom: none; padding-bottom: 0; }
   .info-key { font-size: 12px; color: var(--muted); flex-shrink: 0; }
   .info-val { font-size: 13px; color: var(--text); text-align: right; font-weight: 500; }
   .info-val.accent { color: var(--accent); }
-  .info-val.green { color: var(--green); }
-  .info-val.amber { color: var(--amber); }
+  .info-val.green  { color: var(--green); }
+  .info-val.amber  { color: #8A6018; }
 
   .flight-card {
     background: var(--bg3);
@@ -407,11 +408,11 @@
     display: flex; align-items: center; gap: 8px;
     font-size: 15px; font-weight: 700; margin-bottom: 6px;
   }
-  .flight-arrow { color: var(--accent); font-size: 18px; }
+  .flight-arrow { color: var(--lava); font-size: 18px; }
   .flight-detail { font-size: 12px; color: var(--muted); }
   .flight-code {
-    display: inline-block; background: rgba(79,195,247,0.1);
-    border: 0.5px solid rgba(79,195,247,0.25);
+    display: inline-block; background: rgba(123,94,160,0.1);
+    border: 0.5px solid rgba(123,94,160,0.25);
     border-radius: 4px; padding: 1px 8px;
     font-size: 12px; color: var(--accent); font-weight: 600;
     margin-top: 6px;
@@ -419,8 +420,8 @@
 
   /* ── EMERGENCY ── */
   .emerg-card {
-    background: rgba(248,81,73,0.08);
-    border: 0.5px solid rgba(248,81,73,0.25);
+    background: rgba(160,56,40,0.07);
+    border: 0.5px solid rgba(160,56,40,0.22);
     border-radius: var(--radius);
     padding: 14px 16px;
     margin-bottom: 8px;
@@ -445,21 +446,21 @@
   /* ── TIPS ── */
   .tip-card {
     background: var(--card);
-    border-left: 3px solid var(--amber);
+    border-left: 3px solid var(--gold);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     padding: 10px 14px;
     margin-bottom: 8px;
     font-size: 13px;
   }
-  .tip-card b { color: var(--amber); }
+  .tip-card b { color: #8A6018; }
 
   /* ── NOTICE BANNER ── */
   .notice {
-    background: rgba(240,164,67,0.08);
-    border: 0.5px solid rgba(240,164,67,0.25);
+    background: rgba(196,154,58,0.08);
+    border: 0.5px solid rgba(196,154,58,0.25);
     border-radius: var(--radius-sm);
     padding: 10px 14px;
-    font-size: 12px; color: var(--amber);
+    font-size: 12px; color: #8A6018;
     margin-bottom: 12px;
     display: flex; gap: 8px; align-items: flex-start;
   }
@@ -471,48 +472,32 @@
     left: 50%; transform: translateX(-50%);
     width: 100%; max-width: 430px;
     height: 32px;
-    background: linear-gradient(transparent, rgba(13,17,23,0.8));
+    background: linear-gradient(transparent, rgba(244,239,228,0.8));
     pointer-events: none;
   }
 
   /* ── DASHBOARD ── */
   .db-hero {
     position: relative;
-    background: var(--grad-aurora);
+    background: linear-gradient(135deg, rgba(58,48,56,0.07) 0%, rgba(123,94,160,0.08) 50%, rgba(196,154,58,0.08) 100%);
     border-radius: var(--radius);
     overflow: hidden;
     margin-bottom: 12px;
     padding: 24px 18px 20px;
-    border: 0.5px solid rgba(93,232,200,0.15);
+    border: 0.5px solid var(--border2);
   }
   .db-hero::before {
     content: '';
-    position: absolute; inset: 0;
-    background-image: url('https://static.liontech.com.tw/cmspic/PIC2405-001973/M_PIC2405-001973.jpg');
-    background-size: cover;
-    background-position: center 40%;
-    filter: blur(3px) brightness(0.35) saturate(1.2);
-    transform: scale(1.04);
-    z-index: 0;
+    position: absolute; top: -30px; right: -20px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,154,58,0.14) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
   }
-  .db-hero-aurora {
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 100%; pointer-events: none; opacity: 0.45; z-index: 1;
-  }
-  .db-hero-glow {
-    position: absolute; top: -40px; right: -20px;
-    width: 180px; height: 180px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(184,127,255,0.18) 0%, transparent 70%);
-    pointer-events: none; z-index: 1;
-  }
-  .db-hero-glow2 {
-    position: absolute; bottom: -30px; left: -10px;
-    width: 140px; height: 140px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(93,232,200,0.14) 0%, transparent 70%);
-    pointer-events: none; z-index: 1;
-  }
+  .db-hero-aurora { display: none; }
+  .db-hero-glow   { display: none; }
+  .db-hero-glow2  { display: none; }
   .db-hero-inner {
-    position: relative; z-index: 2;
+    position: relative; z-index: 1;
     display: flex; align-items: flex-start; justify-content: space-between;
   }
   .db-header {
@@ -520,33 +505,31 @@
     padding: 20px 0 14px;
   }
   .db-trip-label {
-    font-size: 10px; letter-spacing: 0.16em; color: var(--accent);
-    text-transform: uppercase; margin-bottom: 6px; opacity: 0.8;
+    font-size: 10px; letter-spacing: 0.16em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 6px;
   }
   .db-trip-title {
     font-family: var(--font-display);
     font-size: 32px; font-weight: 700; line-height: 1.05;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.02em; color: var(--lava);
   }
   .db-trip-title span { color: var(--accent); }
   .db-trip-dates {
-    font-size: 12px; color: rgba(232,240,248,0.55);
+    font-size: 12px; color: var(--muted);
     margin-top: 8px; letter-spacing: 0.04em;
   }
   .db-countdown {
-    background: rgba(8,20,35,0.7);
-    border: 0.5px solid rgba(93,232,200,0.25);
+    background: rgba(58,48,56,0.1);
+    border: 0.5px solid var(--border2);
     border-radius: var(--radius-sm); padding: 10px 14px;
     text-align: center; min-width: 64px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 20px rgba(93,232,200,0.1), inset 0 0 12px rgba(93,232,200,0.04);
   }
-  .db-countdown-num { font-size: 26px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .db-countdown-num { font-size: 26px; font-weight: 700; color: var(--lava); line-height: 1; }
   .db-countdown-label { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: 0.06em; }
   .db-today-card {
     background: var(--card); border: 0.5px solid var(--border2);
     border-radius: var(--radius); margin-bottom: 12px; overflow: hidden;
-    border-left: 2px solid var(--accent);
+    border-left: 2px solid var(--lava);
   }
   .db-today-nav {
     display: flex; align-items: center; justify-content: space-between;
@@ -558,25 +541,25 @@
     font-size: 22px; line-height: 1; cursor: pointer;
     padding: 2px 8px; border-radius: 6px; transition: color 0.15s, background 0.15s;
   }
-  .db-nav-arrow:hover { color: var(--accent); background: rgba(79,195,247,0.08); }
+  .db-nav-arrow:hover { color: var(--accent); background: rgba(123,94,160,0.08); }
   .db-today-inner { padding: 12px 14px 14px; }
   .db-today-route { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
   .db-today-hotel { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
   .db-spot-mini {
     display: flex; align-items: center; gap: 8px;
     padding: 5px 0; font-size: 12px; color: var(--muted);
-    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    border-bottom: 0.5px solid var(--border);
   }
   .db-spot-mini:last-child { border-bottom: none; }
   .db-spot-mini-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .db-spot-mini-name { color: var(--text); flex: 1; }
   .db-warn-strip {
     display: flex; align-items: flex-start; gap: 8px;
-    background: rgba(240,164,67,0.08); border-left: 2px solid var(--amber);
-    padding: 8px 12px; font-size: 12px; color: var(--amber);
+    background: rgba(196,154,58,0.08); border-left: 2px solid var(--gold);
+    padding: 8px 12px; font-size: 12px; color: #8A6018;
   }
   .db-pre-trip { padding: 20px 14px; text-align: center; }
-  .db-pre-trip-num { font-size: 40px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .db-pre-trip-num { font-size: 40px; font-weight: 700; color: var(--lava); line-height: 1; }
   .db-pre-trip-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
   .db-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
   .db-widget-card {
@@ -588,13 +571,13 @@
     text-transform: uppercase; letter-spacing: 0.1em;
     display: flex; align-items: center; gap: 5px; margin-bottom: 10px;
   }
-  .db-widget-icon { font-size: 12px; color: var(--accent); }
+  .db-widget-icon { font-size: 12px; color: var(--lava); }
   .db-widget-sub { color: var(--dim); font-size: 9px; margin-left: 2px; text-transform: none; letter-spacing: 0; }
   .db-widget-refresh {
     font-size: 10px; color: var(--dim); cursor: pointer; margin-top: 8px;
     padding-top: 6px; border-top: 0.5px solid var(--border); text-align: right;
   }
-  .db-widget-refresh:hover { color: var(--accent); }
+  .db-widget-refresh:hover { color: var(--lava); }
   .db-loading { font-size: 11px; color: var(--dim); padding: 4px 0; }
   .db-temp-main { font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
   .db-temp-feels { font-size: 10px; color: var(--muted); margin-top: 2px; }
@@ -626,8 +609,8 @@
     text-decoration: none; display: block; text-align: center; transition: all 0.15s;
   }
   .db-road-btn span { font-size: 10px; color: var(--muted); font-weight: 400; display: block; margin-top: 2px; }
-  .db-road-btn:hover { border-color: rgba(79,195,247,0.4); color: var(--accent); }
-  .db-road-primary { background: rgba(79,195,247,0.08); border-color: rgba(79,195,247,0.3); color: var(--accent); }
+  .db-road-btn:hover { border-color: rgba(123,94,160,0.4); color: var(--accent); }
+  .db-road-primary { background: rgba(123,94,160,0.08); border-color: rgba(123,94,160,0.28); color: var(--accent); }
   .db-members-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
   /* ══ 清單頁 ══ */
 
@@ -656,8 +639,8 @@
     -webkit-tap-highlight-color: transparent;
   }
   .task-cat-btn.active {
-    background: var(--accent); border-color: var(--accent);
-    color: var(--bg); font-weight: 700;
+    background: var(--lava); border-color: var(--lava);
+    color: rgba(244,239,228,0.92); font-weight: 700;
   }
 
   /* 整體進度 */
@@ -743,7 +726,7 @@
     font-size: 11px; font-weight: 700; color: var(--bg);
     margin-top: 1px; transition: all 0.15s;
   }
-  .task-done .task-checkbox { background: var(--green); border-color: var(--green); color: var(--bg); }
+  .task-done .task-checkbox { background: var(--green); border-color: var(--green); color: rgba(244,239,228,0.9); }
   .task-body { flex: 1; min-width: 0; }
   .task-text {
     font-size: 13px; color: var(--text); line-height: 1.5;
@@ -764,10 +747,10 @@
     border-radius: 10px; font-size: 10px; font-weight: 600;
     border: 0.5px solid; opacity: 0.85;
   }
-  .assignee-badge.hank  { color: #4fc3f7; border-color: rgba(79,195,247,0.35); background: rgba(79,195,247,0.1); }
-  .assignee-badge.lily  { color: #a371f7; border-color: rgba(163,113,247,0.35); background: rgba(163,113,247,0.1); }
-  .assignee-badge.bro   { color: #56d364; border-color: rgba(86,211,100,0.35); background: rgba(86,211,100,0.1); }
-  .assignee-badge.sis   { color: #f0a443; border-color: rgba(240,164,67,0.35); background: rgba(240,164,67,0.1); }
+  .assignee-badge.hank  { color: var(--accent);  border-color: rgba(123,94,160,0.32); background: rgba(123,94,160,0.1); }
+  .assignee-badge.lily  { color: #8A6018;         border-color: rgba(196,154,58,0.32);  background: rgba(196,154,58,0.1); }
+  .assignee-badge.bro   { color: var(--rust);     border-color: rgba(158,74,44,0.32);   background: rgba(158,74,44,0.1); }
+  .assignee-badge.sis   { color: var(--slate);    border-color: rgba(90,110,122,0.32);  background: rgba(90,110,122,0.1); }
 
   /* 成員頁：我的任務 */
   .my-tasks-section { margin-top: 16px; }
@@ -802,10 +785,10 @@
     -webkit-tap-highlight-color: transparent;
     user-select: none;
   }
-  .assign-chip.selected-hank { border-color: #4fc3f7; background: rgba(79,195,247,0.15); color: #4fc3f7; }
-  .assign-chip.selected-lily { border-color: #a371f7; background: rgba(163,113,247,0.15); color: #a371f7; }
-  .assign-chip.selected-bro  { border-color: #56d364; background: rgba(86,211,100,0.15); color: #56d364; }
-  .assign-chip.selected-sis  { border-color: #f0a443; background: rgba(240,164,67,0.15); color: #f0a443; }
+  .assign-chip.selected-hank { border-color: var(--accent); background: rgba(123,94,160,0.15); color: var(--accent); }
+  .assign-chip.selected-lily { border-color: var(--gold);   background: rgba(196,154,58,0.15); color: #8A6018; }
+  .assign-chip.selected-bro  { border-color: var(--rust);   background: rgba(158,74,44,0.15);  color: var(--rust); }
+  .assign-chip.selected-sis  { border-color: var(--slate);  background: rgba(90,110,122,0.15); color: var(--slate); }
   .assign-chip:not([class*="selected"]) { color: var(--muted); }
 
   /* ══ 行程頁 Tab 架構 ══ */
@@ -864,7 +847,7 @@
     padding: 16px 0 8px;
   }
   .day-detail-date { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
-  .day-detail-title { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .day-detail-title { font-size: 20px; font-weight: 700; color: var(--lava); line-height: 1.2; }
 
   /* 地圖區塊 */
   .day-map-block {
@@ -1072,14 +1055,14 @@
     <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;hank&#39;)">
       <div class="member-avatar">H</div> Hank
     </div>
-    <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;lily&#39;)">
-      <div class="member-avatar" style="background:var(--purple)">L</div> Lily
+    <div class="member-chip" onclick="switchPage('people','lily')">
+      <div class="member-avatar" style="background:#C49A3A">L</div> Lily
     </div>
-    <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;bro&#39;)">
-      <div class="member-avatar" style="background:var(--green)">哥</div> 哥哥
+    <div class="member-chip" onclick="switchPage('people','bro')">
+      <div class="member-avatar" style="background:#9E4A2C">哥</div> 哥哥
     </div>
-    <div class="member-chip" onclick="switchPage(&#39;people&#39;,&#39;sis&#39;)">
-      <div class="member-avatar" style="background:var(--amber)">妹</div> 妹妹
+    <div class="member-chip" onclick="switchPage('people','sis')">
+      <div class="member-avatar" style="background:#5A6E7A">妹</div> 妹妹
     </div>
   </div>
 
@@ -1614,7 +1597,7 @@ const HOTELS = [
 const MEMBERS = {
   hank: {
     name: 'Hank', role: '主要駕駛',
-    color: '#4fc3f7',
+    color: '#7B5EA0',
     flights: [
       { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03 · 座位 62B', code: '訂單：富邦卡', twd: 45804 },
       { route: 'KEF → 倫敦 LHR', detail: '2026/11/14 · 座位 17B · T5', code: 'BA8881 · 訂單：YWBN7U', twd: 9084 },
@@ -1624,7 +1607,7 @@ const MEMBERS = {
   },
   lily: {
     name: 'Lily', role: '副駕 / 訂房統籌',
-    color: '#a371f7',
+    color: '#C49A3A',
     flights: [
       { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03 · 座位 62A', code: '訂單：好市多卡', twd: 46124 },
       { route: 'KEF → 倫敦 LHR', detail: '2026/11/14 · 座位 17A · T5', code: 'BA8881 · 訂單：YWQISH', twd: 9084 },
@@ -1634,7 +1617,7 @@ const MEMBERS = {
   },
   bro: {
     name: '哥哥', role: '旅遊夥伴',
-    color: '#56d364',
+    color: '#9E4A2C',
     flights: [
       { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03', code: '費用 NT$42,300（3/26已轉）', twd: 42300 },
       { route: 'KEF → 倫敦', detail: '2026/11/14', code: '費用 NT$8,069（3/26已轉）', twd: 8069 },
@@ -1644,7 +1627,7 @@ const MEMBERS = {
   },
   sis: {
     name: '妹妹', role: '旅遊夥伴',
-    color: '#f0a443',
+    color: '#5A6E7A',
     flights: [
       { route: '桃園 → KEF', detail: 'via 倫敦 · 2026/11/03', code: '費用 NT$42,300（3/26已轉）', twd: 42300 },
       { route: 'KEF → 倫敦', detail: '2026/11/14', code: '費用 NT$8,048（3/26已轉）', twd: 8048 },
