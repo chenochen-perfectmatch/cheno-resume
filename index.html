@@ -612,6 +612,53 @@
   .db-road-btn:hover { border-color: rgba(123,94,160,0.4); color: var(--accent); }
   .db-road-primary { background: rgba(123,94,160,0.08); border-color: rgba(123,94,160,0.28); color: var(--accent); }
   .db-members-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  /* ══ 冰島｜倫敦 分段切換 ══ */
+  .segment-bar {
+    display: flex;
+    gap: 0;
+    padding: 10px 16px 0;
+    background: var(--bg);
+    position: sticky;
+    top: 52px;
+    z-index: 91;
+  }
+  .segment-btn {
+    flex: 1;
+    padding: 9px 0 8px;
+    border: 0.5px solid var(--border2);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--font);
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+  }
+  .segment-btn:first-child {
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    border-right: none;
+  }
+  .segment-btn:last-child {
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .segment-btn.active {
+    background: var(--lava);
+    color: rgba(244,239,228,0.95);
+    border-color: var(--lava);
+    z-index: 1;
+  }
+  .segment-btn.active.london {
+    background: var(--slate);
+    border-color: var(--slate);
+  }
+  .segment-flag {
+    font-size: 14px;
+    margin-right: 5px;
+    vertical-align: -1px;
+  }
+
   /* ══ 行程頁 Tab 架構 ══ */
   .day-tab-bar {
     display: flex;
@@ -619,7 +666,7 @@
     gap: 6px;
     padding: 12px 16px 10px;
     position: sticky;
-    top: 52px;
+    top: 101px;
     z-index: 90;
     background: var(--bg);
     border-bottom: 0.5px solid var(--border);
@@ -728,6 +775,166 @@
     grid-column: 1 / 3;
   }
 
+  /* ══════════════════════════════════════
+     RESPONSIVE — 平板 768px+
+  ══════════════════════════════════════ */
+  @media (min-width: 768px) {
+    body {
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+    }
+    body::before {
+      max-width: 100%;
+      margin: 0;
+    }
+
+    /* topbar 橫跨整列 */
+    .topbar {
+      grid-column: 1 / 3;
+      grid-row: 1;
+      max-width: 100%;
+      padding: 0 28px;
+      height: 58px;
+      border-bottom: 0.5px solid var(--border2);
+    }
+    .topbar-title { font-size: 18px; }
+
+    /* 底部導覽變成左側垂直導覽 */
+    .bottom-nav {
+      position: sticky;
+      top: 58px;
+      left: 0;
+      bottom: auto;
+      transform: none;
+      width: 220px;
+      max-width: 220px;
+      height: calc(100vh - 58px);
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      border-top: none;
+      border-right: 0.5px solid var(--border2);
+      padding: 20px 12px;
+      gap: 4px;
+      grid-column: 1;
+      grid-row: 2;
+      overflow-y: auto;
+    }
+    .nav-btn {
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+      text-align: left;
+    }
+    .nav-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .nav-btn:hover { background: rgba(123,94,160,0.06); }
+    .nav-btn.active {
+      background: rgba(123,94,160,0.1);
+      border: 0.5px solid rgba(123,94,160,0.22);
+    }
+
+    /* 主內容區 — 所有 page 都放 col 2，active 才顯示 */
+    .page {
+      grid-column: 2;
+      grid-row: 2;
+      padding: 28px 32px 60px;
+      max-width: 720px;
+      width: 100%;
+    }
+    /* display:none 的 page 不佔空間 */
+    .page:not(.active) { display: none; }
+    .page.active { display: block; }
+
+    /* 側邊欄旅程摘要 */
+    .sidenav-trip { display: block !important; }
+
+    /* 行程頁調整 */
+    #page-days {
+      padding: 0 0 60px;
+      max-width: 720px;
+    }
+    .segment-bar {
+      top: 58px;
+      padding: 12px 32px 0;
+    }
+    .day-tab-bar {
+      top: 108px;
+      padding: 12px 32px 10px;
+    }
+    #day-detail-panel { padding: 0 32px; }
+
+    /* Hero 卡片放大 */
+    .db-hero { padding: 32px 28px 26px; }
+    .db-trip-title { font-size: 40px; }
+
+    /* 首頁雙欄 widgets */
+    .db-2col { grid-template-columns: 1fr 1fr; }
+
+    /* 成員頁 tab 橫排 */
+    .member-tabs { gap: 10px; }
+    .member-tab { font-size: 14px; padding: 12px 16px; }
+
+    /* 倒數區塊更顯眼 */
+    .db-countdown { min-width: 80px; padding: 14px 18px; }
+    .db-countdown-num { font-size: 32px; }
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — 桌機 1100px+
+  ══════════════════════════════════════ */
+  @media (min-width: 1100px) {
+    body {
+      grid-template-columns: 240px 1fr;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .topbar { padding: 0 36px; }
+
+    .bottom-nav {
+      width: 240px;
+      max-width: 240px;
+      padding: 24px 16px;
+    }
+
+    .page {
+      max-width: 860px;
+      padding: 36px 48px 80px;
+    }
+
+    #page-days {
+      max-width: 860px;
+    }
+    .segment-bar { padding: 14px 48px 0; }
+    .day-tab-bar { padding: 12px 48px 10px; top: 110px; }
+    #day-detail-panel { padding: 0 48px; }
+
+    /* 首頁三欄 stats */
+    .stats-row { grid-template-columns: 1fr 1fr 1fr; }
+
+    /* 首頁 widgets 雙欄加寬 */
+    .db-today-card { font-size: 14px; }
+    .db-trip-title { font-size: 48px; }
+
+    /* 住宿卡片 hover 效果 */
+    .hotel-card {
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .hotel-card:hover {
+      border-color: var(--border2);
+      box-shadow: 0 2px 12px rgba(58,48,56,0.07);
+    }
+
+    /* day-card hover */
+    .day-card { transition: border-color 0.15s; }
+    .day-card:hover { border-color: var(--border2); }
+  }
 
 </style>
 
@@ -890,6 +1097,15 @@
 
 <!-- ====== PAGE: 每日行程 ====== -->
 <div class="page" id="page-days" style="padding:0 0 90px">
+  <!-- 分段切換：冰島 / 倫敦 -->
+  <div class="segment-bar" id="segment-bar">
+    <button class="segment-btn active" id="seg-iceland" onclick="switchSegment('iceland')">
+      <span class="segment-flag">🇮🇸</span>冰島 D1–D12
+    </button>
+    <button class="segment-btn london" id="seg-london" onclick="switchSegment('london')">
+      <span class="segment-flag">🇬🇧</span>倫敦 D12–D16
+    </button>
+  </div>
   <!-- 固定頂部：橫向日期捲軸 -->
   <div class="day-tab-bar" id="day-tab-bar"><button class="day-tab active" id="daytab-1" onclick="selectDay(1)">
       <div class="day-tab-num">D1</div>
@@ -1158,6 +1374,13 @@
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
+  <!-- 側邊欄旅程摘要（平板/桌機才顯示） -->
+  <div class="sidenav-trip" style="display:none">
+    <div style="font-size:10px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Family Road Trip</div>
+    <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--lava);line-height:1.1">冰島 <span style="color:var(--accent)">×</span> 倫敦</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px">11.03 — 11.18 · 4人</div>
+    <div style="height:0.5px;background:var(--border2);margin:16px 0 8px"></div>
+  </div>
   <button class="nav-btn" onclick="switchPage(&#39;home&#39;)" id="nav-home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
     首頁
@@ -1472,25 +1695,8 @@ const MEMBERS = {
 // ═══════════════════════════════════════════
 
 function renderDays() {
-  const tabBar = document.getElementById('day-tab-bar');
-  if (!tabBar) return;
-
-  // 橫向日期 tab
-  tabBar.innerHTML = DAYS.map(day => {
-    const tagColors = { '極光機會':'aurora','採買日':'warn','橡皮艇已訂':'booked','冰洞已訂':'booked',
-      '偏趕':'warn','全程最長':'warn','注意天氣':'warn','飛機日':'ok','英國入境':'london','倫敦':'london','回程':'london' };
-    const alertTag = day.tags.find(t => tagColors[t] === 'warn');
-    const auroraTag = day.tags.find(t => tagColors[t] === 'aurora');
-    const dot = alertTag ? 'var(--amber)' : auroraTag ? 'var(--purple)' : day.tags.find(t=>tagColors[t]==='london') ? 'var(--teal)' : 'var(--dim)';
-    return `<button class="day-tab" id="daytab-${day.d}" onclick="selectDay(${day.d})">
-      <div class="day-tab-num">D${day.d}</div>
-      <div class="day-tab-date">${day.date.split(' ')[0]}</div>
-      <div class="day-tab-dot" style="background:${dot}"></div>
-    </button>`;
-  }).join('');
-
-  // 預設選第一天
-  selectDay(1);
+  // 使用 switchSegment 統一渲染，預設冰島段
+  switchSegment('iceland');
 }
 
 function selectDay(d) {
@@ -1611,6 +1817,7 @@ function toggleDay(d) { selectDay(d); }
 
 function renderHotels() {
   const container = document.getElementById('hotel-list');
+  if (!container) return;
   const now = new Date();
 
   container.innerHTML = `<div class="notice"><span class="notice-icon">⚠</span><span>所有住宿均透過 Flygo booking 預訂，下方顯示各住宿免費取消截止日。</span></div>` +
@@ -1905,29 +2112,42 @@ function fetchWeather() {
   fetchWeatherForDay(idx);
 }
 
-// ── 極光 (NOAA Kp 指數) ──
+// ── 極光 (NOAA Kp 指數) — 多重 proxy fallback ──
 async function fetchAurora() {
   const contentEl = document.getElementById('db-aurora-content');
   if (!contentEl) return;
   contentEl.innerHTML = '<div class="db-loading">抓取中…</div>';
+
+  const target = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json';
+  // 依序嘗試三個 proxy，任一成功即停止
+  const proxies = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`,
+    `https://corsproxy.io/?${encodeURIComponent(target)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`,
+  ];
+
+  let data = null;
+  for (const proxyUrl of proxies) {
+    try {
+      const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(6000) });
+      if (!res.ok) continue;
+      data = await res.json();
+      if (data && Array.isArray(data) && data.length > 1) break;
+    } catch(e) { continue; }
+  }
+
+  if (!data) {
+    contentEl.innerHTML = '<div class="db-loading" style="color:var(--red)">抓取失敗<br><span style="font-size:9px">請連接網路後重試</span></div>';
+    return;
+  }
+
   try {
-    // 用 corsproxy 繞過 CORS，讀 NOAA 3天 Kp 預報 JSON
-    const proxy = 'https://corsproxy.io/?';
-    const target = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json';
-    const res = await fetch(proxy + encodeURIComponent(target));
-    const data = await res.json();
-
-    // 過濾掉 header（第一欄不是數字的列）並取最近8筆
-    const rows = data
-      .filter(r => r && !isNaN(parseFloat(r[1])))
-      .slice(-8);
-
+    const rows = data.filter(r => r && !isNaN(parseFloat(r[1]))).slice(-8);
     if (!rows.length) throw new Error('no data');
 
     const latest = rows[rows.length - 1];
     const kp = parseFloat(latest[1]);
 
-    // 顏色與狀態
     let kpColor, status, tip;
     if (isNaN(kp)) {
       kpColor = 'var(--dim)'; status = '資料異常'; tip = '請稍後重試。';
@@ -1945,7 +2165,6 @@ async function fetchAurora() {
       tip = '絕佳機會！即使有輕微雲層也可能看到。';
     }
 
-    // mini bar chart（最近8筆，NaN 的顯示為 0）
     const maxKp = 9;
     const barsHtml = rows.map(r => {
       const v = Math.max(0.1, parseFloat(r[1]) || 0);
@@ -1970,6 +2189,41 @@ async function fetchAurora() {
   }
 }
 
+// ── 冰島 / 倫敦 分段切換 ──
+const ICELAND_DAYS = [1,2,3,4,5,6,7,8,9,10,11,12];
+const LONDON_DAYS  = [12,13,14,15,16];
+
+function switchSegment(seg) {
+  // 更新按鈕樣式
+  document.getElementById('seg-iceland').classList.toggle('active', seg === 'iceland');
+  document.getElementById('seg-london').classList.toggle('active', seg === 'london');
+
+  // 重新渲染 tab bar，只顯示該段天數
+  const tabBar = document.getElementById('day-tab-bar');
+  if (!tabBar) return;
+  const visibleDays = seg === 'iceland' ? ICELAND_DAYS : LONDON_DAYS;
+  const tagColors = { '極光機會':'aurora','採買日':'warn','橡皮艇已訂':'booked','冰洞已訂':'booked',
+    '偏趕':'warn','全程最長':'warn','注意天氣':'warn','飛機日':'ok','英國入境':'london','倫敦':'london','回程':'london' };
+
+  tabBar.innerHTML = DAYS
+    .filter(day => visibleDays.includes(day.d))
+    .map(day => {
+      const alertTag = day.tags.find(t => tagColors[t] === 'warn');
+      const auroraTag = day.tags.find(t => tagColors[t] === 'aurora');
+      const dot = alertTag ? 'var(--amber)' : auroraTag ? 'var(--purple)' : day.tags.find(t=>tagColors[t]==='london') ? 'var(--teal)' : 'var(--dim)';
+      return `<button class="day-tab" id="daytab-${day.d}" onclick="selectDay(${day.d})">
+        <div class="day-tab-num">D${day.d}</div>
+        <div class="day-tab-date">${day.date.split(' ')[0]}</div>
+        <div class="day-tab-dot" style="background:${dot}"></div>
+      </button>`;
+    }).join('');
+
+  // 選第一天
+  selectDay(visibleDays[0]);
+}
+
+
+
 // ── Dashboard 初始化 ──
 function initDashboard() {
   updateCountdown();
@@ -1988,6 +2242,12 @@ function initDashboard() {
 
 
 // ═══════════════════════════════════════════
+// 初始化：設定首頁為 active，渲染所有區塊
+document.getElementById('page-home').classList.add('active');
+document.getElementById('nav-home').classList.add('active');
+renderDays();
+renderHotels();
+renderMember('hank');
 initDashboard();
 
 
