@@ -778,162 +778,73 @@
   /* ══════════════════════════════════════
      RESPONSIVE — 平板 768px+
   ══════════════════════════════════════ */
+
+  /* topnav-links 預設隱藏（手機不顯示） */
+  .topnav-links { display: none; }
+
   @media (min-width: 768px) {
-    body {
-      max-width: 100%;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      grid-template-rows: auto 1fr;
-      min-height: 100vh;
-    }
-    body::before {
-      max-width: 100%;
-      margin: 0;
-    }
+    body { max-width: 100%; }
+    body::before { max-width: 100%; margin: 0; }
 
-    /* topbar 橫跨整列 */
     .topbar {
-      grid-column: 1 / 3;
-      grid-row: 1;
       max-width: 100%;
-      padding: 0 28px;
-      height: 58px;
-      border-bottom: 0.5px solid var(--border2);
+      height: 60px;
+      padding: 0 40px;
     }
-    .topbar-title { font-size: 18px; }
+    .topbar-title { font-size: 17px; }
+    .topbar-sub { display: none; }
+    .topbar-right-mobile { display: none; }
 
-    /* 底部導覽變成左側垂直導覽 */
-    .bottom-nav {
-      position: sticky;
-      top: 58px;
-      left: 0;
-      bottom: auto;
-      transform: none;
-      width: 220px;
-      max-width: 220px;
-      height: calc(100vh - 58px);
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: flex-start;
-      border-top: none;
-      border-right: 0.5px solid var(--border2);
-      padding: 20px 12px;
-      gap: 4px;
-      grid-column: 1;
-      grid-row: 2;
-      overflow-y: auto;
-    }
-    .nav-btn {
-      flex-direction: row;
-      justify-content: flex-start;
-      gap: 12px;
-      padding: 12px 14px;
-      font-size: 13px;
+    .topnav-links { display: flex; align-items: center; gap: 2px; }
+    .topnav-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 14px;
+      border: none; background: none;
+      color: var(--muted);
+      font-size: 13px; font-family: var(--font); font-weight: 500;
+      cursor: pointer;
       border-radius: var(--radius-sm);
-      text-align: left;
+      transition: all 0.15s;
+      white-space: nowrap;
     }
-    .nav-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
-    .nav-btn:hover { background: rgba(123,94,160,0.06); }
-    .nav-btn.active {
-      background: rgba(123,94,160,0.1);
-      border: 0.5px solid rgba(123,94,160,0.22);
+    .topnav-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .topnav-btn:hover { background: rgba(123,94,160,0.07); color: var(--text); }
+    .topnav-btn.active { color: var(--accent); background: rgba(123,94,160,0.1); }
+
+    .bottom-nav { display: none !important; }
+    .scroll-fade { display: none; }
+
+    .page { max-width: 780px; margin: 0 auto; padding: 32px 40px 80px; }
+
+    #page-days { padding: 0 0 80px; max-width: 780px; margin: 0 auto; }
+    .segment-bar { top: 60px; padding: 12px 40px 0; max-width: 780px; margin: 0 auto; }
+    .day-tab-bar { top: 108px; padding: 12px 40px 10px; max-width: 780px; margin: 0 auto; }
+    #day-detail-panel { padding: 0 40px; }
+
+    .hotel-card, .day-card { transition: border-color 0.15s, box-shadow 0.15s; }
+    .hotel-card:hover, .day-card:hover {
+      border-color: var(--border2);
+      box-shadow: 0 2px 10px rgba(58,48,56,0.07);
     }
 
-    /* 主內容區 — 所有 page 都放 col 2，active 才顯示 */
-    .page {
-      grid-column: 2;
-      grid-row: 2;
-      padding: 28px 32px 60px;
-      max-width: 720px;
-      width: 100%;
-    }
-    /* display:none 的 page 不佔空間 */
-    .page:not(.active) { display: none; }
-    .page.active { display: block; }
-
-    /* 側邊欄旅程摘要 */
-    .sidenav-trip { display: block !important; }
-
-    /* 行程頁調整 */
-    #page-days {
-      padding: 0 0 60px;
-      max-width: 720px;
-    }
-    .segment-bar {
-      top: 58px;
-      padding: 12px 32px 0;
-    }
-    .day-tab-bar {
-      top: 108px;
-      padding: 12px 32px 10px;
-    }
-    #day-detail-panel { padding: 0 32px; }
-
-    /* Hero 卡片放大 */
-    .db-hero { padding: 32px 28px 26px; }
-    .db-trip-title { font-size: 40px; }
-
-    /* 首頁雙欄 widgets */
-    .db-2col { grid-template-columns: 1fr 1fr; }
-
-    /* 成員頁 tab 橫排 */
-    .member-tabs { gap: 10px; }
-    .member-tab { font-size: 14px; padding: 12px 16px; }
-
-    /* 倒數區塊更顯眼 */
-    .db-countdown { min-width: 80px; padding: 14px 18px; }
-    .db-countdown-num { font-size: 32px; }
+    .db-trip-title { font-size: 38px; }
+    .db-countdown-num { font-size: 30px; }
   }
 
-  /* ══════════════════════════════════════
-     RESPONSIVE — 桌機 1100px+
-  ══════════════════════════════════════ */
   @media (min-width: 1100px) {
-    body {
-      grid-template-columns: 240px 1fr;
-      max-width: 1440px;
-      margin: 0 auto;
-    }
+    .topbar { padding: 0 60px; height: 64px; }
+    .topbar-title { font-size: 18px; }
+    .topnav-btn { font-size: 14px; padding: 9px 16px; gap: 8px; }
+    .topnav-btn svg { width: 16px; height: 16px; }
 
-    .topbar { padding: 0 36px; }
+    .page { max-width: 920px; padding: 40px 60px 100px; }
 
-    .bottom-nav {
-      width: 240px;
-      max-width: 240px;
-      padding: 24px 16px;
-    }
+    #page-days { max-width: 920px; }
+    .segment-bar { padding: 14px 60px 0; max-width: 920px; top: 64px; }
+    .day-tab-bar { padding: 12px 60px 10px; top: 112px; max-width: 920px; }
+    #day-detail-panel { padding: 0 60px; }
 
-    .page {
-      max-width: 860px;
-      padding: 36px 48px 80px;
-    }
-
-    #page-days {
-      max-width: 860px;
-    }
-    .segment-bar { padding: 14px 48px 0; }
-    .day-tab-bar { padding: 12px 48px 10px; top: 110px; }
-    #day-detail-panel { padding: 0 48px; }
-
-    /* 首頁三欄 stats */
-    .stats-row { grid-template-columns: 1fr 1fr 1fr; }
-
-    /* 首頁 widgets 雙欄加寬 */
-    .db-today-card { font-size: 14px; }
-    .db-trip-title { font-size: 48px; }
-
-    /* 住宿卡片 hover 效果 */
-    .hotel-card {
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .hotel-card:hover {
-      border-color: var(--border2);
-      box-shadow: 0 2px 12px rgba(58,48,56,0.07);
-    }
-
-    /* day-card hover */
-    .day-card { transition: border-color 0.15s; }
-    .day-card:hover { border-color: var(--border2); }
+    .db-trip-title { font-size: 44px; }
   }
 
 </style>
@@ -947,7 +858,26 @@
     <div class="topbar-title">冰島 × 倫敦</div>
     <div class="topbar-sub">2026.11.03 — 11.18 · 4人</div>
   </div>
-  <div style="font-size:11px;color:var(--muted);text-align:right">
+  <!-- 平板/桌機頂部導覽 -->
+  <nav class="topnav-links">
+    <button class="topnav-btn" onclick="switchPage('home')" id="topnav-home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      首頁
+    </button>
+    <button class="topnav-btn" onclick="switchPage('days')" id="topnav-days">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      行程
+    </button>
+    <button class="topnav-btn" onclick="switchPage('people')" id="topnav-people">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      成員
+    </button>
+    <button class="topnav-btn" onclick="switchPage('emergency')" id="topnav-emergency">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      資訊
+    </button>
+  </nav>
+  <div class="topbar-right-mobile" style="font-size:11px;color:var(--muted);text-align:right">
     16天<br>自駕環島
   </div>
 </div>
@@ -1374,13 +1304,6 @@
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <!-- 側邊欄旅程摘要（平板/桌機才顯示） -->
-  <div class="sidenav-trip" style="display:none">
-    <div style="font-size:10px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Family Road Trip</div>
-    <div style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--lava);line-height:1.1">冰島 <span style="color:var(--accent)">×</span> 倫敦</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:4px">11.03 — 11.18 · 4人</div>
-    <div style="height:0.5px;background:var(--border2);margin:16px 0 8px"></div>
-  </div>
   <button class="nav-btn" onclick="switchPage(&#39;home&#39;)" id="nav-home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
     首頁
@@ -1901,17 +1824,19 @@ function renderMember(id) {
 function switchPage(page, subParam) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.topnav-btn').forEach(b => b.classList.remove('active'));
 
   const pageEl = document.getElementById('page-' + page);
   if (pageEl) { pageEl.classList.add('active'); pageEl.scrollTop = 0; }
   const navEl = document.getElementById('nav-' + page);
   if (navEl) navEl.classList.add('active');
+  const topnavEl = document.getElementById('topnav-' + page);
+  if (topnavEl) topnavEl.classList.add('active');
 
   if (page === 'people') {
     const member = subParam || 'hank';
     switchMember(member);
   }
-
 
   window.scrollTo(0, 0);
 }
@@ -2245,6 +2170,8 @@ function initDashboard() {
 // 初始化：設定首頁為 active，渲染所有區塊
 document.getElementById('page-home').classList.add('active');
 document.getElementById('nav-home').classList.add('active');
+const _tn = document.getElementById('topnav-home');
+if (_tn) _tn.classList.add('active');
 renderDays();
 renderHotels();
 renderMember('hank');
